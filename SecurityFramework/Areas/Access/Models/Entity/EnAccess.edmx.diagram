@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c9aee99c625f4073b30481fe19d218c5" Name="Diagram1">
+        <EntityTypeShape EntityType="AccessModel.Domain" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.Group" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.Office" Width="1.5" PointX="7.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.Organization" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.RoleRoute" Width="1.5" PointX="14.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.Role" Width="1.5" PointX="12" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.RoleUser" Width="1.5" PointX="14.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.Route" Width="1.5" PointX="12" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.Shop" Width="1.5" PointX="9.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.AspNetUser" Width="1.5" PointX="12" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwArea" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwAreaAndRole" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwAreaAndRoleAndRoute" Width="1.5" PointX="4.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwAreaAndRoleAndUser" Width="1.5" PointX="6.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwAreaTree" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwIsInRole" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwRoleRoute" Width="1.5" PointX="2.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwRoleUser" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="AccessModel.FK_Organizations_Domains" ManuallyRouted="false" />
+        <AssociationConnector Association="AccessModel.FK_Roles_Domains" ManuallyRouted="false" />
+        <AssociationConnector Association="AccessModel.FK_Groups_Organizations" ManuallyRouted="false" />
+        <AssociationConnector Association="AccessModel.FK_Offices_Groups" ManuallyRouted="false" />
+        <AssociationConnector Association="AccessModel.FK_Roles_Groups" ManuallyRouted="false" />
+        <AssociationConnector Association="AccessModel.FK_Roles_Offices" ManuallyRouted="false" />
+        <AssociationConnector Association="AccessModel.FK_Shops_Offices" ManuallyRouted="false" />
+        <AssociationConnector Association="AccessModel.FK_Roles_Organizations" ManuallyRouted="false" />
+        <AssociationConnector Association="AccessModel.FK_RoleRoutes_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="AccessModel.FK_RoleRoutes_Routes" ManuallyRouted="false" />
+        <AssociationConnector Association="AccessModel.FK_Roles_Shops" ManuallyRouted="false" />
+        <AssociationConnector Association="AccessModel.FK_RoleUsers_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="AccessModel.FK_RoleUsers_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="AccessModel.FK_AspNetUsers_AspNetUsers" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

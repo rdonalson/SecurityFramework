@@ -1,0 +1,1347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AccessModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Domains">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AppId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AppId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrganizationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Offices">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AppId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GroupId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Organizations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AppId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DomainId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RoleRoutes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RouteId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Sequence" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DomainId" Type="uniqueidentifier" />
+          <Property Name="OrganizationId" Type="uniqueidentifier" />
+          <Property Name="GroupId" Type="uniqueidentifier" />
+          <Property Name="OfficeId" Type="uniqueidentifier" />
+          <Property Name="ShopId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="RoleUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Routes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AppId" Type="uniqueidentifier" />
+          <Property Name="FilePath" Type="varchar" MaxLength="500" />
+          <Property Name="FileName" Type="varchar" MaxLength="100" />
+          <Property Name="AppPath" Type="varchar" MaxLength="255" />
+          <Property Name="RoutePath" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Shops">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AppId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OfficeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="SysAdmin" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SecurityFramework.Access.vwAreas' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwAreas">
+          <Key>
+            <PropertyRef Name="DomId" />
+            <PropertyRef Name="Domain" />
+          </Key>
+          <Property Name="BreadcrubTrail" Type="varchar" MaxLength="512" />
+          <Property Name="DomId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Domain" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="OrgId" Type="uniqueidentifier" />
+          <Property Name="Organization" Type="varchar" MaxLength="100" />
+          <Property Name="GrpId" Type="uniqueidentifier" />
+          <Property Name="Group" Type="varchar" MaxLength="100" />
+          <Property Name="OffId" Type="uniqueidentifier" />
+          <Property Name="Office" Type="varchar" MaxLength="100" />
+          <Property Name="ShpId" Type="uniqueidentifier" />
+          <Property Name="Shop" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SecurityFramework.Access.vwAreasAndRoles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwAreasAndRoles">
+          <Key>
+            <PropertyRef Name="AreaSeq" />
+            <PropertyRef Name="Area" />
+            <PropertyRef Name="Roles" />
+            <PropertyRef Name="Seq" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="AreaSeq" Type="int" Nullable="false" />
+          <Property Name="Area" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="AreaName" Type="varchar" MaxLength="100" />
+          <Property Name="Roles" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Seq" Type="int" Nullable="false" />
+          <Property Name="AreaAndRole" Type="varchar" MaxLength="218" />
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SecurityFramework.Access.vwAreasAndRolesAndRoutes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwAreasAndRolesAndRoutes">
+          <Key>
+            <PropertyRef Name="AreaSeq" />
+            <PropertyRef Name="Seq" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="RouteId" />
+          </Key>
+          <Property Name="AreaSeq" Type="int" Nullable="false" />
+          <Property Name="Seq" Type="int" Nullable="false" />
+          <Property Name="AreaAndRole" Type="varchar" MaxLength="218" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RouteId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoutePath" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SecurityFramework.Access.vwAreasAndRolesAndUsers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwAreasAndRolesAndUsers">
+          <Key>
+            <PropertyRef Name="AreaSeq" />
+            <PropertyRef Name="Seq" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="AreaSeq" Type="int" Nullable="false" />
+          <Property Name="Seq" Type="int" Nullable="false" />
+          <Property Name="AreaAndRole" Type="varchar" MaxLength="218" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SecurityFramework.Access.vwAreaTrees' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwAreaTrees">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Area" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ParentId" Type="uniqueidentifier" />
+          <Property Name="Area" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SecurityFramework.Access.vwIsInRole' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwIsInRole">
+          <Key>
+            <PropertyRef Name="AreaAppId" />
+            <PropertyRef Name="Area" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="RouteId" />
+          </Key>
+          <Property Name="AreaAppId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AreaId" Type="uniqueidentifier" />
+          <Property Name="Area" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="RoleId" Type="uniqueidentifier" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="RouteId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoutePath" Type="varchar" MaxLength="200" />
+          <Property Name="RouteAppId" Type="uniqueidentifier" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SecurityFramework.Access.vwRoleRoutes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwRoleRoutes">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="RouteId" />
+          </Key>
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RouteId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AppId" Type="uniqueidentifier" />
+          <Property Name="FilePath" Type="varchar" MaxLength="500" />
+          <Property Name="FileName" Type="varchar" MaxLength="100" />
+          <Property Name="AppPath" Type="varchar" MaxLength="255" />
+          <Property Name="RoutePath" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwRoleUser">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AspNetUsers_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUsers1" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUsers1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_Organizations">
+          <End Role="Organizations" Type="Self.Organizations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Offices_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Offices" Type="Self.Offices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Offices">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Organizations_Domains">
+          <End Role="Domains" Type="Self.Domains" Multiplicity="1" />
+          <End Role="Organizations" Type="Self.Organizations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Domains">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organizations">
+              <PropertyRef Name="DomainId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleRoutes_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RoleRoutes" Type="Self.RoleRoutes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleRoutes">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleRoutes_Routes">
+          <End Role="Routes" Type="Self.Routes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RoleRoutes" Type="Self.RoleRoutes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Routes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleRoutes">
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roles_Domains">
+          <End Role="Domains" Type="Self.Domains" Multiplicity="0..1" />
+          <End Role="Roles" Type="Self.Roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Domains">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="DomainId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roles_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+          <End Role="Roles" Type="Self.Roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roles_Offices">
+          <End Role="Offices" Type="Self.Offices" Multiplicity="0..1" />
+          <End Role="Roles" Type="Self.Roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Offices">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="OfficeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roles_Organizations">
+          <End Role="Organizations" Type="Self.Organizations" Multiplicity="0..1" />
+          <End Role="Roles" Type="Self.Roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roles_Shops">
+          <End Role="Shops" Type="Self.Shops" Multiplicity="0..1" />
+          <End Role="Roles" Type="Self.Roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shops">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="ShopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleUsers_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RoleUsers" Type="Self.RoleUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleUsers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleUsers_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RoleUsers" Type="Self.RoleUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleUsers">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shops_Offices">
+          <End Role="Offices" Type="Self.Offices" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Shops" Type="Self.Shops" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Offices">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shops">
+              <PropertyRef Name="OfficeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="spIsInRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Access">
+          <Parameter Name="AppId" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="UserId" Type="varchar" Mode="In" />
+          <Parameter Name="Route" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="AccessModelStoreContainer">
+          <EntitySet Name="Domains" EntityType="Self.Domains" Schema="Access" store:Type="Tables" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="Access" store:Type="Tables" />
+          <EntitySet Name="Offices" EntityType="Self.Offices" Schema="Access" store:Type="Tables" />
+          <EntitySet Name="Organizations" EntityType="Self.Organizations" Schema="Access" store:Type="Tables" />
+          <EntitySet Name="RoleRoutes" EntityType="Self.RoleRoutes" Schema="Access" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="Access" store:Type="Tables" />
+          <EntitySet Name="RoleUsers" EntityType="Self.RoleUsers" Schema="Access" store:Type="Tables" />
+          <EntitySet Name="Routes" EntityType="Self.Routes" Schema="Access" store:Type="Tables" />
+          <EntitySet Name="Shops" EntityType="Self.Shops" Schema="Access" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwAreas" EntityType="Self.vwAreas" store:Type="Views" store:Schema="Access">
+            <DefiningQuery>SELECT 
+    [vwAreas].[BreadcrubTrail] AS [BreadcrubTrail], 
+    [vwAreas].[DomId] AS [DomId], 
+    [vwAreas].[Domain] AS [Domain], 
+    [vwAreas].[OrgId] AS [OrgId], 
+    [vwAreas].[Organization] AS [Organization], 
+    [vwAreas].[GrpId] AS [GrpId], 
+    [vwAreas].[Group] AS [Group], 
+    [vwAreas].[OffId] AS [OffId], 
+    [vwAreas].[Office] AS [Office], 
+    [vwAreas].[ShpId] AS [ShpId], 
+    [vwAreas].[Shop] AS [Shop]
+    FROM [Access].[vwAreas] AS [vwAreas]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwAreasAndRoles" EntityType="Self.vwAreasAndRoles" store:Type="Views" store:Schema="Access">
+            <DefiningQuery>SELECT 
+    [vwAreasAndRoles].[AreaSeq] AS [AreaSeq], 
+    [vwAreasAndRoles].[Area] AS [Area], 
+    [vwAreasAndRoles].[AreaName] AS [AreaName], 
+    [vwAreasAndRoles].[Roles] AS [Roles], 
+    [vwAreasAndRoles].[Seq] AS [Seq], 
+    [vwAreasAndRoles].[AreaAndRole] AS [AreaAndRole], 
+    [vwAreasAndRoles].[RoleId] AS [RoleId]
+    FROM [Access].[vwAreasAndRoles] AS [vwAreasAndRoles]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwAreasAndRolesAndRoutes" EntityType="Self.vwAreasAndRolesAndRoutes" store:Type="Views" store:Schema="Access">
+            <DefiningQuery>SELECT 
+    [vwAreasAndRolesAndRoutes].[AreaSeq] AS [AreaSeq], 
+    [vwAreasAndRolesAndRoutes].[Seq] AS [Seq], 
+    [vwAreasAndRolesAndRoutes].[AreaAndRole] AS [AreaAndRole], 
+    [vwAreasAndRolesAndRoutes].[Id] AS [Id], 
+    [vwAreasAndRolesAndRoutes].[RoleId] AS [RoleId], 
+    [vwAreasAndRolesAndRoutes].[RouteId] AS [RouteId], 
+    [vwAreasAndRolesAndRoutes].[RoutePath] AS [RoutePath]
+    FROM [Access].[vwAreasAndRolesAndRoutes] AS [vwAreasAndRolesAndRoutes]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwAreasAndRolesAndUsers" EntityType="Self.vwAreasAndRolesAndUsers" store:Type="Views" store:Schema="Access">
+            <DefiningQuery>SELECT 
+    [vwAreasAndRolesAndUsers].[AreaSeq] AS [AreaSeq], 
+    [vwAreasAndRolesAndUsers].[Seq] AS [Seq], 
+    [vwAreasAndRolesAndUsers].[AreaAndRole] AS [AreaAndRole], 
+    [vwAreasAndRolesAndUsers].[Email] AS [Email], 
+    [vwAreasAndRolesAndUsers].[Id] AS [Id], 
+    [vwAreasAndRolesAndUsers].[RoleId] AS [RoleId], 
+    [vwAreasAndRolesAndUsers].[UserId] AS [UserId]
+    FROM [Access].[vwAreasAndRolesAndUsers] AS [vwAreasAndRolesAndUsers]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwAreaTrees" EntityType="Self.vwAreaTrees" store:Type="Views" store:Schema="Access">
+            <DefiningQuery>SELECT 
+    [vwAreaTrees].[Id] AS [Id], 
+    [vwAreaTrees].[ParentId] AS [ParentId], 
+    [vwAreaTrees].[Area] AS [Area]
+    FROM [Access].[vwAreaTrees] AS [vwAreaTrees]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwIsInRole" EntityType="Self.vwIsInRole" store:Type="Views" store:Schema="Access">
+            <DefiningQuery>SELECT 
+    [vwIsInRole].[AreaAppId] AS [AreaAppId], 
+    [vwIsInRole].[AreaId] AS [AreaId], 
+    [vwIsInRole].[Area] AS [Area], 
+    [vwIsInRole].[RoleId] AS [RoleId], 
+    [vwIsInRole].[Name] AS [Name], 
+    [vwIsInRole].[UserId] AS [UserId], 
+    [vwIsInRole].[UserName] AS [UserName], 
+    [vwIsInRole].[RouteId] AS [RouteId], 
+    [vwIsInRole].[RoutePath] AS [RoutePath], 
+    [vwIsInRole].[RouteAppId] AS [RouteAppId]
+    FROM [Access].[vwIsInRole] AS [vwIsInRole]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwRoleRoutes" EntityType="Self.vwRoleRoutes" store:Type="Views" store:Schema="Access">
+            <DefiningQuery>SELECT 
+    [vwRoleRoutes].[RoleId] AS [RoleId], 
+    [vwRoleRoutes].[RouteId] AS [RouteId], 
+    [vwRoleRoutes].[AppId] AS [AppId], 
+    [vwRoleRoutes].[FilePath] AS [FilePath], 
+    [vwRoleRoutes].[FileName] AS [FileName], 
+    [vwRoleRoutes].[AppPath] AS [AppPath], 
+    [vwRoleRoutes].[RoutePath] AS [RoutePath]
+    FROM [Access].[vwRoleRoutes] AS [vwRoleRoutes]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwRoleUser" EntityType="Self.vwRoleUser" store:Type="Views" store:Schema="Access">
+            <DefiningQuery>SELECT 
+    [vwRoleUser].[RoleId] AS [RoleId], 
+    [vwRoleUser].[UserId] AS [UserId], 
+    [vwRoleUser].[Email] AS [Email], 
+    [vwRoleUser].[UserName] AS [UserName]
+    FROM [Access].[vwRoleUser] AS [vwRoleUser]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_AspNetUsers_AspNetUsers" Association="Self.FK_AspNetUsers_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUsers1" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_Organizations" Association="Self.FK_Groups_Organizations">
+            <End Role="Organizations" EntitySet="Organizations" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Offices_Groups" Association="Self.FK_Offices_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Offices" EntitySet="Offices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Organizations_Domains" Association="Self.FK_Organizations_Domains">
+            <End Role="Domains" EntitySet="Domains" />
+            <End Role="Organizations" EntitySet="Organizations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleRoutes_Roles" Association="Self.FK_RoleRoutes_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="RoleRoutes" EntitySet="RoleRoutes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleRoutes_Routes" Association="Self.FK_RoleRoutes_Routes">
+            <End Role="Routes" EntitySet="Routes" />
+            <End Role="RoleRoutes" EntitySet="RoleRoutes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roles_Domains" Association="Self.FK_Roles_Domains">
+            <End Role="Domains" EntitySet="Domains" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roles_Groups" Association="Self.FK_Roles_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roles_Offices" Association="Self.FK_Roles_Offices">
+            <End Role="Offices" EntitySet="Offices" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roles_Organizations" Association="Self.FK_Roles_Organizations">
+            <End Role="Organizations" EntitySet="Organizations" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roles_Shops" Association="Self.FK_Roles_Shops">
+            <End Role="Shops" EntitySet="Shops" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleUsers_AspNetUsers" Association="Self.FK_RoleUsers_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="RoleUsers" EntitySet="RoleUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleUsers_Roles" Association="Self.FK_RoleUsers_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="RoleUsers" EntitySet="RoleUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shops_Offices" Association="Self.FK_Shops_Offices">
+            <End Role="Offices" EntitySet="Offices" />
+            <End Role="Shops" EntitySet="Shops" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AccessModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Domain">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="AppId" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Organizations" Relationship="Self.FK_Organizations_Domains" FromRole="Domains" ToRole="Organizations" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_Roles_Domains" FromRole="Domains" ToRole="Roles" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="AppId" Type="Guid" Nullable="false" />
+          <Property Name="OrganizationId" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_Groups_Organizations" FromRole="Groups" ToRole="Organizations" />
+          <NavigationProperty Name="Offices" Relationship="Self.FK_Offices_Groups" FromRole="Groups" ToRole="Offices" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_Roles_Groups" FromRole="Groups" ToRole="Roles" />
+        </EntityType>
+        <EntityType Name="Office">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="AppId" Type="Guid" Nullable="false" />
+          <Property Name="GroupId" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Group" Relationship="Self.FK_Offices_Groups" FromRole="Offices" ToRole="Groups" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_Roles_Offices" FromRole="Offices" ToRole="Roles" />
+          <NavigationProperty Name="Shops" Relationship="Self.FK_Shops_Offices" FromRole="Offices" ToRole="Shops" />
+        </EntityType>
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="AppId" Type="Guid" Nullable="false" />
+          <Property Name="DomainId" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Domain" Relationship="Self.FK_Organizations_Domains" FromRole="Organizations" ToRole="Domains" />
+          <NavigationProperty Name="Groups" Relationship="Self.FK_Groups_Organizations" FromRole="Organizations" ToRole="Groups" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_Roles_Organizations" FromRole="Organizations" ToRole="Roles" />
+        </EntityType>
+        <EntityType Name="RoleRoute">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="RouteId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_RoleRoutes_Roles" FromRole="RoleRoutes" ToRole="Roles" />
+          <NavigationProperty Name="Route" Relationship="Self.FK_RoleRoutes_Routes" FromRole="RoleRoutes" ToRole="Routes" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Sequence" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DomainId" Type="Guid" />
+          <Property Name="OrganizationId" Type="Guid" />
+          <Property Name="GroupId" Type="Guid" />
+          <Property Name="OfficeId" Type="Guid" />
+          <Property Name="ShopId" Type="Guid" />
+          <NavigationProperty Name="Domain" Relationship="Self.FK_Roles_Domains" FromRole="Roles" ToRole="Domains" />
+          <NavigationProperty Name="Group" Relationship="Self.FK_Roles_Groups" FromRole="Roles" ToRole="Groups" />
+          <NavigationProperty Name="Office" Relationship="Self.FK_Roles_Offices" FromRole="Roles" ToRole="Offices" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_Roles_Organizations" FromRole="Roles" ToRole="Organizations" />
+          <NavigationProperty Name="RoleRoutes" Relationship="Self.FK_RoleRoutes_Roles" FromRole="Roles" ToRole="RoleRoutes" />
+          <NavigationProperty Name="Shop" Relationship="Self.FK_Roles_Shops" FromRole="Roles" ToRole="Shops" />
+          <NavigationProperty Name="RoleUsers" Relationship="Self.FK_RoleUsers_Roles" FromRole="Roles" ToRole="RoleUsers" />
+        </EntityType>
+        <EntityType Name="RoleUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_RoleUsers_Roles" FromRole="RoleUsers" ToRole="Roles" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_RoleUsers_AspNetUsers" FromRole="RoleUsers" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="AppId" Type="Guid" />
+          <Property Name="FilePath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AppPath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RoutePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="RoleRoutes" Relationship="Self.FK_RoleRoutes_Routes" FromRole="Routes" ToRole="RoleRoutes" />
+        </EntityType>
+        <EntityType Name="Shop">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="AppId" Type="Guid" Nullable="false" />
+          <Property Name="OfficeId" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Office" Relationship="Self.FK_Shops_Offices" FromRole="Shops" ToRole="Offices" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_Roles_Shops" FromRole="Shops" ToRole="Roles" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SysAdmin" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="RoleUsers" Relationship="Self.FK_RoleUsers_AspNetUsers" FromRole="AspNetUsers" ToRole="RoleUsers" />
+          <NavigationProperty Name="AspNetUsers1" Relationship="Self.FK_AspNetUsers_AspNetUsers" FromRole="AspNetUsers" ToRole="AspNetUsers1" />
+          <NavigationProperty Name="AspNetUser1" Relationship="Self.FK_AspNetUsers_AspNetUsers" FromRole="AspNetUsers1" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="vwArea">
+          <Key>
+            <PropertyRef Name="DomId" />
+            <PropertyRef Name="Domain" />
+          </Key>
+          <Property Name="BreadcrubTrail" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="DomId" Type="Guid" Nullable="false" />
+          <Property Name="Domain" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrgId" Type="Guid" />
+          <Property Name="Organization" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="GrpId" Type="Guid" />
+          <Property Name="Group" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OffId" Type="Guid" />
+          <Property Name="Office" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ShpId" Type="Guid" />
+          <Property Name="Shop" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwAreaAndRole">
+          <Key>
+            <PropertyRef Name="AreaSeq" />
+            <PropertyRef Name="Area" />
+            <PropertyRef Name="Roles" />
+            <PropertyRef Name="Seq" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="AreaSeq" Type="Int32" Nullable="false" />
+          <Property Name="Area" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AreaName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Roles" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Seq" Type="Int32" Nullable="false" />
+          <Property Name="AreaAndRole" Type="String" MaxLength="218" FixedLength="false" Unicode="false" />
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vwAreaAndRoleAndRoute">
+          <Key>
+            <PropertyRef Name="AreaSeq" />
+            <PropertyRef Name="Seq" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="RouteId" />
+          </Key>
+          <Property Name="AreaSeq" Type="Int32" Nullable="false" />
+          <Property Name="Seq" Type="Int32" Nullable="false" />
+          <Property Name="AreaAndRole" Type="String" MaxLength="218" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="RouteId" Type="Guid" Nullable="false" />
+          <Property Name="RoutePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwAreaAndRoleAndUser">
+          <Key>
+            <PropertyRef Name="AreaSeq" />
+            <PropertyRef Name="Seq" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="AreaSeq" Type="Int32" Nullable="false" />
+          <Property Name="Seq" Type="Int32" Nullable="false" />
+          <Property Name="AreaAndRole" Type="String" MaxLength="218" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vwAreaTree">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Area" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ParentId" Type="Guid" />
+          <Property Name="Area" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vwIsInRole">
+          <Key>
+            <PropertyRef Name="AreaAppId" />
+            <PropertyRef Name="Area" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="RouteId" />
+          </Key>
+          <Property Name="AreaAppId" Type="Guid" Nullable="false" />
+          <Property Name="AreaId" Type="Guid" />
+          <Property Name="Area" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoleId" Type="Guid" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RouteId" Type="Guid" Nullable="false" />
+          <Property Name="RoutePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RouteAppId" Type="Guid" />
+        </EntityType>
+        <EntityType Name="vwRoleRoute">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="RouteId" />
+          </Key>
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="RouteId" Type="Guid" Nullable="false" />
+          <Property Name="AppId" Type="Guid" />
+          <Property Name="FilePath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AppPath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RoutePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwRoleUser">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Organizations_Domains">
+          <End Role="Domains" Type="Self.Domain" Multiplicity="1" />
+          <End Role="Organizations" Type="Self.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Domains">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organizations">
+              <PropertyRef Name="DomainId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roles_Domains">
+          <End Role="Domains" Type="Self.Domain" Multiplicity="0..1" />
+          <End Role="Roles" Type="Self.Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Domains">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="DomainId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_Organizations">
+          <End Role="Organizations" Type="Self.Organization" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Groups" Type="Self.Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Offices_Groups">
+          <End Role="Groups" Type="Self.Group" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Offices" Type="Self.Office" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Offices">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roles_Groups">
+          <End Role="Groups" Type="Self.Group" Multiplicity="0..1" />
+          <End Role="Roles" Type="Self.Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roles_Offices">
+          <End Role="Offices" Type="Self.Office" Multiplicity="0..1" />
+          <End Role="Roles" Type="Self.Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Offices">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="OfficeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shops_Offices">
+          <End Role="Offices" Type="Self.Office" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Shops" Type="Self.Shop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Offices">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shops">
+              <PropertyRef Name="OfficeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roles_Organizations">
+          <End Role="Organizations" Type="Self.Organization" Multiplicity="0..1" />
+          <End Role="Roles" Type="Self.Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleRoutes_Roles">
+          <End Role="Roles" Type="Self.Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RoleRoutes" Type="Self.RoleRoute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleRoutes">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleRoutes_Routes">
+          <End Role="Routes" Type="Self.Route" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RoleRoutes" Type="Self.RoleRoute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Routes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleRoutes">
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roles_Shops">
+          <End Role="Shops" Type="Self.Shop" Multiplicity="0..1" />
+          <End Role="Roles" Type="Self.Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shops">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="ShopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleUsers_Roles">
+          <End Role="Roles" Type="Self.Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RoleUsers" Type="Self.RoleUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleUsers">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleUsers_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RoleUsers" Type="Self.RoleUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleUsers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUsers_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="AspNetUsers1" Type="Self.AspNetUser" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUsers1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AccessEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Domains" EntityType="Self.Domain" />
+          <EntitySet Name="Groups" EntityType="Self.Group" />
+          <EntitySet Name="Offices" EntityType="Self.Office" />
+          <EntitySet Name="Organizations" EntityType="Self.Organization" />
+          <EntitySet Name="RoleRoutes" EntityType="Self.RoleRoute" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="RoleUsers" EntityType="Self.RoleUser" />
+          <EntitySet Name="Routes" EntityType="Self.Route" />
+          <EntitySet Name="Shops" EntityType="Self.Shop" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="vwAreas" EntityType="Self.vwArea" />
+          <EntitySet Name="vwAreasAndRoles" EntityType="AccessModel.vwAreaAndRole" />
+          <EntitySet Name="vwAreasAndRolesAndRoutes" EntityType="AccessModel.vwAreaAndRoleAndRoute" />
+          <EntitySet Name="vwAreasAndRolesAndUsers" EntityType="AccessModel.vwAreaAndRoleAndUser" />
+          <EntitySet Name="vwAreaTrees" EntityType="Self.vwAreaTree" />
+          <EntitySet Name="vwIsInRoles" EntityType="Self.vwIsInRole" />
+          <EntitySet Name="vwRoleRoutes" EntityType="Self.vwRoleRoute" />
+          <EntitySet Name="vwRoleUsers" EntityType="Self.vwRoleUser" />
+          <AssociationSet Name="FK_Organizations_Domains" Association="Self.FK_Organizations_Domains">
+            <End Role="Domains" EntitySet="Domains" />
+            <End Role="Organizations" EntitySet="Organizations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roles_Domains" Association="Self.FK_Roles_Domains">
+            <End Role="Domains" EntitySet="Domains" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_Organizations" Association="Self.FK_Groups_Organizations">
+            <End Role="Organizations" EntitySet="Organizations" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Offices_Groups" Association="Self.FK_Offices_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Offices" EntitySet="Offices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roles_Groups" Association="Self.FK_Roles_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roles_Offices" Association="Self.FK_Roles_Offices">
+            <End Role="Offices" EntitySet="Offices" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shops_Offices" Association="Self.FK_Shops_Offices">
+            <End Role="Offices" EntitySet="Offices" />
+            <End Role="Shops" EntitySet="Shops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roles_Organizations" Association="Self.FK_Roles_Organizations">
+            <End Role="Organizations" EntitySet="Organizations" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleRoutes_Roles" Association="Self.FK_RoleRoutes_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="RoleRoutes" EntitySet="RoleRoutes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleRoutes_Routes" Association="Self.FK_RoleRoutes_Routes">
+            <End Role="Routes" EntitySet="Routes" />
+            <End Role="RoleRoutes" EntitySet="RoleRoutes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roles_Shops" Association="Self.FK_Roles_Shops">
+            <End Role="Shops" EntitySet="Shops" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleUsers_Roles" Association="Self.FK_RoleUsers_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="RoleUsers" EntitySet="RoleUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleUsers_AspNetUsers" Association="Self.FK_RoleUsers_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="RoleUsers" EntitySet="RoleUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUsers_AspNetUsers" Association="Self.FK_AspNetUsers_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUsers1" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <FunctionImport Name="spIsInRole" ReturnType="Collection(Int32)">
+            <Parameter Name="AppId" Mode="In" Type="Guid" />
+            <Parameter Name="UserId" Mode="In" Type="String" />
+            <Parameter Name="Route" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AccessModelStoreContainer" CdmEntityContainer="AccessEntities">
+          <EntitySetMapping Name="Domains">
+            <EntityTypeMapping TypeName="AccessModel.Domain">
+              <MappingFragment StoreEntitySet="Domains">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="AccessModel.Group">
+              <MappingFragment StoreEntitySet="Groups">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Offices">
+            <EntityTypeMapping TypeName="AccessModel.Office">
+              <MappingFragment StoreEntitySet="Offices">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Organizations">
+            <EntityTypeMapping TypeName="AccessModel.Organization">
+              <MappingFragment StoreEntitySet="Organizations">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="DomainId" ColumnName="DomainId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleRoutes">
+            <EntityTypeMapping TypeName="AccessModel.RoleRoute">
+              <MappingFragment StoreEntitySet="RoleRoutes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="AccessModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DomainId" ColumnName="DomainId" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="OfficeId" ColumnName="OfficeId" />
+                <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleUsers">
+            <EntityTypeMapping TypeName="AccessModel.RoleUser">
+              <MappingFragment StoreEntitySet="RoleUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Routes">
+            <EntityTypeMapping TypeName="AccessModel.Route">
+              <MappingFragment StoreEntitySet="Routes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="AppPath" ColumnName="AppPath" />
+                <ScalarProperty Name="RoutePath" ColumnName="RoutePath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shops">
+            <EntityTypeMapping TypeName="AccessModel.Shop">
+              <MappingFragment StoreEntitySet="Shops">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="OfficeId" ColumnName="OfficeId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="AccessModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="SysAdmin" ColumnName="SysAdmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwAreas">
+            <EntityTypeMapping TypeName="AccessModel.vwArea">
+              <MappingFragment StoreEntitySet="vwAreas">
+                <ScalarProperty Name="BreadcrubTrail" ColumnName="BreadcrubTrail" />
+                <ScalarProperty Name="DomId" ColumnName="DomId" />
+                <ScalarProperty Name="Domain" ColumnName="Domain" />
+                <ScalarProperty Name="OrgId" ColumnName="OrgId" />
+                <ScalarProperty Name="Organization" ColumnName="Organization" />
+                <ScalarProperty Name="GrpId" ColumnName="GrpId" />
+                <ScalarProperty Name="Group" ColumnName="Group" />
+                <ScalarProperty Name="OffId" ColumnName="OffId" />
+                <ScalarProperty Name="Office" ColumnName="Office" />
+                <ScalarProperty Name="ShpId" ColumnName="ShpId" />
+                <ScalarProperty Name="Shop" ColumnName="Shop" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwAreasAndRoles">
+            <EntityTypeMapping TypeName="AccessModel.vwAreaAndRole">
+              <MappingFragment StoreEntitySet="vwAreasAndRoles">
+                <ScalarProperty Name="AreaSeq" ColumnName="AreaSeq" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="AreaName" ColumnName="AreaName" />
+                <ScalarProperty Name="Roles" ColumnName="Roles" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="AreaAndRole" ColumnName="AreaAndRole" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwAreasAndRolesAndRoutes">
+            <EntityTypeMapping TypeName="AccessModel.vwAreaAndRoleAndRoute">
+              <MappingFragment StoreEntitySet="vwAreasAndRolesAndRoutes">
+                <ScalarProperty Name="AreaSeq" ColumnName="AreaSeq" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="AreaAndRole" ColumnName="AreaAndRole" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="RoutePath" ColumnName="RoutePath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwAreasAndRolesAndUsers">
+            <EntityTypeMapping TypeName="AccessModel.vwAreaAndRoleAndUser">
+              <MappingFragment StoreEntitySet="vwAreasAndRolesAndUsers">
+                <ScalarProperty Name="AreaSeq" ColumnName="AreaSeq" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="AreaAndRole" ColumnName="AreaAndRole" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwAreaTrees">
+            <EntityTypeMapping TypeName="AccessModel.vwAreaTree">
+              <MappingFragment StoreEntitySet="vwAreaTrees">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwIsInRoles">
+            <EntityTypeMapping TypeName="AccessModel.vwIsInRole">
+              <MappingFragment StoreEntitySet="vwIsInRole">
+                <ScalarProperty Name="AreaAppId" ColumnName="AreaAppId" />
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="RoutePath" ColumnName="RoutePath" />
+                <ScalarProperty Name="RouteAppId" ColumnName="RouteAppId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwRoleRoutes">
+            <EntityTypeMapping TypeName="AccessModel.vwRoleRoute">
+              <MappingFragment StoreEntitySet="vwRoleRoutes">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="AppPath" ColumnName="AppPath" />
+                <ScalarProperty Name="RoutePath" ColumnName="RoutePath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwRoleUsers">
+            <EntityTypeMapping TypeName="AccessModel.vwRoleUser">
+              <MappingFragment StoreEntitySet="vwRoleUser">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spIsInRole" FunctionName="AccessModel.Store.spIsInRole" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
