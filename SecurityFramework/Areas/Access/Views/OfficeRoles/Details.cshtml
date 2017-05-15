@@ -1,0 +1,42 @@
+﻿@model SecurityFramework.Areas.Access.Models.Entity.Role
+
+@{
+    ViewBag.Title = "Office-Role Details";
+}
+
+<h2>Office-Role Details</h2>
+
+<div>
+    <h4>Office-Role</h4>
+    <hr/>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Sequence)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sequence)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Office.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Office.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

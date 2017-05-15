@@ -232,6 +232,7 @@
       <DependentUpon>EnAccess.edmx</DependentUpon>
       <LastGenOutput>EnAccess.cs</LastGenOutput>
     </Content>
+    <Content Include="Areas\Access\Views\web.config" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -246,7 +247,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Areas\Access\Views\web.config" />
     <EntityDeploy Include="Areas\Access\Models\Entity\EnAccess.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EnAccess.Designer.cs</LastGenOutput>
@@ -262,6 +262,97 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Areas\Access\Views\AccessHome\Index.cshtml" />
+    <Content Include="Areas\Access\Views\DomainRoles\Create.cshtml" />
+    <Content Include="Areas\Access\Views\DomainRoles\Delete.cshtml" />
+    <Content Include="Areas\Access\Views\DomainRoles\Details.cshtml" />
+    <Content Include="Areas\Access\Views\DomainRoles\Edit.cshtml" />
+    <Content Include="Areas\Access\Views\DomainRoles\Index.cshtml" />
+    <Content Include="Areas\Access\Views\Domains\Create.cshtml" />
+    <Content Include="Areas\Access\Views\Domains\Delete.cshtml" />
+    <Content Include="Areas\Access\Views\Domains\Details.cshtml" />
+    <Content Include="Areas\Access\Views\Domains\Edit.cshtml" />
+    <Content Include="Areas\Access\Views\Domains\Index.cshtml" />
+    <Content Include="Areas\Access\Views\GroupRoles\Create.cshtml" />
+    <Content Include="Areas\Access\Views\GroupRoles\Delete.cshtml" />
+    <Content Include="Areas\Access\Views\GroupRoles\Details.cshtml" />
+    <Content Include="Areas\Access\Views\GroupRoles\Edit.cshtml" />
+    <Content Include="Areas\Access\Views\GroupRoles\Index.cshtml" />
+    <Content Include="Areas\Access\Views\Groups\Create.cshtml" />
+    <Content Include="Areas\Access\Views\Groups\Delete.cshtml" />
+    <Content Include="Areas\Access\Views\Groups\Details.cshtml" />
+    <Content Include="Areas\Access\Views\Groups\Edit.cshtml" />
+    <Content Include="Areas\Access\Views\Groups\Index.cshtml" />
+    <Content Include="Areas\Access\Views\OfficeRoles\Create.cshtml" />
+    <Content Include="Areas\Access\Views\OfficeRoles\Delete.cshtml" />
+    <Content Include="Areas\Access\Views\OfficeRoles\Details.cshtml" />
+    <Content Include="Areas\Access\Views\OfficeRoles\Edit.cshtml" />
+    <Content Include="Areas\Access\Views\OfficeRoles\Index.cshtml" />
+    <Content Include="Areas\Access\Views\Offices\Create.cshtml" />
+    <Content Include="Areas\Access\Views\Offices\Delete.cshtml" />
+    <Content Include="Areas\Access\Views\Offices\Details.cshtml" />
+    <Content Include="Areas\Access\Views\Offices\Edit.cshtml" />
+    <Content Include="Areas\Access\Views\Offices\Index.cshtml" />
+    <Content Include="Areas\Access\Views\OrganizationRoles\Create.cshtml" />
+    <Content Include="Areas\Access\Views\OrganizationRoles\Delete.cshtml" />
+    <Content Include="Areas\Access\Views\OrganizationRoles\Details.cshtml" />
+    <Content Include="Areas\Access\Views\OrganizationRoles\Edit.cshtml" />
+    <Content Include="Areas\Access\Views\OrganizationRoles\Index.cshtml" />
+    <Content Include="Areas\Access\Views\Organizations\Create.cshtml" />
+    <Content Include="Areas\Access\Views\Organizations\Delete.cshtml" />
+    <Content Include="Areas\Access\Views\Organizations\Details.cshtml" />
+    <Content Include="Areas\Access\Views\Organizations\Edit.cshtml" />
+    <Content Include="Areas\Access\Views\Organizations\Index.cshtml" />
+    <Content Include="Areas\Access\Views\RoleRoutes\Create.cshtml" />
+    <Content Include="Areas\Access\Views\RoleRoutes\Delete.cshtml" />
+    <Content Include="Areas\Access\Views\RoleRoutes\Details.cshtml" />
+    <Content Include="Areas\Access\Views\RoleRoutes\Edit.cshtml" />
+    <Content Include="Areas\Access\Views\RoleRoutes\Index.cshtml" />
+    <Content Include="Areas\Access\Views\Roles\Create.cshtml" />
+    <Content Include="Areas\Access\Views\Roles\Delete.cshtml" />
+    <Content Include="Areas\Access\Views\Roles\Details.cshtml" />
+    <Content Include="Areas\Access\Views\Roles\Edit.cshtml" />
+    <Content Include="Areas\Access\Views\Roles\Index.cshtml" />
+    <Content Include="Areas\Access\Views\RoleUsers\Create.cshtml" />
+    <Content Include="Areas\Access\Views\RoleUsers\Delete.cshtml" />
+    <Content Include="Areas\Access\Views\RoleUsers\Details.cshtml" />
+    <Content Include="Areas\Access\Views\RoleUsers\Edit.cshtml" />
+    <Content Include="Areas\Access\Views\RoleUsers\Index.cshtml" />
+    <Content Include="Areas\Access\Views\RoleUsers\ListBox.cshtml" />
+    <Content Include="Areas\Access\Views\Routes\Create.cshtml" />
+    <Content Include="Areas\Access\Views\Routes\Delete.cshtml" />
+    <Content Include="Areas\Access\Views\Routes\Details.cshtml" />
+    <Content Include="Areas\Access\Views\Routes\Edit.cshtml" />
+    <Content Include="Areas\Access\Views\Routes\Index.cshtml" />
+    <Content Include="Areas\Access\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Access\Views\ShopRoles\Create.cshtml" />
+    <Content Include="Areas\Access\Views\ShopRoles\Delete.cshtml" />
+    <Content Include="Areas\Access\Views\ShopRoles\Details.cshtml" />
+    <Content Include="Areas\Access\Views\ShopRoles\Edit.cshtml" />
+    <Content Include="Areas\Access\Views\ShopRoles\Index.cshtml" />
+    <Content Include="Areas\Access\Views\Shops\Create.cshtml" />
+    <Content Include="Areas\Access\Views\Shops\Delete.cshtml" />
+    <Content Include="Areas\Access\Views\Shops\Details.cshtml" />
+    <Content Include="Areas\Access\Views\Shops\Edit.cshtml" />
+    <Content Include="Areas\Access\Views\Shops\Index.cshtml" />
+    <Content Include="Areas\Access\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Booking\Views\BookingHome\Index.cshtml" />
+    <Content Include="Areas\Booking\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Booking\Views\web.config" />
+    <Content Include="Areas\Booking\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Operator\Views\OperatorHome\Index.cshtml" />
+    <Content Include="Areas\Operator\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Operator\Views\web.config" />
+    <Content Include="Areas\Operator\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Validation\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Validation\Views\ValidationHome\Index.cshtml" />
+    <Content Include="Areas\Validation\Views\web.config" />
+    <Content Include="Areas\Validation\Views\_ViewStart.cshtml" />
+    <Content Include="Opportunity\Axial.aspx" />
+    <Content Include="Opportunity\Home.aspx" />
+    <Content Include="Opportunity\Manage.aspx" />
+    <Content Include="Opportunity\Millennium.aspx" />
+    <Content Include="Opportunity\Site.Master" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -509,6 +600,12 @@
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Access\Models\ListViewModel.cs" />
+    <Compile Include="Areas\Booking\BookingAreaRegistration.cs" />
+    <Compile Include="Areas\Booking\Controllers\BookingHomeController.cs" />
+    <Compile Include="Areas\Operator\Controllers\OperatorHomeController.cs" />
+    <Compile Include="Areas\Operator\OperatorAreaRegistration.cs" />
+    <Compile Include="Areas\Validation\Controllers\ValidationHomeController.cs" />
+    <Compile Include="Areas\Validation\ValidationAreaRegistration.cs" />
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -528,6 +625,41 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Opportunity\Axial.aspx.cs">
+      <DependentUpon>Axial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Opportunity\Axial.aspx.designer.cs">
+      <DependentUpon>Axial.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Opportunity\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Opportunity\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Opportunity\Manage.aspx.cs">
+      <DependentUpon>Manage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Opportunity\Manage.aspx.designer.cs">
+      <DependentUpon>Manage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Opportunity\Millennium.aspx.cs">
+      <DependentUpon>Millennium.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Opportunity\Millennium.aspx.designer.cs">
+      <DependentUpon>Millennium.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Opportunity\Site.Master.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Opportunity\Site.Master.designer.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -561,7 +693,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Access\Views\Shared\" />
+    <Folder Include="Areas\Booking\Models\" />
+    <Folder Include="Areas\Operator\Models\" />
+    <Folder Include="Areas\Validation\Models\" />
+    <Folder Include="Areas\Validation\Views\Validation\" />
     <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>

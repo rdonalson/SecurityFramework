@@ -1,0 +1,50 @@
+﻿@model SecurityFramework.Areas.Access.Models.Entity.Route
+
+@{
+    ViewBag.Title = "Route Details";
+}
+
+<h2>Route Details</h2>
+
+<div>
+    <h4>Route</h4>
+    <hr/>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FilePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FilePath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FileName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FileName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AppPath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppPath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoutePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoutePath)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

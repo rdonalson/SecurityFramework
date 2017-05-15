@@ -1,0 +1,34 @@
+﻿@model SecurityFramework.Areas.Access.Models.Entity.vwAreaAndRoleAndRoute
+
+@{
+    ViewBag.Title = "Role & Route Details";
+}
+
+<h2>Role & Route Details</h2>
+
+<div>
+    <h4>Role & Route</h4>
+    <hr/>
+    <dl class="dl-horizontal">
+        <dt>
+            Area & Role
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AreaAndRole)
+        </dd>
+
+        <dt>
+            Route
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoutePath)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -80,6 +80,11 @@ namespace SecurityFramework
             // Null out current user
             GlobalVariables.KillUser();
         }
+
+        protected static bool IsInRole(string pathAndQuery)
+        {
+            return GlobalVariables.IsInRole(pathAndQuery);
+        }
     }
 
 }
