@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SecurityFramework.Areas.Access.Models
+namespace SecurityFramework.Areas.Access.Models.View
 {
     public class ListViewModel
     {

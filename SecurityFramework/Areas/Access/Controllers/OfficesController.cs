@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using SecurityFramework.Areas.Access.Models;
 using SecurityFramework.Areas.Access.Models.Entity;
+using SecurityFramework.Areas.Access.Models.View;
 
 namespace SecurityFramework.Areas.Access.Controllers
 {

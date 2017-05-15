@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using SecurityFramework.Areas.Access.Models.Common;
 using SecurityFramework.Areas.Access.Models.Entity;
 
 namespace SecurityFramework.Areas.Access.Controllers
@@ -11,13 +12,18 @@ namespace SecurityFramework.Areas.Access.Controllers
     [Authorize]
     public class OfficeRolesController : Controller
     {
-        private readonly AccessEntities _db = new AccessEntities();
+        private readonly AccessEntities _db;
+        private readonly Utilities _utilities;
 
+        public OfficeRolesController()
+        {
+            _db = new AccessEntities();
+            _utilities = new Utilities(_db);
+        }
         // GET: Access/OfficeRoles
         public ActionResult Index()
         {
-            var roles = _db.Roles.Where(item => item.OfficeId != null).OrderBy(item => item.Sequence);
-            return View(roles.ToList());
+            return View(_utilities.GetOfficeRoles().ToList());
         }
 
         // GET: Access/OfficeRoles/Details/5
@@ -25,7 +31,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var role = _db.Roles.Find(id);
+            var role = _utilities.GetOfficeRoles().SingleOrDefault(item => item.Id == id);
             if (role == null)
                 return HttpNotFound();
             return View(role);
@@ -34,7 +40,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         // GET: Access/OfficeRoles/Create
         public ActionResult Create()
         {
-            ViewBag.OfficeId = new SelectList(_db.Offices, "Id", "Name");
+            ViewBag.OfficeId = new SelectList(_utilities.GetOffices(), "Id", "Breadcrumb");
             return View();
         }
 
@@ -53,7 +59,7 @@ namespace SecurityFramework.Areas.Access.Controllers
                 return RedirectToAction($"Index");
             }
 
-            ViewBag.OfficeId = new SelectList(_db.Offices, "Id", "Name", role.OfficeId);
+            ViewBag.OfficeId = new SelectList(_utilities.GetOffices(), "Id", "Breadcrumb", role.OfficeId);
             return View(role);
         }
 
@@ -65,7 +71,7 @@ namespace SecurityFramework.Areas.Access.Controllers
             var role = _db.Roles.Find(id);
             if (role == null)
                 return HttpNotFound();
-            ViewBag.OfficeId = new SelectList(_db.Offices, "Id", "Name", role.OfficeId);
+            ViewBag.OfficeId = new SelectList(_utilities.GetOffices(), "Id", "Breadcrumb", role.OfficeId);
             return View(role);
         }
 
@@ -82,7 +88,7 @@ namespace SecurityFramework.Areas.Access.Controllers
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
-            ViewBag.OfficeId = new SelectList(_db.Offices, "Id", "Name", role.OfficeId);
+            ViewBag.OfficeId = new SelectList(_utilities.GetOffices(), "Id", "Breadcrumb", role.OfficeId);
             return View(role);
         }
 
@@ -91,7 +97,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var role = _db.Roles.Find(id);
+            var role = _utilities.GetOfficeRoles().SingleOrDefault(item => item.Id == id);
             if (role == null)
                 return HttpNotFound();
             return View(role);
@@ -104,7 +110,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         public ActionResult DeleteConfirmed(Guid id)
         {
             var role = _db.Roles.Find(id);
-            _db.Roles.Remove(role);
+            if (role != null) _db.Roles.Remove(role);
             _db.SaveChanges();
             return RedirectToAction($"Index");
         }

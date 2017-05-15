@@ -1,4 +1,4 @@
-﻿@model SecurityFramework.Areas.Access.Models.Entity.Role
+﻿@model SecurityFramework.Areas.Access.Models.View.ListViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -11,15 +11,15 @@
     <hr/>
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Sequence)
+            @Html.DisplayNameFor(model => model.Breadcrumb)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Sequence)
+            @Html.DisplayFor(model => model.Breadcrumb)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            Role
         </dt>
 
         <dd>
@@ -27,13 +27,12 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Shop.Name)
+            @Html.DisplayNameFor(model => model.Sequence)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Shop.Name)
+            @Html.DisplayFor(model => model.Sequence)
         </dd>
-
     </dl>
 </div>
 <p>

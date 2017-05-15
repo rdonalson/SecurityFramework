@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using SecurityFramework.Areas.Access.Models.Common;
 using SecurityFramework.Areas.Access.Models.Entity;
 
 namespace SecurityFramework.Areas.Access.Controllers
@@ -11,13 +12,19 @@ namespace SecurityFramework.Areas.Access.Controllers
     [Authorize]
     public class ShopRolesController : Controller
     {
-        private readonly AccessEntities _db = new AccessEntities();
+        private readonly AccessEntities _db;
+        private readonly Utilities _utilities;
+
+        public ShopRolesController()
+        {
+            _db = new AccessEntities();
+            _utilities = new Utilities(_db);
+        }
 
         // GET: Access/ShopRoles
         public ActionResult Index()
         {
-            var roles = _db.Roles.Where(item => item.ShopId != null).OrderBy(item => item.Sequence);
-            return View(roles.ToList());
+            return View(_utilities.GetShopRoles().ToList());
         }
 
         // GET: Access/ShopRoles/Details/5
@@ -25,7 +32,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var role = _db.Roles.Find(id);
+            var role = _utilities.GetShopRoles().SingleOrDefault(item => item.Id == id);
             if (role == null)
                 return HttpNotFound();
             return View(role);
@@ -34,7 +41,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         // GET: Access/ShopRoles/Create
         public ActionResult Create()
         {
-            ViewBag.ShopId = new SelectList(_db.Shops, "Id", "Name");
+            ViewBag.ShopId = new SelectList(_utilities.GetShops(), "Id", "Breadcrumb");
             return View();
         }
 
@@ -53,7 +60,7 @@ namespace SecurityFramework.Areas.Access.Controllers
                 return RedirectToAction($"Index");
             }
 
-            ViewBag.ShopId = new SelectList(_db.Shops, "Id", "Name", role.ShopId);
+            ViewBag.ShopId = new SelectList(_utilities.GetShops(), "Id", "Breadcrumb", role.ShopId);
             return View(role);
         }
 
@@ -82,7 +89,7 @@ namespace SecurityFramework.Areas.Access.Controllers
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
-            ViewBag.ShopId = new SelectList(_db.Shops, "Id", "Name", role.ShopId);
+            ViewBag.ShopId = new SelectList(_utilities.GetShops(), "Id", "Breadcrumb", role.ShopId);
             return View(role);
         }
 
@@ -91,7 +98,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var role = _db.Roles.Find(id);
+            var role = _utilities.GetShopRoles().SingleOrDefault(item => item.Id == id);
             if (role == null)
                 return HttpNotFound();
             return View(role);
@@ -104,7 +111,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         public ActionResult DeleteConfirmed(Guid id)
         {
             var role = _db.Roles.Find(id);
-            _db.Roles.Remove(role);
+            if (role != null) _db.Roles.Remove(role);
             _db.SaveChanges();
             return RedirectToAction($"Index");
         }

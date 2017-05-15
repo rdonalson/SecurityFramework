@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using SecurityFramework.Areas.Access.Models.Common;
 using SecurityFramework.Areas.Access.Models.Entity;
 
 namespace SecurityFramework.Areas.Access.Controllers
@@ -11,13 +12,18 @@ namespace SecurityFramework.Areas.Access.Controllers
     [Authorize]
     public class DomainRolesController : Controller
     {
-        private readonly AccessEntities _db = new AccessEntities();
+        private readonly AccessEntities _db;
+        private readonly Utilities _utilities;
 
+        public DomainRolesController()
+        {
+            _db = new AccessEntities();
+            _utilities = new Utilities(_db);
+        }
         // GET: Access/DomainRoles
         public ActionResult Index()
         {
-            var roles = _db.Roles.Where(item => item.DomainId != null).OrderBy(item => item.Sequence);
-            return View(roles.ToList());
+            return View(_utilities.GetDomainRoles().ToList());
         }
 
         // GET: Access/DomainRoles/Details/5
@@ -25,7 +31,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var role = _db.Roles.Find(id);
+            var role = _utilities.GetDomainRoles().SingleOrDefault(item => item.Id == id);
             if (role == null)
                 return HttpNotFound();
             return View(role);
@@ -34,7 +40,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         // GET: Access/DomainRoles/Create
         public ActionResult Create()
         {
-            ViewBag.DomainId = new SelectList(_db.Domains, "Id", "Name");
+            ViewBag.DomainId = new SelectList(_utilities.GetDomains(), "Id", "Breadcrumb");
             return View();
         }
 
@@ -53,7 +59,7 @@ namespace SecurityFramework.Areas.Access.Controllers
                 return RedirectToAction($"Index");
             }
 
-            ViewBag.DomainId = new SelectList(_db.Domains, "Id", "Name", role.DomainId);
+            ViewBag.DomainId = new SelectList(_utilities.GetDomains(), "Id", "Breadcrumb", role.DomainId);
             return View(role);
         }
 
@@ -65,7 +71,7 @@ namespace SecurityFramework.Areas.Access.Controllers
             var role = _db.Roles.Find(id);
             if (role == null)
                 return HttpNotFound();
-            ViewBag.DomainId = new SelectList(_db.Domains, "Id", "Name", role.DomainId);
+            ViewBag.DomainId = new SelectList(_utilities.GetDomains(), "Id", "Breadcrumb", role.DomainId);
             return View(role);
         }
 
@@ -74,7 +80,6 @@ namespace SecurityFramework.Areas.Access.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "Id,Sequence,Name,DomainId,OrganizationId,GroupId,OfficeId,ShopId")] Role role)
         public ActionResult Edit([Bind(Include = "Id,Sequence,Name,DomainId")] Role role)
         {
             if (ModelState.IsValid)
@@ -83,7 +88,7 @@ namespace SecurityFramework.Areas.Access.Controllers
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
-            ViewBag.DomainId = new SelectList(_db.Domains, "Id", "Name", role.DomainId);
+            ViewBag.DomainId = new SelectList(_utilities.GetDomains(), "Id", "Breadcrumb", role.DomainId);
             return View(role);
         }
 
@@ -92,7 +97,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var role = _db.Roles.Find(id);
+            var role = _utilities.GetDomainRoles().SingleOrDefault(item => item.Id == id);
             if (role == null)
                 return HttpNotFound();
             return View(role);

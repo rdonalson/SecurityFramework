@@ -530,6 +530,7 @@
     <Compile Include="Areas\Access\Controllers\RoutesController.cs" />
     <Compile Include="Areas\Access\Controllers\ShopRolesController .cs" />
     <Compile Include="Areas\Access\Controllers\ShopsController.cs" />
+    <Compile Include="Areas\Access\Models\Common\Utilities.cs" />
     <Compile Include="Areas\Access\Models\Entity\AspNetUser.cs">
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
@@ -599,7 +600,7 @@
     <Compile Include="Areas\Access\Models\Entity\vwRoleUser.cs">
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Access\Models\ListViewModel.cs" />
+    <Compile Include="Areas\Access\Models\View\ListViewModel.cs" />
     <Compile Include="Areas\Booking\BookingAreaRegistration.cs" />
     <Compile Include="Areas\Booking\Controllers\BookingHomeController.cs" />
     <Compile Include="Areas\Operator\Controllers\OperatorHomeController.cs" />

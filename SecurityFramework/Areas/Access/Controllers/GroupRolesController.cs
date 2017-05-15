@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using SecurityFramework.Areas.Access.Models.Common;
 using SecurityFramework.Areas.Access.Models.Entity;
 
 namespace SecurityFramework.Areas.Access.Controllers
@@ -11,13 +12,19 @@ namespace SecurityFramework.Areas.Access.Controllers
     [Authorize]
     public class GroupRolesController : Controller
     {
-        private readonly AccessEntities _db = new AccessEntities();
+        private readonly AccessEntities _db;
+        private readonly Utilities _utilities;
+
+        public GroupRolesController()
+        {
+            _db = new AccessEntities();
+            _utilities = new Utilities(_db);
+        }
 
         // GET: Access/GroupRoles
         public ActionResult Index()
         {
-            var roles = _db.Roles.Where(item => item.GroupId != null).OrderBy(item => item.Sequence);
-            return View(roles.ToList());
+            return View(_utilities.GetGroupRoles().ToList());
         }
 
         // GET: Access/GroupRoles/Details/5
@@ -25,7 +32,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var role = _db.Roles.Find(id);
+            var role = _utilities.GetGroupRoles().SingleOrDefault(item => item.Id == id);
             if (role == null)
                 return HttpNotFound();
             return View(role);
@@ -34,7 +41,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         // GET: Access/GroupRoles/Create
         public ActionResult Create()
         {
-            ViewBag.GroupId = new SelectList(_db.Groups, "Id", "Name");
+            ViewBag.GroupId = new SelectList(_utilities.GetGroups(), "Id", "Breadcrumb");
             return View();
         }
 
@@ -53,11 +60,7 @@ namespace SecurityFramework.Areas.Access.Controllers
                 return RedirectToAction($"Index");
             }
 
-            ViewBag.DomainId = new SelectList(_db.Domains, "Id", "Name", role.DomainId);
-            ViewBag.GroupId = new SelectList(_db.Groups, "Id", "Name", role.GroupId);
-            ViewBag.OfficeId = new SelectList(_db.Offices, "Id", "Name", role.OfficeId);
-            ViewBag.OrganizationId = new SelectList(_db.Organizations, "Id", "Name", role.OrganizationId);
-            ViewBag.ShopId = new SelectList(_db.Shops, "Id", "Name", role.ShopId);
+            ViewBag.GroupId = new SelectList(_utilities.GetGroups(), "Id", "Breadcrumb", role.GroupId);
             return View(role);
         }
 
@@ -69,7 +72,7 @@ namespace SecurityFramework.Areas.Access.Controllers
             var role = _db.Roles.Find(id);
             if (role == null)
                 return HttpNotFound();
-            ViewBag.GroupId = new SelectList(_db.Groups, "Id", "Name", role.GroupId);
+            ViewBag.GroupId = new SelectList(_utilities.GetGroups(), "Id", "Breadcrumb", role.GroupId);
             return View(role);
         }
 
@@ -86,7 +89,7 @@ namespace SecurityFramework.Areas.Access.Controllers
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
-            ViewBag.GroupId = new SelectList(_db.Groups, "Id", "Name", role.GroupId);
+            ViewBag.GroupId = new SelectList(_utilities.GetGroups(), "Id", "Breadcrumb", role.GroupId);
             return View(role);
         }
 
@@ -95,7 +98,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var role = _db.Roles.Find(id);
+            var role = _utilities.GetGroupRoles().SingleOrDefault(item => item.Id == id);
             if (role == null)
                 return HttpNotFound();
             return View(role);

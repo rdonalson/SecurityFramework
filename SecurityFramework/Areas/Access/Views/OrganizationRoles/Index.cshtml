@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SecurityFramework.Areas.Access.Models.ListViewModel>
+﻿@model IEnumerable<SecurityFramework.Areas.Access.Models.View.ListViewModel>
 
 @{
     ViewBag.Title = "Organization-Roles";
@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.Breadcrumb)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Role
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Sequence)
