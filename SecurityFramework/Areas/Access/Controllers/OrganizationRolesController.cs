@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using SecurityFramework.Areas.Access.Models;
 using SecurityFramework.Areas.Access.Models.Entity;
 
 namespace SecurityFramework.Areas.Access.Controllers
@@ -13,11 +14,42 @@ namespace SecurityFramework.Areas.Access.Controllers
     {
         private readonly AccessEntities _db = new AccessEntities();
 
+        private IQueryable<ListViewModel> GetOrganizationRoles()
+        {
+            var organizations = from dom in _db.Domains
+                join org in _db.Organizations on dom.Id equals org.DomainId
+                join rle in _db.Roles on org.Id equals rle.OrganizationId
+                where rle.OrganizationId != null
+                orderby dom.Name, org.Name, rle.Sequence
+                select new ListViewModel
+                {
+                    Breadcrumb = dom.Name + " > " + org.Name,
+                    Id = rle.Id,
+                    Name = rle.Name,
+                    Sequence = rle.Sequence
+                };
+            return organizations;
+        }
+        
+        private IQueryable<ListViewModel> GetOrganizations()
+        {
+            var organizations = from dom in _db.Domains
+                join org in _db.Organizations on dom.Id equals org.DomainId
+                join grp in _db.Groups on org.Id equals grp.OrganizationId
+                orderby dom.Name, org.Name, grp.Name
+                select new ListViewModel
+                {
+                    Breadcrumb = dom.Name + " > " + org.Name,
+                    Id = org.Id,
+                    Name = org.Name
+                };
+            return organizations;
+        }
+
         // GET: Access/OrganizationRoles
         public ActionResult Index()
         {
-            var roles = _db.Roles.Where(item => item.OrganizationId != null).OrderBy(item => item.Sequence);
-            return View(roles.ToList());
+            return View(GetOrganizationRoles().ToList());
         }
 
         // GET: Access/OrganizationRoles/Details/5
@@ -25,7 +57,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var role = _db.Roles.Find(id);
+ var role = GetOrganizationRoles().SingleOrDefault(item => item.Id == id);
             if (role == null)
                 return HttpNotFound();
             return View(role);
@@ -34,7 +66,8 @@ namespace SecurityFramework.Areas.Access.Controllers
         // GET: Access/OrganizationRoles/Create
         public ActionResult Create()
         {
-            ViewBag.OrganizationId = new SelectList(_db.Organizations, "Id", "Name");
+            //ViewBag.OrganizationId = new SelectList(_db.Organizations, "Id", "Name");
+            ViewBag.OrganizationId = new SelectList(GetOrganizations(), "Id", "Breadcrumb");
             return View();
         }
 
@@ -53,7 +86,8 @@ namespace SecurityFramework.Areas.Access.Controllers
                 return RedirectToAction($"Index");
             }
 
-            ViewBag.OrganizationId = new SelectList(_db.Organizations, "Id", "Name", role.OrganizationId);
+            ViewBag.OrganizationId = new SelectList(GetOrganizations(), "Id", "Breadcrumb", role.OrganizationId);
+            //ViewBag.OrganizationId = new SelectList(_db.Organizations, "Id", "Name", role.OrganizationId);
             return View(role);
         }
 
@@ -65,7 +99,8 @@ namespace SecurityFramework.Areas.Access.Controllers
             var role = _db.Roles.Find(id);
             if (role == null)
                 return HttpNotFound();
-            ViewBag.OrganizationId = new SelectList(_db.Organizations, "Id", "Name", role.OrganizationId);
+            ViewBag.OrganizationId = new SelectList(GetOrganizations(), "Id", "Breadcrumb", role.OrganizationId);
+            //ViewBag.OrganizationId = new SelectList(_db.Organizations, "Id", "Name", role.OrganizationId);
             return View(role);
         }
 
@@ -82,7 +117,8 @@ namespace SecurityFramework.Areas.Access.Controllers
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
-            ViewBag.OrganizationId = new SelectList(_db.Organizations, "Id", "Name", role.OrganizationId);
+            ViewBag.OrganizationId = new SelectList(GetOrganizations(), "Id", "Breadcrumb", role.OrganizationId);
+            //ViewBag.OrganizationId = new SelectList(_db.Organizations, "Id", "Name", role.OrganizationId);
             return View(role);
         }
 
@@ -91,7 +127,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var role = _db.Roles.Find(id);
+            var role = GetOrganizationRoles().SingleOrDefault(item => item.Id == id);
             if (role == null)
                 return HttpNotFound();
             return View(role);

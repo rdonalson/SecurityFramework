@@ -17,7 +17,6 @@ namespace SecurityFramework.Areas.Access.Controllers
         // GET: Access/Organizations
         public ActionResult Index()
         {
-            //var organizations = _db.Organizations.Include(o => o.Domain);
             var organizations = from dom in _db.Domains
                 join org in _db.Organizations on dom.Id equals org.DomainId
                 orderby dom.Name, org.Name
