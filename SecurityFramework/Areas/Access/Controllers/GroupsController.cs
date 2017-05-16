@@ -3,9 +3,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using SecurityFramework.Areas.Access.Models;
+using SecurityFramework.Areas.Access.Models.Common;
 using SecurityFramework.Areas.Access.Models.Entity;
-using SecurityFramework.Areas.Access.Models.View;
 
 namespace SecurityFramework.Areas.Access.Controllers
 {
@@ -13,42 +12,19 @@ namespace SecurityFramework.Areas.Access.Controllers
     [Authorize]
     public class GroupsController : Controller
     {
-        private readonly AccessEntities _db = new AccessEntities();
+        private readonly AccessEntities _db;
+        private readonly Utilities _utilities;
 
-        private IQueryable<ListViewModel> GetGroups()
+        public GroupsController()
         {
-            var groups = from dom in _db.Domains
-                join org in _db.Organizations on dom.Id equals org.DomainId
-                join grp in _db.Groups on org.Id equals grp.OrganizationId
-                orderby dom.Name, org.Name, grp.Name
-                select new ListViewModel
-                {
-                    Breadcrumb = dom.Name + " > " + org.Name + " > " + grp.Name,
-                    Id = grp.Id,
-                    Name = grp.Name
-                };
-            return groups;
-        }
-
-        private IQueryable<ListViewModel> GetOrganizations()
-        {
-            var organizations = from dom in _db.Domains
-                join org in _db.Organizations on dom.Id equals org.DomainId
-                join grp in _db.Groups on org.Id equals grp.OrganizationId
-                orderby dom.Name, org.Name, grp.Name
-                select new ListViewModel
-                {
-                    Breadcrumb = dom.Name + " > " + org.Name,
-                    Id = org.Id,
-                    Name = org.Name
-                };
-            return organizations;
+            _db = new AccessEntities();
+            _utilities = new Utilities(_db);
         }
 
         // GET: Access/Groups
         public ActionResult Index()
         {
-            return View(GetGroups().ToList());
+            return View(_utilities.GetGroups().ToList());
         }
 
         // GET: Access/Groups/Details/5
@@ -56,7 +32,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var group = GetGroups().SingleOrDefault(item => item.Id == id);
+            var group = _utilities.GetGroups().SingleOrDefault(item => item.Id == id);
             if (group == null)
                 return HttpNotFound();
             return View(group);
@@ -65,7 +41,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         // GET: Access/Groups/Create
         public ActionResult Create()
         {
-            ViewBag.OrganizationId = new SelectList(GetOrganizations(), "Id", "Breadcrumb");
+            ViewBag.OrganizationId = new SelectList(_utilities.GetOrganizations(), "Id", "Breadcrumb");
             return View();
         }
 
@@ -84,7 +60,8 @@ namespace SecurityFramework.Areas.Access.Controllers
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
-            ViewBag.OrganizationId = new SelectList(GetOrganizations(), "Id", "Breadcrumb", group.OrganizationId);
+            ViewBag.OrganizationId = new SelectList(_utilities.GetOrganizations(), "Id", "Breadcrumb",
+                group.OrganizationId);
 
             return View(group);
         }
@@ -97,7 +74,8 @@ namespace SecurityFramework.Areas.Access.Controllers
             var group = _db.Groups.Find(id);
             if (group == null)
                 return HttpNotFound();
-            ViewBag.OrganizationId = new SelectList(GetOrganizations(), "Id", "Breadcrumb", group.OrganizationId);
+            ViewBag.OrganizationId = new SelectList(_utilities.GetOrganizations(), "Id", "Breadcrumb",
+                group.OrganizationId);
             return View(group);
         }
 
@@ -114,7 +92,8 @@ namespace SecurityFramework.Areas.Access.Controllers
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
-            ViewBag.OrganizationId = new SelectList(GetOrganizations(), "Id", "Breadcrumb", group.OrganizationId);
+            ViewBag.OrganizationId = new SelectList(_utilities.GetOrganizations(), "Id", "Breadcrumb",
+                group.OrganizationId);
             return View(group);
         }
 
@@ -123,7 +102,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var group = GetGroups().SingleOrDefault(item => item.Id == id);
+            var group = _utilities.GetGroups().SingleOrDefault(item => item.Id == id);
             if (group == null)
                 return HttpNotFound();
             return View(group);
@@ -143,7 +122,9 @@ namespace SecurityFramework.Areas.Access.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            _db.Dispose();
+            if (disposing)
+                _db.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

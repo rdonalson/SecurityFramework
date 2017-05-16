@@ -112,6 +112,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (disposing)
                 _db.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

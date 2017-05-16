@@ -3,9 +3,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using SecurityFramework.Areas.Access.Models;
+using SecurityFramework.Areas.Access.Models.Common;
 using SecurityFramework.Areas.Access.Models.Entity;
-using SecurityFramework.Areas.Access.Models.View;
 
 namespace SecurityFramework.Areas.Access.Controllers
 {
@@ -13,43 +12,19 @@ namespace SecurityFramework.Areas.Access.Controllers
     [Authorize]
     public class OfficesController : Controller
     {
-        private readonly AccessEntities _db = new AccessEntities();
+        private readonly AccessEntities _db;
+        private readonly Utilities _utilities;
 
-        private IQueryable<ListViewModel> GetOffices()
+        public OfficesController()
         {
-            var offices = from dom in _db.Domains
-                join org in _db.Organizations on dom.Id equals org.DomainId
-                join grp in _db.Groups on org.Id equals grp.OrganizationId
-                join off in _db.Offices on grp.Id equals off.GroupId
-                orderby dom.Name, org.Name, grp.Name, off.Name
-                select new ListViewModel
-                {
-                    Breadcrumb = dom.Name + " > " + org.Name + " > " + grp.Name + " > " + off.Name,
-                    Id = off.Id,
-                    Name = off.Name
-                };
-            return offices;
-        }
-
-        private IQueryable<ListViewModel> GetGroups()
-        {
-            var groups = from dom in _db.Domains
-                join org in _db.Organizations on dom.Id equals org.DomainId
-                join grp in _db.Groups on org.Id equals grp.OrganizationId
-                orderby dom.Name, org.Name, grp.Name
-                select new ListViewModel
-                {
-                    Breadcrumb = dom.Name + " > " + org.Name + " > " + grp.Name,
-                    Id = grp.Id,
-                    Name = grp.Name
-                };
-            return groups;
+            _db = new AccessEntities();
+            _utilities = new Utilities(_db);
         }
 
         // GET: Access/Offices
         public ActionResult Index()
         {
-            return View(GetOffices().ToList());
+            return View(_utilities.GetOffices().ToList());
         }
 
         // GET: Access/Offices/Details/5
@@ -57,7 +32,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var office = GetOffices().SingleOrDefault(item => item.Id == id);
+            var office = _utilities.GetOffices().SingleOrDefault(item => item.Id == id);
             if (office == null)
                 return HttpNotFound();
             return View(office);
@@ -66,7 +41,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         // GET: Access/Offices/Create
         public ActionResult Create()
         {
-            ViewBag.GroupId = new SelectList(GetGroups(), "Id", "Breadcrumb");
+            ViewBag.GroupId = new SelectList(_utilities.GetGroups(), "Id", "Breadcrumb");
             return View();
         }
 
@@ -86,7 +61,7 @@ namespace SecurityFramework.Areas.Access.Controllers
                 return RedirectToAction($"Index");
             }
 
-            ViewBag.GroupId = new SelectList(GetGroups(), "Id", "Breadcrumb", office.GroupId);
+            ViewBag.GroupId = new SelectList(_utilities.GetGroups(), "Id", "Breadcrumb", office.GroupId);
             return View(office);
         }
 
@@ -98,7 +73,7 @@ namespace SecurityFramework.Areas.Access.Controllers
             var office = _db.Offices.Find(id);
             if (office == null)
                 return HttpNotFound();
-            ViewBag.GroupId = new SelectList(GetGroups(), "Id", "Breadcrumb", office.GroupId);
+            ViewBag.GroupId = new SelectList(_utilities.GetGroups(), "Id", "Breadcrumb", office.GroupId);
             return View(office);
         }
 
@@ -115,7 +90,7 @@ namespace SecurityFramework.Areas.Access.Controllers
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
-            ViewBag.GroupId = new SelectList(GetGroups(), "Id", "Breadcrumb", office.GroupId);
+            ViewBag.GroupId = new SelectList(_utilities.GetGroups(), "Id", "Breadcrumb", office.GroupId);
             return View(office);
         }
 
@@ -124,7 +99,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var office = GetOffices().SingleOrDefault(item => item.Id == id);
+            var office = _utilities.GetOffices().SingleOrDefault(item => item.Id == id);
             if (office == null)
                 return HttpNotFound();
             return View(office);
@@ -146,6 +121,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (disposing)
                 _db.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

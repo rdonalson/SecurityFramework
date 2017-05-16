@@ -3,9 +3,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using SecurityFramework.Areas.Access.Models;
+using SecurityFramework.Areas.Access.Models.Common;
 using SecurityFramework.Areas.Access.Models.Entity;
-using SecurityFramework.Areas.Access.Models.View;
 
 namespace SecurityFramework.Areas.Access.Controllers
 {
@@ -13,45 +12,19 @@ namespace SecurityFramework.Areas.Access.Controllers
     [Authorize]
     public class ShopsController : Controller
     {
-        private readonly AccessEntities _db = new AccessEntities();
+        private readonly AccessEntities _db;
+        private readonly Utilities _utilities;
 
-        private IQueryable<ListViewModel> GetOffices()
+        public ShopsController()
         {
-            var offices = from dom in _db.Domains
-                join org in _db.Organizations on dom.Id equals org.DomainId
-                join grp in _db.Groups on org.Id equals grp.OrganizationId
-                join off in _db.Offices on grp.Id equals off.GroupId
-                orderby dom.Name, org.Name, grp.Name, off.Name
-                select new ListViewModel
-                {
-                    Breadcrumb = dom.Name + " > " + org.Name + " > " + grp.Name + " > " + off.Name,
-                    Id = off.Id,
-                    Name = off.Name
-                };
-            return offices;
-        }
-
-        private IQueryable<ListViewModel> GetShops()
-        {
-            var shops = from dom in _db.Domains
-                join org in _db.Organizations on dom.Id equals org.DomainId
-                join grp in _db.Groups on org.Id equals grp.OrganizationId
-                join off in _db.Offices on grp.Id equals off.GroupId
-                join shp in _db.Shops on off.Id equals shp.OfficeId
-                orderby dom.Name, org.Name, grp.Name, off.Name, shp.Name
-                select new ListViewModel
-                {
-                    Breadcrumb = dom.Name + " > " + org.Name + " > " + grp.Name + " > " + off.Name + " > " + shp.Name,
-                    Id = shp.Id,
-                    Name = shp.Name
-                };
-            return shops;
+            _db = new AccessEntities();
+            _utilities = new Utilities(_db);
         }
 
         // GET: Access/Shops
         public ActionResult Index()
         {
-            return View(GetShops().ToList());
+            return View(_utilities.GetShops().ToList());
         }
 
         // GET: Access/Shops/Details/5
@@ -59,7 +32,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var shop = GetShops().SingleOrDefault(item => item.Id == id);
+            var shop = _utilities.GetShops().SingleOrDefault(item => item.Id == id);
             if (shop == null)
                 return HttpNotFound();
             return View(shop);
@@ -68,7 +41,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         // GET: Access/Shops/Create
         public ActionResult Create()
         {
-            ViewBag.OfficeId = new SelectList(GetOffices(), "Id", "Breadcrumb");
+            ViewBag.OfficeId = new SelectList(_utilities.GetOffices(), "Id", "Breadcrumb");
             return View();
         }
 
@@ -88,7 +61,7 @@ namespace SecurityFramework.Areas.Access.Controllers
                 return RedirectToAction($"Index");
             }
 
-            ViewBag.OfficeId = new SelectList(GetOffices(), "Id", "Breadcrumb", shop.OfficeId);
+            ViewBag.OfficeId = new SelectList(_utilities.GetOffices(), "Id", "Breadcrumb", shop.OfficeId);
             return View(shop);
         }
 
@@ -100,7 +73,7 @@ namespace SecurityFramework.Areas.Access.Controllers
             var shop = _db.Shops.Find(id);
             if (shop == null)
                 return HttpNotFound();
-            ViewBag.OfficeId = new SelectList(GetOffices(), "Id", "Breadcrumb", shop.OfficeId);
+            ViewBag.OfficeId = new SelectList(_utilities.GetOffices(), "Id", "Breadcrumb", shop.OfficeId);
             return View(shop);
         }
 
@@ -117,7 +90,7 @@ namespace SecurityFramework.Areas.Access.Controllers
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
-            ViewBag.OfficeId = new SelectList(GetOffices(), "Id", "Breadcrumb", shop.OfficeId);
+            ViewBag.OfficeId = new SelectList(_utilities.GetOffices(), "Id", "Breadcrumb", shop.OfficeId);
             return View(shop);
         }
 
@@ -126,7 +99,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var shop = GetShops().SingleOrDefault(item => item.Id == id);
+            var shop = _utilities.GetShops().SingleOrDefault(item => item.Id == id);
             if (shop == null)
                 return HttpNotFound();
             return View(shop);
@@ -146,7 +119,9 @@ namespace SecurityFramework.Areas.Access.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            _db.Dispose();
+            if (disposing)
+                _db.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

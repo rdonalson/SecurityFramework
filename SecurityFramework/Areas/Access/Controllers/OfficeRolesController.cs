@@ -20,6 +20,7 @@ namespace SecurityFramework.Areas.Access.Controllers
             _db = new AccessEntities();
             _utilities = new Utilities(_db);
         }
+
         // GET: Access/OfficeRoles
         public ActionResult Index()
         {

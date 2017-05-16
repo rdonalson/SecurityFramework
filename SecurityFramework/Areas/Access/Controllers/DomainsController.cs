@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using SecurityFramework.Areas.Access.Models.Common;
 using SecurityFramework.Areas.Access.Models.Entity;
 
 namespace SecurityFramework.Areas.Access.Controllers
@@ -11,12 +12,19 @@ namespace SecurityFramework.Areas.Access.Controllers
     [Authorize]
     public class DomainsController : Controller
     {
-        private readonly AccessEntities _db = new AccessEntities();
+        private readonly AccessEntities _db;
+        private readonly Utilities _utilities;
+
+        public DomainsController()
+        {
+            _db = new AccessEntities();
+            _utilities = new Utilities(_db);
+        }
 
         // GET: Access/Domains
         public ActionResult Index()
         {
-            return View(_db.Domains.ToList());
+            return View(_utilities.GetDomains().ToList());
         }
 
         // GET: Access/Domains/Details/5
@@ -24,7 +32,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var domain = _db.Domains.Find(id);
+            var domain = _utilities.GetDomains().SingleOrDefault(item => item.Id == id);
             if (domain == null)
                 return HttpNotFound();
             return View(domain);
@@ -87,7 +95,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var domain = _db.Domains.Find(id);
+            var domain = _utilities.GetDomains().SingleOrDefault(item => item.Id == id);
             if (domain == null)
                 return HttpNotFound();
             return View(domain);

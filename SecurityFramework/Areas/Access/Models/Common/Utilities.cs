@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Web.Security;
 using SecurityFramework.Areas.Access.Models.Entity;
 using SecurityFramework.Areas.Access.Models.View;
 
@@ -13,7 +12,88 @@ namespace SecurityFramework.Areas.Access.Models.Common
         {
             _db = db;
         }
-        
+
+        #region Areas
+
+        public IQueryable<ListViewModel> GetDomains()
+        {
+            var domains = from dom in _db.Domains
+                orderby dom.Name
+                select new ListViewModel
+                {
+                    Breadcrumb = dom.Name,
+                    Id = dom.Id,
+                    Name = dom.Name
+                };
+            return domains;
+        }
+
+        public IQueryable<ListViewModel> GetOrganizations()
+        {
+            var organizations = from dom in _db.Domains
+                join org in _db.Organizations on dom.Id equals org.DomainId
+                orderby dom.Name, org.Name
+                select new ListViewModel
+                {
+                    Breadcrumb = dom.Name + " > " + org.Name,
+                    Id = org.Id,
+                    Name = org.Name
+                };
+            return organizations;
+        }
+
+        public IQueryable<ListViewModel> GetGroups()
+        {
+            var groups = from dom in _db.Domains
+                join org in _db.Organizations on dom.Id equals org.DomainId
+                join grp in _db.Groups on org.Id equals grp.OrganizationId
+                orderby dom.Name, org.Name, grp.Name
+                select new ListViewModel
+                {
+                    Breadcrumb = dom.Name + " > " + org.Name + " > " + grp.Name,
+                    Id = grp.Id,
+                    Name = grp.Name
+                };
+            return groups;
+        }
+
+        public IQueryable<ListViewModel> GetOffices()
+        {
+            var offices = from dom in _db.Domains
+                join org in _db.Organizations on dom.Id equals org.DomainId
+                join grp in _db.Groups on org.Id equals grp.OrganizationId
+                join off in _db.Offices on grp.Id equals off.GroupId
+                orderby dom.Name, org.Name, grp.Name, off.Name
+                select new ListViewModel
+                {
+                    Breadcrumb = dom.Name + " > " + org.Name + " > " + grp.Name + " > " + off.Name,
+                    Id = off.Id,
+                    Name = off.Name
+                };
+            return offices;
+        }
+
+        public IQueryable<ListViewModel> GetShops()
+        {
+            var shops = from dom in _db.Domains
+                join org in _db.Organizations on dom.Id equals org.DomainId
+                join grp in _db.Groups on org.Id equals grp.OrganizationId
+                join off in _db.Offices on grp.Id equals off.GroupId
+                join shp in _db.Shops on off.Id equals shp.OfficeId
+                orderby dom.Name, org.Name, grp.Name, off.Name, shp.Name
+                select new ListViewModel
+                {
+                    Breadcrumb = dom.Name + " > " + org.Name + " > " + grp.Name + " > " + off.Name + " > " + shp.Name,
+                    Id = shp.Id,
+                    Name = shp.Name
+                };
+            return shops;
+        }
+
+        #endregion Areas
+
+        #region Roles
+
         public IQueryable<ListViewModel> GetDomainRoles()
         {
             var domainRoles = from dom in _db.Domains
@@ -96,11 +176,11 @@ namespace SecurityFramework.Areas.Access.Models.Common
                 orderby dom.Name, org.Name, grp.Name, off.Name, shp.Name, rle.Sequence
                 select new ListViewModel
                 {
-                    Breadcrumb = dom.Name + " > " 
-                        + org.Name + " > " 
-                        + grp.Name + " > " 
-                        + off.Name + " > " 
-                        + shp.Name,
+                    Breadcrumb = dom.Name + " > "
+                                 + org.Name + " > "
+                                 + grp.Name + " > "
+                                 + off.Name + " > "
+                                 + shp.Name,
                     Id = rle.Id,
                     Name = rle.Name,
                     Sequence = rle.Sequence
@@ -108,80 +188,6 @@ namespace SecurityFramework.Areas.Access.Models.Common
             return shopRoles;
         }
 
-
-        public IQueryable<ListViewModel> GetDomains()
-        {
-            var domains = from dom in _db.Domains
-                orderby dom.Name
-                select new ListViewModel
-                {
-                    Breadcrumb = dom.Name,
-                    Id = dom.Id,
-                    Name = dom.Name
-                };
-            return domains;
-        }
-
-        public IQueryable<ListViewModel> GetOrganizations()
-        {
-            var organizations = from dom in _db.Domains
-                join org in _db.Organizations on dom.Id equals org.DomainId
-                orderby dom.Name, org.Name
-                select new ListViewModel
-                {
-                    Breadcrumb = dom.Name + " > " + org.Name,
-                    Id = org.Id,
-                    Name = org.Name
-                };
-            return organizations;
-        }
-
-        public IQueryable<ListViewModel> GetGroups()
-        {
-            var groups = from dom in _db.Domains
-                join org in _db.Organizations on dom.Id equals org.DomainId
-                join grp in _db.Groups on org.Id equals grp.OrganizationId
-                orderby dom.Name, org.Name, grp.Name
-                select new ListViewModel
-                {
-                    Breadcrumb = dom.Name + " > " + org.Name + " > " + grp.Name,
-                    Id = grp.Id,
-                    Name = grp.Name
-                };
-            return groups;
-        }
-
-        public IQueryable<ListViewModel> GetOffices()
-        {
-            var offices = from dom in _db.Domains
-                join org in _db.Organizations on dom.Id equals org.DomainId
-                join grp in _db.Groups on org.Id equals grp.OrganizationId
-                join off in _db.Offices on grp.Id equals off.GroupId
-                orderby dom.Name, org.Name, grp.Name, off.Name
-                select new ListViewModel
-                {
-                    Breadcrumb = dom.Name + " > " + org.Name + " > " + grp.Name + " > " + off.Name,
-                    Id = off.Id,
-                    Name = off.Name
-                };
-            return offices;
-        }
-
-        public IQueryable<ListViewModel> GetShops()
-        {
-            var shops = from dom in _db.Domains
-                join org in _db.Organizations on dom.Id equals org.DomainId
-                join grp in _db.Groups on org.Id equals grp.OrganizationId
-                join off in _db.Offices on grp.Id equals off.GroupId
-                join shp in _db.Shops on off.Id equals shp.OfficeId
-                orderby dom.Name, org.Name, grp.Name, off.Name, shp.Name
-                select new ListViewModel
-                {
-                    Breadcrumb = dom.Name + " > " + org.Name + " > " + grp.Name + " > " + off.Name + " > " + shp.Name,
-                    Id = shp.Id,
-                    Name = shp.Name
-                 };
-            return shops;
-        }
+        #endregion Roles
     }
 }

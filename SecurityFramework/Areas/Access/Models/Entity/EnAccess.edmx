@@ -1,10 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AccessModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="AccessModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self"
+              xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator"
+              xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation"
+              xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Domains">
           <Key>
             <PropertyRef Name="Id" />
@@ -422,7 +426,8 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="spIsInRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Access">
+        <Function Name="spIsInRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false"
+                  ParameterTypeSemantics="AllowImplicitConversion" Schema="Access">
           <Parameter Name="AppId" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="UserId" Type="varchar" Mode="In" />
           <Parameter Name="Route" Type="varchar" Mode="In" />
@@ -439,92 +444,110 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have
           <EntitySet Name="Shops" EntityType="Self.Shops" Schema="Access" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vwAreas" EntityType="Self.vwAreas" store:Type="Views" store:Schema="Access">
-            <DefiningQuery>SELECT 
-    [vwAreas].[BreadcrubTrail] AS [BreadcrubTrail], 
-    [vwAreas].[DomId] AS [DomId], 
-    [vwAreas].[Domain] AS [Domain], 
-    [vwAreas].[OrgId] AS [OrgId], 
-    [vwAreas].[Organization] AS [Organization], 
-    [vwAreas].[GrpId] AS [GrpId], 
-    [vwAreas].[Group] AS [Group], 
-    [vwAreas].[OffId] AS [OffId], 
-    [vwAreas].[Office] AS [Office], 
-    [vwAreas].[ShpId] AS [ShpId], 
-    [vwAreas].[Shop] AS [Shop]
-    FROM [Access].[vwAreas] AS [vwAreas]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwAreas].[BreadcrubTrail] AS [BreadcrubTrail],
+              [vwAreas].[DomId] AS [DomId],
+              [vwAreas].[Domain] AS [Domain],
+              [vwAreas].[OrgId] AS [OrgId],
+              [vwAreas].[Organization] AS [Organization],
+              [vwAreas].[GrpId] AS [GrpId],
+              [vwAreas].[Group] AS [Group],
+              [vwAreas].[OffId] AS [OffId],
+              [vwAreas].[Office] AS [Office],
+              [vwAreas].[ShpId] AS [ShpId],
+              [vwAreas].[Shop] AS [Shop]
+              FROM [Access].[vwAreas] AS [vwAreas]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwAreasAndRoles" EntityType="Self.vwAreasAndRoles" store:Type="Views" store:Schema="Access">
-            <DefiningQuery>SELECT 
-    [vwAreasAndRoles].[AreaSeq] AS [AreaSeq], 
-    [vwAreasAndRoles].[Area] AS [Area], 
-    [vwAreasAndRoles].[AreaName] AS [AreaName], 
-    [vwAreasAndRoles].[Roles] AS [Roles], 
-    [vwAreasAndRoles].[Seq] AS [Seq], 
-    [vwAreasAndRoles].[AreaAndRole] AS [AreaAndRole], 
-    [vwAreasAndRoles].[RoleId] AS [RoleId]
-    FROM [Access].[vwAreasAndRoles] AS [vwAreasAndRoles]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwAreasAndRoles].[AreaSeq] AS [AreaSeq],
+              [vwAreasAndRoles].[Area] AS [Area],
+              [vwAreasAndRoles].[AreaName] AS [AreaName],
+              [vwAreasAndRoles].[Roles] AS [Roles],
+              [vwAreasAndRoles].[Seq] AS [Seq],
+              [vwAreasAndRoles].[AreaAndRole] AS [AreaAndRole],
+              [vwAreasAndRoles].[RoleId] AS [RoleId]
+              FROM [Access].[vwAreasAndRoles] AS [vwAreasAndRoles]
+            </DefiningQuery>
           </EntitySet>
-          <EntitySet Name="vwAreasAndRolesAndRoutes" EntityType="Self.vwAreasAndRolesAndRoutes" store:Type="Views" store:Schema="Access">
-            <DefiningQuery>SELECT 
-    [vwAreasAndRolesAndRoutes].[AreaSeq] AS [AreaSeq], 
-    [vwAreasAndRolesAndRoutes].[Seq] AS [Seq], 
-    [vwAreasAndRolesAndRoutes].[AreaAndRole] AS [AreaAndRole], 
-    [vwAreasAndRolesAndRoutes].[Id] AS [Id], 
-    [vwAreasAndRolesAndRoutes].[RoleId] AS [RoleId], 
-    [vwAreasAndRolesAndRoutes].[RouteId] AS [RouteId], 
-    [vwAreasAndRolesAndRoutes].[RoutePath] AS [RoutePath]
-    FROM [Access].[vwAreasAndRolesAndRoutes] AS [vwAreasAndRolesAndRoutes]</DefiningQuery>
+          <EntitySet Name="vwAreasAndRolesAndRoutes" EntityType="Self.vwAreasAndRolesAndRoutes" store:Type="Views"
+                     store:Schema="Access">
+            <DefiningQuery>
+              SELECT
+              [vwAreasAndRolesAndRoutes].[AreaSeq] AS [AreaSeq],
+              [vwAreasAndRolesAndRoutes].[Seq] AS [Seq],
+              [vwAreasAndRolesAndRoutes].[AreaAndRole] AS [AreaAndRole],
+              [vwAreasAndRolesAndRoutes].[Id] AS [Id],
+              [vwAreasAndRolesAndRoutes].[RoleId] AS [RoleId],
+              [vwAreasAndRolesAndRoutes].[RouteId] AS [RouteId],
+              [vwAreasAndRolesAndRoutes].[RoutePath] AS [RoutePath]
+              FROM [Access].[vwAreasAndRolesAndRoutes] AS [vwAreasAndRolesAndRoutes]
+            </DefiningQuery>
           </EntitySet>
-          <EntitySet Name="vwAreasAndRolesAndUsers" EntityType="Self.vwAreasAndRolesAndUsers" store:Type="Views" store:Schema="Access">
-            <DefiningQuery>SELECT 
-    [vwAreasAndRolesAndUsers].[AreaSeq] AS [AreaSeq], 
-    [vwAreasAndRolesAndUsers].[Seq] AS [Seq], 
-    [vwAreasAndRolesAndUsers].[AreaAndRole] AS [AreaAndRole], 
-    [vwAreasAndRolesAndUsers].[Email] AS [Email], 
-    [vwAreasAndRolesAndUsers].[Id] AS [Id], 
-    [vwAreasAndRolesAndUsers].[RoleId] AS [RoleId], 
-    [vwAreasAndRolesAndUsers].[UserId] AS [UserId]
-    FROM [Access].[vwAreasAndRolesAndUsers] AS [vwAreasAndRolesAndUsers]</DefiningQuery>
+          <EntitySet Name="vwAreasAndRolesAndUsers" EntityType="Self.vwAreasAndRolesAndUsers" store:Type="Views"
+                     store:Schema="Access">
+            <DefiningQuery>
+              SELECT
+              [vwAreasAndRolesAndUsers].[AreaSeq] AS [AreaSeq],
+              [vwAreasAndRolesAndUsers].[Seq] AS [Seq],
+              [vwAreasAndRolesAndUsers].[AreaAndRole] AS [AreaAndRole],
+              [vwAreasAndRolesAndUsers].[Email] AS [Email],
+              [vwAreasAndRolesAndUsers].[Id] AS [Id],
+              [vwAreasAndRolesAndUsers].[RoleId] AS [RoleId],
+              [vwAreasAndRolesAndUsers].[UserId] AS [UserId]
+              FROM [Access].[vwAreasAndRolesAndUsers] AS [vwAreasAndRolesAndUsers]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwAreaTrees" EntityType="Self.vwAreaTrees" store:Type="Views" store:Schema="Access">
-            <DefiningQuery>SELECT 
-    [vwAreaTrees].[Id] AS [Id], 
-    [vwAreaTrees].[ParentId] AS [ParentId], 
-    [vwAreaTrees].[Area] AS [Area]
-    FROM [Access].[vwAreaTrees] AS [vwAreaTrees]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwAreaTrees].[Id] AS [Id],
+              [vwAreaTrees].[ParentId] AS [ParentId],
+              [vwAreaTrees].[Area] AS [Area]
+              FROM [Access].[vwAreaTrees] AS [vwAreaTrees]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwIsInRole" EntityType="Self.vwIsInRole" store:Type="Views" store:Schema="Access">
-            <DefiningQuery>SELECT 
-    [vwIsInRole].[AreaAppId] AS [AreaAppId], 
-    [vwIsInRole].[AreaId] AS [AreaId], 
-    [vwIsInRole].[Area] AS [Area], 
-    [vwIsInRole].[RoleId] AS [RoleId], 
-    [vwIsInRole].[Name] AS [Name], 
-    [vwIsInRole].[UserId] AS [UserId], 
-    [vwIsInRole].[UserName] AS [UserName], 
-    [vwIsInRole].[RouteId] AS [RouteId], 
-    [vwIsInRole].[RoutePath] AS [RoutePath], 
-    [vwIsInRole].[RouteAppId] AS [RouteAppId]
-    FROM [Access].[vwIsInRole] AS [vwIsInRole]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwIsInRole].[AreaAppId] AS [AreaAppId],
+              [vwIsInRole].[AreaId] AS [AreaId],
+              [vwIsInRole].[Area] AS [Area],
+              [vwIsInRole].[RoleId] AS [RoleId],
+              [vwIsInRole].[Name] AS [Name],
+              [vwIsInRole].[UserId] AS [UserId],
+              [vwIsInRole].[UserName] AS [UserName],
+              [vwIsInRole].[RouteId] AS [RouteId],
+              [vwIsInRole].[RoutePath] AS [RoutePath],
+              [vwIsInRole].[RouteAppId] AS [RouteAppId]
+              FROM [Access].[vwIsInRole] AS [vwIsInRole]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwRoleRoutes" EntityType="Self.vwRoleRoutes" store:Type="Views" store:Schema="Access">
-            <DefiningQuery>SELECT 
-    [vwRoleRoutes].[RoleId] AS [RoleId], 
-    [vwRoleRoutes].[RouteId] AS [RouteId], 
-    [vwRoleRoutes].[AppId] AS [AppId], 
-    [vwRoleRoutes].[FilePath] AS [FilePath], 
-    [vwRoleRoutes].[FileName] AS [FileName], 
-    [vwRoleRoutes].[AppPath] AS [AppPath], 
-    [vwRoleRoutes].[RoutePath] AS [RoutePath]
-    FROM [Access].[vwRoleRoutes] AS [vwRoleRoutes]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwRoleRoutes].[RoleId] AS [RoleId],
+              [vwRoleRoutes].[RouteId] AS [RouteId],
+              [vwRoleRoutes].[AppId] AS [AppId],
+              [vwRoleRoutes].[FilePath] AS [FilePath],
+              [vwRoleRoutes].[FileName] AS [FileName],
+              [vwRoleRoutes].[AppPath] AS [AppPath],
+              [vwRoleRoutes].[RoutePath] AS [RoutePath]
+              FROM [Access].[vwRoleRoutes] AS [vwRoleRoutes]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwRoleUser" EntityType="Self.vwRoleUser" store:Type="Views" store:Schema="Access">
-            <DefiningQuery>SELECT 
-    [vwRoleUser].[RoleId] AS [RoleId], 
-    [vwRoleUser].[UserId] AS [UserId], 
-    [vwRoleUser].[Email] AS [Email], 
-    [vwRoleUser].[UserName] AS [UserName]
-    FROM [Access].[vwRoleUser] AS [vwRoleUser]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [vwRoleUser].[RoleId] AS [RoleId],
+              [vwRoleUser].[UserId] AS [UserId],
+              [vwRoleUser].[Email] AS [Email],
+              [vwRoleUser].[UserName] AS [UserName]
+              FROM [Access].[vwRoleUser] AS [vwRoleUser]
+            </DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_AspNetUsers_AspNetUsers" Association="Self.FK_AspNetUsers_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -587,7 +610,10 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="AccessModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="AccessModel" Alias="Self" annotation:UseStrongSpatialTypes="false"
+              xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation"
+              xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation"
+              xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Domain">
           <Key>
             <PropertyRef Name="Id" />
@@ -595,7 +621,8 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="AppId" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Organizations" Relationship="Self.FK_Organizations_Domains" FromRole="Domains" ToRole="Organizations" />
+          <NavigationProperty Name="Organizations" Relationship="Self.FK_Organizations_Domains" FromRole="Domains"
+                              ToRole="Organizations" />
           <NavigationProperty Name="Roles" Relationship="Self.FK_Roles_Domains" FromRole="Domains" ToRole="Roles" />
         </EntityType>
         <EntityType Name="Group">
@@ -606,7 +633,8 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have
           <Property Name="AppId" Type="Guid" Nullable="false" />
           <Property Name="OrganizationId" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Organization" Relationship="Self.FK_Groups_Organizations" FromRole="Groups" ToRole="Organizations" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_Groups_Organizations" FromRole="Groups"
+                              ToRole="Organizations" />
           <NavigationProperty Name="Offices" Relationship="Self.FK_Offices_Groups" FromRole="Groups" ToRole="Offices" />
           <NavigationProperty Name="Roles" Relationship="Self.FK_Roles_Groups" FromRole="Groups" ToRole="Roles" />
         </EntityType>
@@ -630,9 +658,12 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have
           <Property Name="AppId" Type="Guid" Nullable="false" />
           <Property Name="DomainId" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Domain" Relationship="Self.FK_Organizations_Domains" FromRole="Organizations" ToRole="Domains" />
-          <NavigationProperty Name="Groups" Relationship="Self.FK_Groups_Organizations" FromRole="Organizations" ToRole="Groups" />
-          <NavigationProperty Name="Roles" Relationship="Self.FK_Roles_Organizations" FromRole="Organizations" ToRole="Roles" />
+          <NavigationProperty Name="Domain" Relationship="Self.FK_Organizations_Domains" FromRole="Organizations"
+                              ToRole="Domains" />
+          <NavigationProperty Name="Groups" Relationship="Self.FK_Groups_Organizations" FromRole="Organizations"
+                              ToRole="Groups" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_Roles_Organizations" FromRole="Organizations"
+                              ToRole="Roles" />
         </EntityType>
         <EntityType Name="RoleRoute">
           <Key>
@@ -642,7 +673,8 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have
           <Property Name="RoleId" Type="Guid" Nullable="false" />
           <Property Name="RouteId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Role" Relationship="Self.FK_RoleRoutes_Roles" FromRole="RoleRoutes" ToRole="Roles" />
-          <NavigationProperty Name="Route" Relationship="Self.FK_RoleRoutes_Routes" FromRole="RoleRoutes" ToRole="Routes" />
+          <NavigationProperty Name="Route" Relationship="Self.FK_RoleRoutes_Routes" FromRole="RoleRoutes"
+                              ToRole="Routes" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -659,10 +691,13 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have
           <NavigationProperty Name="Domain" Relationship="Self.FK_Roles_Domains" FromRole="Roles" ToRole="Domains" />
           <NavigationProperty Name="Group" Relationship="Self.FK_Roles_Groups" FromRole="Roles" ToRole="Groups" />
           <NavigationProperty Name="Office" Relationship="Self.FK_Roles_Offices" FromRole="Roles" ToRole="Offices" />
-          <NavigationProperty Name="Organization" Relationship="Self.FK_Roles_Organizations" FromRole="Roles" ToRole="Organizations" />
-          <NavigationProperty Name="RoleRoutes" Relationship="Self.FK_RoleRoutes_Roles" FromRole="Roles" ToRole="RoleRoutes" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_Roles_Organizations" FromRole="Roles"
+                              ToRole="Organizations" />
+          <NavigationProperty Name="RoleRoutes" Relationship="Self.FK_RoleRoutes_Roles" FromRole="Roles"
+                              ToRole="RoleRoutes" />
           <NavigationProperty Name="Shop" Relationship="Self.FK_Roles_Shops" FromRole="Roles" ToRole="Shops" />
-          <NavigationProperty Name="RoleUsers" Relationship="Self.FK_RoleUsers_Roles" FromRole="Roles" ToRole="RoleUsers" />
+          <NavigationProperty Name="RoleUsers" Relationship="Self.FK_RoleUsers_Roles" FromRole="Roles"
+                              ToRole="RoleUsers" />
         </EntityType>
         <EntityType Name="RoleUser">
           <Key>
@@ -672,7 +707,8 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have
           <Property Name="RoleId" Type="Guid" Nullable="false" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Role" Relationship="Self.FK_RoleUsers_Roles" FromRole="RoleUsers" ToRole="Roles" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_RoleUsers_AspNetUsers" FromRole="RoleUsers" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_RoleUsers_AspNetUsers" FromRole="RoleUsers"
+                              ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="Route">
           <Key>
@@ -684,7 +720,8 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have
           <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="AppPath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="RoutePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="RoleRoutes" Relationship="Self.FK_RoleRoutes_Routes" FromRole="Routes" ToRole="RoleRoutes" />
+          <NavigationProperty Name="RoleRoutes" Relationship="Self.FK_RoleRoutes_Routes" FromRole="Routes"
+                              ToRole="RoleRoutes" />
         </EntityType>
         <EntityType Name="Shop">
           <Key>
@@ -714,9 +751,12 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SysAdmin" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="RoleUsers" Relationship="Self.FK_RoleUsers_AspNetUsers" FromRole="AspNetUsers" ToRole="RoleUsers" />
-          <NavigationProperty Name="AspNetUsers1" Relationship="Self.FK_AspNetUsers_AspNetUsers" FromRole="AspNetUsers" ToRole="AspNetUsers1" />
-          <NavigationProperty Name="AspNetUser1" Relationship="Self.FK_AspNetUsers_AspNetUsers" FromRole="AspNetUsers1" ToRole="AspNetUsers" />
+          <NavigationProperty Name="RoleUsers" Relationship="Self.FK_RoleUsers_AspNetUsers" FromRole="AspNetUsers"
+                              ToRole="RoleUsers" />
+          <NavigationProperty Name="AspNetUsers1" Relationship="Self.FK_AspNetUsers_AspNetUsers" FromRole="AspNetUsers"
+                              ToRole="AspNetUsers1" />
+          <NavigationProperty Name="AspNetUser1" Relationship="Self.FK_AspNetUsers_AspNetUsers" FromRole="AspNetUsers1"
+                              ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="vwArea">
           <Key>
