@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityFramework", "Securi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7C54FA27-CFA7-42DC-BD77-4A7ABE85D026}"
 	ProjectSection(SolutionItems) = preProject
+		Solution Items\Create SecurityFramework Data Schema & Data.sql = Solution Items\Create SecurityFramework Data Schema & Data.sql
 		Solution Items\SecurityFramework Access ER Diagram.PNG = Solution Items\SecurityFramework Access ER Diagram.PNG
 	EndProjectSection
 EndProject
