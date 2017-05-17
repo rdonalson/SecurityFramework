@@ -1,20 +1,12 @@
 ﻿@{
     ViewBag.Title = "Access Home";
+
 }
 
 <h2>Access Home</h2>
 @Styles.Render("~/Content/css")
 @Styles.Render("~/Content/gijgo")
-<style>
 
-    .first-column { width: 20%; }
-
-    .second-column { width: 20%; }
-
-    .third-column { width: 20%; }
-
-    .fouth-column { width: 20%; }
-</style>
 <div >
     <table class="table table-bordered">
         <tbody>
@@ -47,11 +39,12 @@
 @Scripts.Render("~/bundles/gijgo")
 @section Scripts {
     <script type="text/javascript">
+        var applicationPath = '@ViewBag.ApplicationPath';
         $(document).ready(function() {
             var areaTree = $('#areaTree').tree({
                 primaryKey: 'id',
                 uiLibrary: 'bootstrap',
-                dataSource: '/Access/AccessHome/GetAreas'
+                dataSource: applicationPath + '/Access/AccessHome/GetAreas'
             });
             areaTree.on('select',
                 function (e, node, id) {
@@ -70,7 +63,7 @@
         var roleGrid = $('#roleGrid').grid({
             primaryKey: 'ID',
             uiLibrary: 'bootstrap',
-            dataSource: '/Access/AccessHome/GetRoles',
+            dataSource: applicationPath + '/Access/AccessHome/GetRoles',
             autoLoad: false,
             selectionType: 'single',
             selectionMethod: 'basic',
@@ -82,7 +75,7 @@
         var userGrid = $('#userGrid').grid({
             primaryKey: 'ID',
             uiLibrary: 'bootstrap',
-            dataSource: '/Access/AccessHome/GetUsers',
+            dataSource: applicationPath + '/Access/AccessHome/GetUsers',
             autoLoad: false,
             columns: [
                 { field: 'ID', hidden: true },
@@ -92,7 +85,7 @@
         var routeGrid = $('#routeGrid').grid({
             primaryKey: 'ID',
             uiLibrary: 'bootstrap',
-            dataSource: '/Access/AccessHome/GetRoutes',
+            dataSource: applicationPath + '/Access/AccessHome/GetRoutes',
             autoLoad: false,
             columns: [
                 { field: 'ID', hidden: true },

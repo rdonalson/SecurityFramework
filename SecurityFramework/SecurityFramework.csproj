@@ -264,6 +264,7 @@
     <Content Include="Content\gijgo\grid.min.css" />
     <Content Include="Content\gijgo\tree.css" />
     <Content Include="Content\gijgo\tree.min.css" />
+    <Content Include="Content\images\icons\favicon.ico" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />

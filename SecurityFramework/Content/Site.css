@@ -11,8 +11,8 @@ body {
     padding-right: 15px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
+/* Override the default bootstrap behavior where horizontal description lists
+   will truncate terms that are too long to fit in the left column
 */
 .dl-horizontal dt {
     white-space: normal;
@@ -36,3 +36,10 @@ input[type="select"] {
         padding: 0;
     }
 }
+
+
+/* Access Splash Page */
+.first-column { width: 20%; }
+.second-column { width: 20%; }
+.third-column { width: 20%; }
+.fouth-column { width: 20%; }

@@ -85,6 +85,8 @@ namespace SecurityFramework
         {
             return GlobalVariables.IsInRole(pathAndQuery);
         }
+
+
     }
 
 }

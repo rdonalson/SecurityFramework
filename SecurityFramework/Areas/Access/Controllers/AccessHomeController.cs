@@ -9,8 +9,8 @@ using Route = SecurityFramework.Areas.Access.Models.View.Route;
 
 namespace SecurityFramework.Areas.Access.Controllers
 {
-    [VerifyAccess]
-    [Authorize]
+    //[VerifyAccess]
+    //[Authorize]
     public class AccessHomeController : Controller
     {
         private readonly AccessEntities _db;
@@ -23,6 +23,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         // GET: Access/AccessHome
         public ActionResult Index()
         {
+            ViewBag.ApplicationPath = Request.ApplicationPath == "/" ? "" : Request.ApplicationPath;
             return View();
         }
 
