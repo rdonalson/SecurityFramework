@@ -235,9 +235,35 @@
     <Content Include="Areas\Access\Views\web.config" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-theme.css.map">
+      <DependentUpon>bootstrap-theme.css</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap-theme.min.css">
+      <DependentUpon>bootstrap-theme.css</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap-theme.min.css.map">
+      <DependentUpon>bootstrap-theme.css</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap.css.map">
+      <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap.min.css">
+      <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap.min.css.map">
+      <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
+    <Content Include="Content\gijgo\checkbox.css" />
+    <Content Include="Content\gijgo\checkbox.min.css" />
+    <Content Include="Content\gijgo\dialog.css" />
+    <Content Include="Content\gijgo\dialog.min.css" />
+    <Content Include="Content\gijgo\editor.css" />
+    <Content Include="Content\gijgo\editor.min.css" />
+    <Content Include="Content\gijgo\grid.css" />
+    <Content Include="Content\gijgo\grid.min.css" />
+    <Content Include="Content\gijgo\tree.css" />
+    <Content Include="Content\gijgo\tree.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
@@ -258,10 +284,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Areas\Access\Views\AccessHome\Index.cshtml" />
     <Content Include="Areas\Access\Views\DomainRoles\Create.cshtml" />
     <Content Include="Areas\Access\Views\DomainRoles\Delete.cshtml" />
@@ -353,18 +375,64 @@
     <Content Include="Opportunity\Manage.aspx" />
     <Content Include="Opportunity\Millennium.aspx" />
     <Content Include="Opportunity\Site.Master" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap.min.js">
+      <DependentUpon>bootstrap.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\gijgo\checkbox\checkbox.js" />
+    <Content Include="Scripts\gijgo\checkbox\checkbox.min.js" />
+    <Content Include="Scripts\gijgo\dialog\dialog.js" />
+    <Content Include="Scripts\gijgo\dialog\dialog.min.js" />
+    <Content Include="Scripts\gijgo\dialog\messages\messages.bg-bg.js" />
+    <Content Include="Scripts\gijgo\dialog\messages\messages.de-de.js" />
+    <Content Include="Scripts\gijgo\dialog\messages\messages.en-us.js" />
+    <Content Include="Scripts\gijgo\dialog\messages\messages.fr-fr.js" />
+    <Content Include="Scripts\gijgo\dialog\messages\messages.pt-br.js" />
+    <Content Include="Scripts\gijgo\draggable\draggable.js" />
+    <Content Include="Scripts\gijgo\draggable\draggable.min.js" />
+    <Content Include="Scripts\gijgo\droppable\droppable.js" />
+    <Content Include="Scripts\gijgo\droppable\droppable.min.js" />
+    <Content Include="Scripts\gijgo\editor\editor.js" />
+    <Content Include="Scripts\gijgo\editor\editor.min.js" />
+    <Content Include="Scripts\gijgo\grid\grid.js" />
+    <Content Include="Scripts\gijgo\grid\grid.min.js" />
+    <Content Include="Scripts\gijgo\grid\messages\messages.bg-bg.js" />
+    <Content Include="Scripts\gijgo\grid\messages\messages.de-de.js" />
+    <Content Include="Scripts\gijgo\grid\messages\messages.en-us.js" />
+    <Content Include="Scripts\gijgo\grid\messages\messages.fr-fr.js" />
+    <Content Include="Scripts\gijgo\grid\messages\messages.pt-br.js" />
+    <Content Include="Scripts\gijgo\tree\tree.js" />
+    <Content Include="Scripts\gijgo\tree\tree.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
-    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js">
+      <DependentUpon>jquery-3.1.1.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-3.1.1.min.map">
+      <DependentUpon>jquery-3.1.1.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js">
+      <DependentUpon>jquery-3.1.1.slim.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map">
+      <DependentUpon>jquery-3.1.1.slim.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
-    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.min.js">
+      <DependentUpon>respond.matchmedia.addListener.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\respond.min.js">
+      <DependentUpon>respond.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />
     <Content Include="Scripts\WebForms\GridView.js" />
@@ -516,6 +584,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Access\AccessAreaRegistration.cs" />
     <Compile Include="Areas\Access\Controllers\AccessHomeController.cs" />
+    <Compile Include="Areas\Access\Models\View\Role.cs" />
+    <Compile Include="Areas\Access\Models\View\Area.cs" />
     <Compile Include="Areas\Access\Controllers\DomainRolesController.cs" />
     <Compile Include="Areas\Access\Controllers\DomainsController.cs" />
     <Compile Include="Areas\Access\Controllers\GroupRolesController.cs" />
@@ -601,6 +671,8 @@
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Access\Models\View\ListViewModel.cs" />
+    <Compile Include="Areas\Access\Models\View\Route.cs" />
+    <Compile Include="Areas\Access\Models\View\User.cs" />
     <Compile Include="Areas\Booking\BookingAreaRegistration.cs" />
     <Compile Include="Areas\Booking\Controllers\BookingHomeController.cs" />
     <Compile Include="Areas\Operator\Controllers\OperatorHomeController.cs" />
@@ -662,6 +734,11 @@
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -694,6 +771,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Access\Views\Areas\" />
+    <Folder Include="Areas\Access\Views\Users\" />
     <Folder Include="Areas\Booking\Models\" />
     <Folder Include="Areas\Operator\Models\" />
     <Folder Include="Areas\Validation\Models\" />
@@ -702,8 +781,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

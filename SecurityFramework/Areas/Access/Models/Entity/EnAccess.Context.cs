@@ -43,8 +43,8 @@ namespace SecurityFramework.Areas.Access.Models.Entity
         public virtual DbSet<vwAreaAndRoleAndUser> vwAreasAndRolesAndUsers { get; set; }
         public virtual DbSet<vwAreaTree> vwAreaTrees { get; set; }
         public virtual DbSet<vwIsInRole> vwIsInRoles { get; set; }
-        public virtual DbSet<vwRoleRoute> vwRoleRoutes { get; set; }
-        public virtual DbSet<vwRoleUser> vwRoleUsers { get; set; }
+        public virtual DbSet<vwRoleRoute> vwRolesRoutes { get; set; }
+        public virtual DbSet<vwRoleUser> vwRolesUsers { get; set; }
     
         public virtual ObjectResult<Nullable<int>> spIsInRole(Nullable<System.Guid> appId, string userId, string route)
         {

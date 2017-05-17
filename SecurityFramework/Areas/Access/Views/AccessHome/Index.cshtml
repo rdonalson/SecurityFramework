@@ -3,8 +3,108 @@
 }
 
 <h2>Access Home</h2>
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/gijgo")
+<style>
 
-<ul class="list-group">
+    .first-column { width: 20%; }
+
+    .second-column { width: 20%; }
+
+    .third-column { width: 20%; }
+
+    .fouth-column { width: 20%; }
+</style>
+<div >
+    <table class="table table-bordered">
+        <tbody>
+        <tr>
+            <td class="first-column">
+                <table class="gj-grid-table gj-grid-bootstrap-table table table-bordered table-hover">
+                    <thead>
+                    <tr data-role="caption">
+                        <th style="text-align: left;">
+                            <div data-role="title">Areas</div>
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+                <div id="areaTree"></div>
+            </td>
+            <td class="second-column">
+                <table id="roleGrid" data-primary-key="ID"></table>
+            </td>
+            <td class="third-column">
+                <table id="userGrid" data-primary-key="ID"></table>
+            </td>
+            <td class="fouth-column">
+                <table id="routeGrid" data-primary-key="ID"></table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+@Scripts.Render("~/bundles/gijgo")
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var areaTree = $('#areaTree').tree({
+                primaryKey: 'id',
+                uiLibrary: 'bootstrap',
+                dataSource: '/Access/AccessHome/GetAreas'
+            });
+            areaTree.on('select',
+                function (e, node, id) {
+                    //debugger;
+                    roleGrid.reload({ guid: id });
+                    userGrid.reload({ guid: id });
+                    routeGrid.reload({ guid: id });
+                });
+            roleGrid.on('rowSelect',
+                function(e, $row, id) {
+                    userGrid.reload({ guid: id });
+                    routeGrid.reload({ guid: id });
+                });
+
+        });
+        var roleGrid = $('#roleGrid').grid({
+            primaryKey: 'ID',
+            uiLibrary: 'bootstrap',
+            dataSource: '/Access/AccessHome/GetRoles',
+            autoLoad: false,
+            selectionType: 'single',
+            selectionMethod: 'basic',
+            columns: [
+                { field: 'ID', hidden: true },
+                { field: 'Name', title: 'Roles' }
+            ]
+        });
+        var userGrid = $('#userGrid').grid({
+            primaryKey: 'ID',
+            uiLibrary: 'bootstrap',
+            dataSource: '/Access/AccessHome/GetUsers',
+            autoLoad: false,
+            columns: [
+                { field: 'ID', hidden: true },
+                { field: 'UserName', title: 'Users' }
+            ]
+        });
+        var routeGrid = $('#routeGrid').grid({
+            primaryKey: 'ID',
+            uiLibrary: 'bootstrap',
+            dataSource: '/Access/AccessHome/GetRoutes',
+            autoLoad: false,
+            columns: [
+                { field: 'ID', hidden: true },
+                { field: 'RouteName', title: 'Routes' }
+            ]
+        });
+    </script>
+}
+
+
+
+@*<ul class="list-group">
     <li class="list-group-item">@Html.ActionLink("Domains", "Index", "Domains")</li>
     <li class="list-group-item">@Html.ActionLink("Organizations", "Index", "Organizations")</li>
     <li class="list-group-item">@Html.ActionLink("Groups", "Index", "Groups")</li>
@@ -18,4 +118,4 @@
     <li class="list-group-item">@Html.ActionLink("Routes", "Index", "Routes")</li>
     <li class="list-group-item">@Html.ActionLink("Users in Roles", "Index", "RoleUsers")</li>
     <li class="list-group-item">@Html.ActionLink("Routes in Roles", "Index", "RoleRoutes")</li>
-</ul>
+</ul>*@

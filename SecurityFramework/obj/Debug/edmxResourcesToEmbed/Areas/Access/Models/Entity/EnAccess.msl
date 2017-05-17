@@ -194,7 +194,7 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="vwRoleRoutes">
+    <EntitySetMapping Name="vwRolesRoutes">
       <EntityTypeMapping TypeName="AccessModel.vwRoleRoute">
         <MappingFragment StoreEntitySet="vwRoleRoutes">
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />
@@ -207,7 +207,7 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="vwRoleUsers">
+    <EntitySetMapping Name="vwRolesUsers">
       <EntityTypeMapping TypeName="AccessModel.vwRoleUser">
         <MappingFragment StoreEntitySet="vwRoleUser">
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />

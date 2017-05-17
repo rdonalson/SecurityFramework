@@ -446,8 +446,8 @@
     <EntitySet Name="vwAreasAndRolesAndUsers" EntityType="AccessModel.vwAreaAndRoleAndUser" />
     <EntitySet Name="vwAreaTrees" EntityType="Self.vwAreaTree" />
     <EntitySet Name="vwIsInRoles" EntityType="Self.vwIsInRole" />
-    <EntitySet Name="vwRoleRoutes" EntityType="Self.vwRoleRoute" />
-    <EntitySet Name="vwRoleUsers" EntityType="Self.vwRoleUser" />
+    <EntitySet Name="vwRolesRoutes" EntityType="Self.vwRoleRoute" />
+    <EntitySet Name="vwRolesUsers" EntityType="Self.vwRoleUser" />
     <AssociationSet Name="FK_Organizations_Domains" Association="Self.FK_Organizations_Domains">
       <End Role="Domains" EntitySet="Domains" />
       <End Role="Organizations" EntitySet="Organizations" />
