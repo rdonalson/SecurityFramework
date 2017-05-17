@@ -26,11 +26,10 @@ namespace SecurityFramework.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=10.244.208.52,49502;Initial Catalog=CSInsideUITemplate;Persist Securi" +
-            "ty Info=True;User ID=CSInternal_App;Password=csinternal**")]
-        public string Setting {
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.;Initial Catalog=SecurityFramework;Integrated Security=True")]
+        public string DefaultConnection {
             get {
-                return ((string)(this["Setting"]));
+                return ((string)(this["DefaultConnection"]));
             }
         }
     }
