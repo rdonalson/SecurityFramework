@@ -60,6 +60,14 @@
                         </li>
                     <%
                         }
+                        if (IsInRole("/SystemAdmin/SystemAdmin"))
+                        {
+                    %>
+                            <li>
+                                <a runat="server" href="~/SystemAdmin/SystemAdmin">System Admin</a>
+                            </li>
+                    <%
+                        }
                         if (IsInRole("/Opportunity/Home"))
                         {
                     %>
@@ -68,7 +76,6 @@
                         </li>
                     <%
                         }
-
                         if (IsInRole("/Booking/BookingHome"))
                         {
                     %>

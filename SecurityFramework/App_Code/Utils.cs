@@ -18,8 +18,8 @@ namespace SecurityFramework
     {
         public static Guid AppAttributeValue { get; set; }
         public static string AppPath { get; set; }
-        //public static User MyUser { get; set; }
         public static string RequestUrl { get; set; }
+        public static Exception LastException { get; set; }
 
         /// -----------------------------------------------------------------------------------------------
         /// <summary>
@@ -93,6 +93,25 @@ namespace SecurityFramework
             }
             set { SessionUtil.SetInSession<User>("UserProfile", value); }
         }
+
+        ///// ---------------------------------------------------------------------------------------------
+        ///// <summary>
+        ///// Storage for the UserProfile up
+        ///// </summary>
+        ///// ---------------------------------------------------------------------------------------------
+        //public static Exception LastException
+        //{
+        //    get
+        //    {
+        //        Exception up = SessionUtil.GetFromSession<Exception>("LastException");
+        //        if (up == null)
+        //        {
+        //            SessionUtil.SetInSession<Exception>("LastException", null);
+        //        }
+        //        return up;
+        //    }
+        //    set { SessionUtil.SetInSession<Exception>("LastException", value); }
+        //}
     }
 
     /// ===============================================================================================

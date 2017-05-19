@@ -40,6 +40,10 @@ namespace SecurityFramework
 
         protected void Application_Error(object sender, EventArgs e)
         {
+            ApplicationCommon.LastException = Server.GetLastError();
+            // Pass the error on to the Generic Error page
+            Response.Redirect("~/SystemAdmin/ApplicationError.aspx", true);
+
         }
 
         protected void Session_Start()
