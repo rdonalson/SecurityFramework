@@ -55,7 +55,7 @@ namespace SecurityFramework.Areas.Access.Controllers
             if (ModelState.IsValid)
             {
                 shop.Id = Guid.NewGuid();
-                shop.AppId = GlobalVariables.AppAttributeValue;
+                shop.AppId = ApplicationCommon.AppAttributeValue;
                 _db.Shops.Add(shop);
                 _db.SaveChanges();
                 return RedirectToAction($"Index");

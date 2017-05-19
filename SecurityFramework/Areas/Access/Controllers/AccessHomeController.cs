@@ -23,7 +23,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         // GET: Access/AccessHome
         public ActionResult Index()
         {
-            ViewBag.ApplicationPath = GlobalVariables.AppPath == "/" ? "" : GlobalVariables.AppPath;
+            ViewBag.ApplicationPath = ApplicationCommon.AppPath == "/" ? "" : ApplicationCommon.AppPath;
             return View();
         }
 

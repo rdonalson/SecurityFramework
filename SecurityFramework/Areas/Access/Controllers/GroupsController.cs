@@ -55,7 +55,7 @@ namespace SecurityFramework.Areas.Access.Controllers
             if (ModelState.IsValid)
             {
                 group.Id = Guid.NewGuid();
-                group.AppId = GlobalVariables.AppAttributeValue;
+                group.AppId = ApplicationCommon.AppAttributeValue;
                 _db.Groups.Add(group);
                 _db.SaveChanges();
                 return RedirectToAction($"Index");

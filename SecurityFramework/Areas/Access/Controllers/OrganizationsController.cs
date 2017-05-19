@@ -55,7 +55,7 @@ namespace SecurityFramework.Areas.Access.Controllers
             if (ModelState.IsValid)
             {
                 organization.Id = Guid.NewGuid();
-                organization.AppId = GlobalVariables.AppAttributeValue;
+                organization.AppId = ApplicationCommon.AppAttributeValue;
                 _db.Organizations.Add(organization);
                 _db.SaveChanges();
                 return RedirectToAction($"Index");

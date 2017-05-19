@@ -54,7 +54,7 @@ namespace SecurityFramework.Areas.Access.Controllers
             if (ModelState.IsValid)
             {
                 domain.Id = Guid.NewGuid();
-                domain.AppId = GlobalVariables.AppAttributeValue;
+                domain.AppId = ApplicationCommon.AppAttributeValue;
                 _db.Domains.Add(domain);
                 _db.SaveChanges();
                 return RedirectToAction($"Index");

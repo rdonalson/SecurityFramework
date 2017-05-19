@@ -21,7 +21,7 @@ namespace SecurityFramework
             // Get application id
             var assembly = Assembly.GetExecutingAssembly();
             var attribute = (GuidAttribute)assembly.GetCustomAttributes(typeof(GuidAttribute), true)[0];
-            GlobalVariables.AppAttributeValue = new Guid(attribute.Value);
+            ApplicationCommon.AppAttributeValue = new Guid(attribute.Value);
 
             // Code that runs on application startup
             AreaRegistration.RegisterAllAreas();
@@ -33,8 +33,8 @@ namespace SecurityFramework
             IFindRoutes findRoutes = new FindRoutes();
             var root = HttpContext.Current.Server.MapPath("~");
             var files = new List<Route>();
-            findRoutes.GetAppFiles(GlobalVariables.AppAttributeValue, new[] { root }, root, new[] { "*.cshtml", "*.aspx" }, ref files);
-            findRoutes.AddToTable(GlobalVariables.AppAttributeValue, files);
+            findRoutes.GetAppFiles(ApplicationCommon.AppAttributeValue, new[] { root }, root, new[] { "*.cshtml", "*.aspx" }, ref files);
+            findRoutes.AddToTable(ApplicationCommon.AppAttributeValue, files);
 
         }
 
@@ -44,9 +44,7 @@ namespace SecurityFramework
 
         protected void Session_Start()
         {
-            //var user = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            //GlobalVariables.User = "e94f0838-9e03-4471-beef-a273db5d44b4";
-            //Session.Add("User", "e94f0838-9e03-4471-beef-a273db5d44b4");
+
         }
 
         protected void Session_End()

@@ -14,11 +14,11 @@ namespace SecurityFramework
     ///     Global variables Initialized in Global.asax and Site.Master.cs
     /// </summary>
     /// ===============================================================================================
-    public class GlobalVariables
+    public class ApplicationCommon
     {
         public static Guid AppAttributeValue { get; set; }
         public static string AppPath { get; set; }
-        public static User MyUser { get; set; }
+        //public static User MyUser { get; set; }
         public static string RequestUrl { get; set; }
 
         /// -----------------------------------------------------------------------------------------------
@@ -28,17 +28,17 @@ namespace SecurityFramework
         /// -----------------------------------------------------------------------------------------------
         public static void SetupUser()
         {
-            if (MyUser == null)
+            if (UserProfile == null)
             {
                 var userName = HttpContext.Current.User.Identity.GetUserName();
                 var userId = HttpContext.Current.User.Identity.GetUserId();
-                if (!string.IsNullOrEmpty(userName))
+                if (!String.IsNullOrEmpty(userName))
                 {
                     var user = new User(
                         userName,
                         new Guid(userId)
                     );
-                    MyUser = user;
+                    UserProfile = user;
                 }
             }
         }
@@ -50,8 +50,8 @@ namespace SecurityFramework
         /// -----------------------------------------------------------------------------------------------
         public static void KillUser()
         {
-            MyUser = null;
-            RequestUrl = string.Empty;
+            UserProfile = null;
+            RequestUrl = String.Empty;
         }
 
         /// -----------------------------------------------------------------------------------------------
@@ -63,16 +63,35 @@ namespace SecurityFramework
         /// -----------------------------------------------------------------------------------------------
         public static bool IsInRole(string pathAndQuery)
         {
-            if (MyUser == null) return false;
+            if (UserProfile == null) return false;
             using (var entities = new AccessEntities())
             {
                 pathAndQuery = pathAndQuery.Replace(AppPath, "");
                 return Convert.ToBoolean(entities.spIsInRole(
                         AppAttributeValue,
-                        MyUser.Id.ToString(),
+                        UserProfile.Id.ToString(),
                         pathAndQuery)
                     .FirstOrDefault());
             }
+        }
+
+        /// ---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Storage for the UserProfile up
+        /// </summary>
+        /// ---------------------------------------------------------------------------------------------
+        public static User UserProfile
+        {
+            get
+            {
+                User up = SessionUtil.GetFromSession<User>("UserProfile");
+                if (up == null)
+                {
+                    SessionUtil.SetInSession<User>("UserProfile", null);
+                }
+                return up;
+            }
+            set { SessionUtil.SetInSession<User>("UserProfile", value); }
         }
     }
 
@@ -224,4 +243,89 @@ namespace SecurityFramework
                     }
         }
     }
+
+    /// =============================================================================================
+    /// <summary>
+    /// Session Wrapper Utilities Class
+    /// </summary>
+    /// =============================================================================================
+    internal static class SessionUtil
+    {
+        #region Session
+        /// ---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Session
+        /// </summary>
+        /// <typeparam name="T">generics</typeparam>
+        /// <param name="key">string</param>
+        /// <returns>generics</returns>
+        /// ---------------------------------------------------------------------------------------------
+        public static T GetFromSession<T>(string key)
+        {
+            object obj = HttpContext.Current.Session[key];
+            if (obj == null)
+            {
+                return default(T);
+            }
+            return (T)obj;
+        }
+        /// ---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Set in Session 
+        /// </summary>
+        /// <typeparam name="T">generics</typeparam>
+        /// <param name="key">string</param>
+        /// <param name="value">T</param>
+        /// ---------------------------------------------------------------------------------------------
+        public static void SetInSession<T>(string key, T value)
+        {
+            if (value == null)
+            {
+                HttpContext.Current.Session.Remove(key);
+            }
+            else
+            {
+                HttpContext.Current.Session[key] = value;
+            }
+        }
+        #endregion Session
+
+        #region Application
+
+        /// ---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Get from Application
+        /// </summary>
+        /// <typeparam name="T">generics</typeparam>
+        /// <param name="key">string</param>
+        /// <returns>generics</returns>
+        /// ---------------------------------------------------------------------------------------------
+        public static T GetFromApplication<T>(string key)
+        {
+            return (T)HttpContext.Current.Application[key];
+        }
+
+        /// ---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Set from Application
+        /// </summary>
+        /// <typeparam name="T">generics</typeparam>
+        /// <param name="key">string</param>
+        /// <param name="value">T</param>
+        /// ---------------------------------------------------------------------------------------------
+        public static void SetInApplication<T>(string key, T value)
+        {
+            if (value == null)
+            {
+                HttpContext.Current.Application.Remove(key);
+            }
+            else
+            {
+                HttpContext.Current.Application[key] = value;
+            }
+        }
+        #endregion Application
+    }
+
+
 }

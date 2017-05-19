@@ -33,10 +33,10 @@ namespace SecurityFramework
         /// -----------------------------------------------------------------------------------------------
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            GlobalVariables.SetupUser();
+            ApplicationCommon.SetupUser();
             _httpContext = httpContext;
             if (_httpContext.Request.Url != null) _pathAndQuery = _httpContext.Request.Url.PathAndQuery;
-            return GlobalVariables.IsInRole(_pathAndQuery);
+            return ApplicationCommon.IsInRole(_pathAndQuery);
         }
 
         /// -----------------------------------------------------------------------------------------------
@@ -58,13 +58,13 @@ namespace SecurityFramework
         /// -----------------------------------------------------------------------------------------------
         public static void AuthorizePage(HttpContext context)
         {
-            GlobalVariables.SetupUser();
-            GlobalVariables.RequestUrl = context.Request.Path;
+            ApplicationCommon.SetupUser();
+            ApplicationCommon.RequestUrl = context.Request.Path;
             if (HttpContext.Current.User != null &&
                 HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 _pathAndQuery = context.Request.Url.PathAndQuery;
-                if (!GlobalVariables.IsInRole(_pathAndQuery))
+                if (!ApplicationCommon.IsInRole(_pathAndQuery))
                     context.Response.Redirect(DefaultUrl + _pathAndQuery);
             }
             else

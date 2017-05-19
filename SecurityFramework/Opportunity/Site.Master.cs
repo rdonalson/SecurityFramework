@@ -18,7 +18,7 @@ namespace SecurityFramework.Opportunity
         }
         protected static bool IsInRole(string pathAndQuery)
         {
-            return GlobalVariables.IsInRole(pathAndQuery);
+            return ApplicationCommon.IsInRole(pathAndQuery);
         }
     }
 

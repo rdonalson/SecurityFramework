@@ -72,9 +72,9 @@ namespace SecurityFramework
             if (!IsPostBack)
             {
                 // Initialize the Current User in the Global Variables
-                GlobalVariables.SetupUser();
+                ApplicationCommon.SetupUser();
                 // Get application path
-                GlobalVariables.AppPath = Request.ApplicationPath;
+                ApplicationCommon.AppPath = Request.ApplicationPath;
             }
         }
 
@@ -82,12 +82,12 @@ namespace SecurityFramework
         {
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             // Null out current user
-            GlobalVariables.KillUser();
+            ApplicationCommon.KillUser();
         }
 
         protected static bool IsInRole(string pathAndQuery)
         {
-            return GlobalVariables.IsInRole(pathAndQuery);
+            return ApplicationCommon.IsInRole(pathAndQuery);
         }
 
 
