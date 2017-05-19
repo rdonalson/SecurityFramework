@@ -21,7 +21,6 @@ namespace SecurityFramework
             // Get application id
             var assembly = Assembly.GetExecutingAssembly();
             var attribute = (GuidAttribute)assembly.GetCustomAttributes(typeof(GuidAttribute), true)[0];
-            //_appAttributeValue = new Guid(attribute.Value);
             GlobalVariables.AppAttributeValue = new Guid(attribute.Value);
 
             // Code that runs on application startup
@@ -31,11 +30,11 @@ namespace SecurityFramework
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             // Populate the AppObjects Table with Page & Route Names
-            IFineRoutes fineRoutes = new FindRoutes();
+            IFindRoutes findRoutes = new FindRoutes();
             var root = HttpContext.Current.Server.MapPath("~");
             var files = new List<Route>();
-            fineRoutes.GetAppFiles(GlobalVariables.AppAttributeValue, new[] { root }, root, new[] { "*.cshtml", "*.aspx" }, ref files);
-            fineRoutes.AddToTable(GlobalVariables.AppAttributeValue, files);
+            findRoutes.GetAppFiles(GlobalVariables.AppAttributeValue, new[] { root }, root, new[] { "*.cshtml", "*.aspx" }, ref files);
+            findRoutes.AddToTable(GlobalVariables.AppAttributeValue, files);
 
         }
 

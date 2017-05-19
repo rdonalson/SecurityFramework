@@ -70,8 +70,12 @@ namespace SecurityFramework
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
+            {
                 // Initialize the Current User in the Global Variables
                 GlobalVariables.SetupUser();
+                // Get application path
+                GlobalVariables.AppPath = Request.ApplicationPath;
+            }
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)

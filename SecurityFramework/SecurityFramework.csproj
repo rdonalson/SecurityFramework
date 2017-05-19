@@ -585,6 +585,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Access\AccessAreaRegistration.cs" />
     <Compile Include="Areas\Access\Controllers\AccessHomeController.cs" />
+    <Compile Include="Areas\Access\Models\Entity\vwRole.cs">
+      <DependentUpon>EnAccess.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Access\Models\View\Role.cs" />
     <Compile Include="Areas\Access\Models\View\Area.cs" />
     <Compile Include="Areas\Access\Controllers\DomainRolesController.cs" />

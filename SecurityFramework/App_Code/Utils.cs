@@ -17,6 +17,7 @@ namespace SecurityFramework
     public class GlobalVariables
     {
         public static Guid AppAttributeValue { get; set; }
+        public static string AppPath { get; set; }
         public static User MyUser { get; set; }
         public static string RequestUrl { get; set; }
 
@@ -65,6 +66,7 @@ namespace SecurityFramework
             if (MyUser == null) return false;
             using (var entities = new AccessEntities())
             {
+                pathAndQuery = pathAndQuery.Replace(AppPath, "");
                 return Convert.ToBoolean(entities.spIsInRole(
                         AppAttributeValue,
                         MyUser.Id.ToString(),
@@ -79,7 +81,7 @@ namespace SecurityFramework
     ///     Interface for FindRoutes
     /// </summary>
     /// ===============================================================================================
-    public interface IFineRoutes
+    public interface IFindRoutes
     {
         void AddToTable(Guid appAttributeValue, List<Route> files);
 
@@ -92,7 +94,7 @@ namespace SecurityFramework
     ///     Processes Specific Application Files and adds them to "AppObjects" security table
     /// </summary>
     /// ===============================================================================================
-    public class FindRoutes : IFineRoutes
+    public class FindRoutes : IFindRoutes
     {
         // Members
         private readonly AccessEntities _entities;
@@ -167,21 +169,25 @@ namespace SecurityFramework
             {
                 var appPath = filePath.Replace(root, @"~\");
                 appPath = appPath.Replace(@"\", @"/");
+                appPath = appPath.Replace(@"//", @"/");
                 var fileName = Path.GetFileName(filePath);
-                var routeName = Path.GetFileNameWithoutExtension(filePath);
-                // Create the route and route directory
-                string routePath;
-                GenerateRouteAndRouteDirectory(appPath, routeName, out routePath);
-                if (routeName != "_Layout" && routeName != "_ViewStart")
-                    files.Add(new Route
-                    {
-                        Id = Guid.NewGuid(),
-                        AppId = appAttributeValue,
-                        FilePath = filePath,
-                        FileName = fileName,
-                        AppPath = appPath,
-                        RoutePath = routePath
-                    });
+                if (!appPath.Contains("/obj/") && !appPath.Contains("/bin/") && !appPath.Contains("/Account/"))
+                {
+                    var routeName = Path.GetFileNameWithoutExtension(filePath);
+                    // Create the route and route directory
+                    string routePath;
+                    GenerateRouteAndRouteDirectory(appPath, routeName, out routePath);
+                    if (routeName != "_Layout" && routeName != "_ViewStart")
+                        files.Add(new Route
+                        {
+                            Id = Guid.NewGuid(),
+                            AppId = appAttributeValue,
+                            FilePath = filePath,
+                            FileName = fileName,
+                            AppPath = appPath,
+                            RoutePath = routePath
+                        });
+                }
             }
 
             // Recurse into subdirectories of this directory.

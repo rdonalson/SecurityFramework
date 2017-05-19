@@ -9,8 +9,8 @@ using Route = SecurityFramework.Areas.Access.Models.View.Route;
 
 namespace SecurityFramework.Areas.Access.Controllers
 {
-    //[VerifyAccess]
-    //[Authorize]
+    [VerifyAccess]
+    [Authorize]
     public class AccessHomeController : Controller
     {
         private readonly AccessEntities _db;
@@ -23,7 +23,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         // GET: Access/AccessHome
         public ActionResult Index()
         {
-            ViewBag.ApplicationPath = Request.ApplicationPath == "/" ? "" : Request.ApplicationPath;
+            ViewBag.ApplicationPath = GlobalVariables.AppPath == "/" ? "" : GlobalVariables.AppPath;
             return View();
         }
 
@@ -61,9 +61,9 @@ namespace SecurityFramework.Areas.Access.Controllers
 
         public JsonResult GetRoles(Guid guid)
         {
-            var roles = _db.Roles.ToList();
+            var roles = _db.vwRoles.ToList();
 
-            var records = roles.Where(l => l.ShopId == guid)
+            var records = roles.Where(l => l.AreaId == guid)
                 .OrderBy(l => l.Sequence)
                 .Select(l => new Role
                 {

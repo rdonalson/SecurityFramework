@@ -218,5 +218,15 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="spIsInRole" FunctionName="AccessModel.Store.spIsInRole" />
+    <EntitySetMapping Name="vwRoles">
+      <EntityTypeMapping TypeName="AccessModel.vwRole">
+        <MappingFragment StoreEntitySet="vwRoles">
+          <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

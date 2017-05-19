@@ -223,6 +223,19 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleRoutes' does not ha
     <Property Name="RoutePath" Type="varchar" MaxLength="200" />
   </EntityType>
   <!--Errors Found During Generation:
+warning 6002: The table/view 'SecurityFramework.Access.vwRoles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Sequence" />
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Sequence" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="AreaId" Type="uniqueidentifier" />
+  </EntityType>
+  <!--Errors Found During Generation:
 warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vwRoleUser">
     <Key>
@@ -434,108 +447,100 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have
     <EntitySet Name="Shops" EntityType="Self.Shops" Schema="Access" store:Type="Tables" />
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="vwAreas" EntityType="Self.vwAreas" store:Type="Views" store:Schema="Access">
-      <DefiningQuery>
-              SELECT
-              [vwAreas].[BreadcrubTrail] AS [BreadcrubTrail],
-              [vwAreas].[DomId] AS [DomId],
-              [vwAreas].[Domain] AS [Domain],
-              [vwAreas].[OrgId] AS [OrgId],
-              [vwAreas].[Organization] AS [Organization],
-              [vwAreas].[GrpId] AS [GrpId],
-              [vwAreas].[Group] AS [Group],
-              [vwAreas].[OffId] AS [OffId],
-              [vwAreas].[Office] AS [Office],
-              [vwAreas].[ShpId] AS [ShpId],
-              [vwAreas].[Shop] AS [Shop]
-              FROM [Access].[vwAreas] AS [vwAreas]
-            </DefiningQuery>
+      <DefiningQuery>SELECT 
+    [vwAreas].[BreadcrubTrail] AS [BreadcrubTrail], 
+    [vwAreas].[DomId] AS [DomId], 
+    [vwAreas].[Domain] AS [Domain], 
+    [vwAreas].[OrgId] AS [OrgId], 
+    [vwAreas].[Organization] AS [Organization], 
+    [vwAreas].[GrpId] AS [GrpId], 
+    [vwAreas].[Group] AS [Group], 
+    [vwAreas].[OffId] AS [OffId], 
+    [vwAreas].[Office] AS [Office], 
+    [vwAreas].[ShpId] AS [ShpId], 
+    [vwAreas].[Shop] AS [Shop]
+    FROM [Access].[vwAreas] AS [vwAreas]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vwAreasAndRoles" EntityType="Self.vwAreasAndRoles" store:Type="Views" store:Schema="Access">
-      <DefiningQuery>
-              SELECT
-              [vwAreasAndRoles].[AreaSeq] AS [AreaSeq],
-              [vwAreasAndRoles].[Area] AS [Area],
-              [vwAreasAndRoles].[AreaName] AS [AreaName],
-              [vwAreasAndRoles].[Roles] AS [Roles],
-              [vwAreasAndRoles].[Seq] AS [Seq],
-              [vwAreasAndRoles].[AreaAndRole] AS [AreaAndRole],
-              [vwAreasAndRoles].[RoleId] AS [RoleId]
-              FROM [Access].[vwAreasAndRoles] AS [vwAreasAndRoles]
-            </DefiningQuery>
+      <DefiningQuery>SELECT 
+    [vwAreasAndRoles].[AreaSeq] AS [AreaSeq], 
+    [vwAreasAndRoles].[Area] AS [Area], 
+    [vwAreasAndRoles].[AreaName] AS [AreaName], 
+    [vwAreasAndRoles].[Roles] AS [Roles], 
+    [vwAreasAndRoles].[Seq] AS [Seq], 
+    [vwAreasAndRoles].[AreaAndRole] AS [AreaAndRole], 
+    [vwAreasAndRoles].[RoleId] AS [RoleId]
+    FROM [Access].[vwAreasAndRoles] AS [vwAreasAndRoles]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vwAreasAndRolesAndRoutes" EntityType="Self.vwAreasAndRolesAndRoutes" store:Type="Views" store:Schema="Access">
-      <DefiningQuery>
-              SELECT
-              [vwAreasAndRolesAndRoutes].[AreaSeq] AS [AreaSeq],
-              [vwAreasAndRolesAndRoutes].[Seq] AS [Seq],
-              [vwAreasAndRolesAndRoutes].[AreaAndRole] AS [AreaAndRole],
-              [vwAreasAndRolesAndRoutes].[Id] AS [Id],
-              [vwAreasAndRolesAndRoutes].[RoleId] AS [RoleId],
-              [vwAreasAndRolesAndRoutes].[RouteId] AS [RouteId],
-              [vwAreasAndRolesAndRoutes].[RoutePath] AS [RoutePath]
-              FROM [Access].[vwAreasAndRolesAndRoutes] AS [vwAreasAndRolesAndRoutes]
-            </DefiningQuery>
+      <DefiningQuery>SELECT 
+    [vwAreasAndRolesAndRoutes].[AreaSeq] AS [AreaSeq], 
+    [vwAreasAndRolesAndRoutes].[Seq] AS [Seq], 
+    [vwAreasAndRolesAndRoutes].[AreaAndRole] AS [AreaAndRole], 
+    [vwAreasAndRolesAndRoutes].[Id] AS [Id], 
+    [vwAreasAndRolesAndRoutes].[RoleId] AS [RoleId], 
+    [vwAreasAndRolesAndRoutes].[RouteId] AS [RouteId], 
+    [vwAreasAndRolesAndRoutes].[RoutePath] AS [RoutePath]
+    FROM [Access].[vwAreasAndRolesAndRoutes] AS [vwAreasAndRolesAndRoutes]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vwAreasAndRolesAndUsers" EntityType="Self.vwAreasAndRolesAndUsers" store:Type="Views" store:Schema="Access">
-      <DefiningQuery>
-              SELECT
-              [vwAreasAndRolesAndUsers].[AreaSeq] AS [AreaSeq],
-              [vwAreasAndRolesAndUsers].[Seq] AS [Seq],
-              [vwAreasAndRolesAndUsers].[AreaAndRole] AS [AreaAndRole],
-              [vwAreasAndRolesAndUsers].[Email] AS [Email],
-              [vwAreasAndRolesAndUsers].[Id] AS [Id],
-              [vwAreasAndRolesAndUsers].[RoleId] AS [RoleId],
-              [vwAreasAndRolesAndUsers].[UserId] AS [UserId]
-              FROM [Access].[vwAreasAndRolesAndUsers] AS [vwAreasAndRolesAndUsers]
-            </DefiningQuery>
+      <DefiningQuery>SELECT 
+    [vwAreasAndRolesAndUsers].[AreaSeq] AS [AreaSeq], 
+    [vwAreasAndRolesAndUsers].[Seq] AS [Seq], 
+    [vwAreasAndRolesAndUsers].[AreaAndRole] AS [AreaAndRole], 
+    [vwAreasAndRolesAndUsers].[Email] AS [Email], 
+    [vwAreasAndRolesAndUsers].[Id] AS [Id], 
+    [vwAreasAndRolesAndUsers].[RoleId] AS [RoleId], 
+    [vwAreasAndRolesAndUsers].[UserId] AS [UserId]
+    FROM [Access].[vwAreasAndRolesAndUsers] AS [vwAreasAndRolesAndUsers]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vwAreaTrees" EntityType="Self.vwAreaTrees" store:Type="Views" store:Schema="Access">
-      <DefiningQuery>
-              SELECT
-              [vwAreaTrees].[Id] AS [Id],
-              [vwAreaTrees].[ParentId] AS [ParentId],
-              [vwAreaTrees].[Area] AS [Area]
-              FROM [Access].[vwAreaTrees] AS [vwAreaTrees]
-            </DefiningQuery>
+      <DefiningQuery>SELECT 
+    [vwAreaTrees].[Id] AS [Id], 
+    [vwAreaTrees].[ParentId] AS [ParentId], 
+    [vwAreaTrees].[Area] AS [Area]
+    FROM [Access].[vwAreaTrees] AS [vwAreaTrees]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vwIsInRole" EntityType="Self.vwIsInRole" store:Type="Views" store:Schema="Access">
-      <DefiningQuery>
-              SELECT
-              [vwIsInRole].[AreaAppId] AS [AreaAppId],
-              [vwIsInRole].[AreaId] AS [AreaId],
-              [vwIsInRole].[Area] AS [Area],
-              [vwIsInRole].[RoleId] AS [RoleId],
-              [vwIsInRole].[Name] AS [Name],
-              [vwIsInRole].[UserId] AS [UserId],
-              [vwIsInRole].[UserName] AS [UserName],
-              [vwIsInRole].[RouteId] AS [RouteId],
-              [vwIsInRole].[RoutePath] AS [RoutePath],
-              [vwIsInRole].[RouteAppId] AS [RouteAppId]
-              FROM [Access].[vwIsInRole] AS [vwIsInRole]
-            </DefiningQuery>
+      <DefiningQuery>SELECT 
+    [vwIsInRole].[AreaAppId] AS [AreaAppId], 
+    [vwIsInRole].[AreaId] AS [AreaId], 
+    [vwIsInRole].[Area] AS [Area], 
+    [vwIsInRole].[RoleId] AS [RoleId], 
+    [vwIsInRole].[Name] AS [Name], 
+    [vwIsInRole].[UserId] AS [UserId], 
+    [vwIsInRole].[UserName] AS [UserName], 
+    [vwIsInRole].[RouteId] AS [RouteId], 
+    [vwIsInRole].[RoutePath] AS [RoutePath], 
+    [vwIsInRole].[RouteAppId] AS [RouteAppId]
+    FROM [Access].[vwIsInRole] AS [vwIsInRole]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vwRoleRoutes" EntityType="Self.vwRoleRoutes" store:Type="Views" store:Schema="Access">
-      <DefiningQuery>
-              SELECT
-              [vwRoleRoutes].[RoleId] AS [RoleId],
-              [vwRoleRoutes].[RouteId] AS [RouteId],
-              [vwRoleRoutes].[AppId] AS [AppId],
-              [vwRoleRoutes].[FilePath] AS [FilePath],
-              [vwRoleRoutes].[FileName] AS [FileName],
-              [vwRoleRoutes].[AppPath] AS [AppPath],
-              [vwRoleRoutes].[RoutePath] AS [RoutePath]
-              FROM [Access].[vwRoleRoutes] AS [vwRoleRoutes]
-            </DefiningQuery>
+      <DefiningQuery>SELECT 
+    [vwRoleRoutes].[RoleId] AS [RoleId], 
+    [vwRoleRoutes].[RouteId] AS [RouteId], 
+    [vwRoleRoutes].[AppId] AS [AppId], 
+    [vwRoleRoutes].[FilePath] AS [FilePath], 
+    [vwRoleRoutes].[FileName] AS [FileName], 
+    [vwRoleRoutes].[AppPath] AS [AppPath], 
+    [vwRoleRoutes].[RoutePath] AS [RoutePath]
+    FROM [Access].[vwRoleRoutes] AS [vwRoleRoutes]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vwRoles" EntityType="Self.vwRoles" store:Type="Views" store:Schema="Access">
+      <DefiningQuery>SELECT 
+    [vwRoles].[Id] AS [Id], 
+    [vwRoles].[Sequence] AS [Sequence], 
+    [vwRoles].[Name] AS [Name], 
+    [vwRoles].[AreaId] AS [AreaId]
+    FROM [Access].[vwRoles] AS [vwRoles]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vwRoleUser" EntityType="Self.vwRoleUser" store:Type="Views" store:Schema="Access">
-      <DefiningQuery>
-              SELECT
-              [vwRoleUser].[RoleId] AS [RoleId],
-              [vwRoleUser].[UserId] AS [UserId],
-              [vwRoleUser].[Email] AS [Email],
-              [vwRoleUser].[UserName] AS [UserName]
-              FROM [Access].[vwRoleUser] AS [vwRoleUser]
-            </DefiningQuery>
+      <DefiningQuery>SELECT 
+    [vwRoleUser].[RoleId] AS [RoleId], 
+    [vwRoleUser].[UserId] AS [UserId], 
+    [vwRoleUser].[Email] AS [Email], 
+    [vwRoleUser].[UserName] AS [UserName]
+    FROM [Access].[vwRoleUser] AS [vwRoleUser]</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="FK_AspNetUsers_AspNetUsers" Association="Self.FK_AspNetUsers_AspNetUsers">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
