@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Security.Principal;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
+using SecurityFramework.Utilities.Common;
 
 namespace SecurityFramework
 {
@@ -39,9 +37,7 @@ namespace SecurityFramework
                     Value = _antiXsrfTokenValue
                 };
                 if (FormsAuthentication.RequireSSL && Request.IsSecureConnection)
-                {
                     responseCookie.Secure = true;
-                }
                 Response.Cookies.Set(responseCookie);
             }
 
@@ -54,16 +50,14 @@ namespace SecurityFramework
             {
                 // Set Anti-XSRF token
                 ViewState[AntiXsrfTokenKey] = Page.ViewStateUserKey;
-                ViewState[AntiXsrfUserNameKey] = Context.User.Identity.Name ?? String.Empty;
+                ViewState[AntiXsrfUserNameKey] = Context.User.Identity.Name ?? string.Empty;
             }
             else
             {
                 // Validate the Anti-XSRF token
-                if ((string)ViewState[AntiXsrfTokenKey] != _antiXsrfTokenValue
-                    || (string)ViewState[AntiXsrfUserNameKey] != (Context.User.Identity.Name ?? String.Empty))
-                {
+                if ((string) ViewState[AntiXsrfTokenKey] != _antiXsrfTokenValue
+                    || (string) ViewState[AntiXsrfUserNameKey] != (Context.User.Identity.Name ?? string.Empty))
                     throw new InvalidOperationException("Validation of Anti-XSRF token failed.");
-                }
             }
         }
 
@@ -72,9 +66,9 @@ namespace SecurityFramework
             if (!IsPostBack)
             {
                 // Initialize the Current User in the Global Variables
-                ApplicationCommon.SetupUser();
+                AppCommon.SetupUser();
                 // Get application path
-                ApplicationCommon.AppPath = Request.ApplicationPath;
+                AppCommon.AppPath = Request.ApplicationPath;
             }
         }
 
@@ -82,15 +76,7 @@ namespace SecurityFramework
         {
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             // Null out current user
-            ApplicationCommon.KillUser();
+            AppCommon.KillUser();
         }
-
-        protected static bool IsInRole(string pathAndQuery)
-        {
-            return ApplicationCommon.IsInRole(pathAndQuery);
-        }
-
-
     }
-
 }

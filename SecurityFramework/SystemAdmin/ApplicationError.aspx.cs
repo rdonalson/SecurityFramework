@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.UI;
+using SecurityFramework.Utilities.Common;
 
 namespace SecurityFramework.SystemAdmin
 {
@@ -10,7 +11,7 @@ namespace SecurityFramework.SystemAdmin
             try
             {
                 // Get the last error from the server
-                Exception ex = ApplicationCommon.LastException;
+                Exception ex = AppCommon.LastException;
 
                 // Create a safe message
                 var safeMsg = "A problem has occurred in the web site. ";
@@ -37,7 +38,7 @@ namespace SecurityFramework.SystemAdmin
 
                 // Clear the error from the server
                 Server.ClearError();
-                ApplicationCommon.LastException = null;
+                AppCommon.LastException = null;
             }
             catch (Exception ex)
             {

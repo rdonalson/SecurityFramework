@@ -77,6 +77,10 @@ C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.Owin.Security.OAuth.dll
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.Practices.ServiceLocation.dll
+C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.Practices.Unity.Configuration.dll
+C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.Practices.Unity.dll
+C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.Practices.Unity.RegistrationByConvention.dll
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.ScriptManager.MSAjax.dll
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.ScriptManager.WebForms.dll
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.Web.Infrastructure.dll
@@ -110,6 +114,11 @@ C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.Practices.ServiceLocation.pdb
+C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.Practices.ServiceLocation.xml
+C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.Practices.Unity.xml
+C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.Practices.Unity.Configuration.xml
+C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.Practices.Unity.RegistrationByConvention.xml
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Newtonsoft.Json.xml
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\System.Web.Optimization.xml
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.AspNet.FriendlyUrls.xml
@@ -130,4 +139,3 @@ C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\System.Web.Providers.xml
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\obj\Debug\SecurityFramework.dll
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\obj\Debug\SecurityFramework.pdb
-C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\obj\Debug\SecurityFramework.csprojResolveAssemblyReference.cache

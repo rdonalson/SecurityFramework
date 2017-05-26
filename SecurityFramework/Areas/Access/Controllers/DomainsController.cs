@@ -3,8 +3,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using SecurityFramework.Areas.Access.Models.Common;
 using SecurityFramework.Areas.Access.Models.Entity;
+using SecurityFramework.Areas.Access.Models.Utils;
+using SecurityFramework.Utilities.Common;
 
 namespace SecurityFramework.Areas.Access.Controllers
 {
@@ -12,19 +13,19 @@ namespace SecurityFramework.Areas.Access.Controllers
     [Authorize]
     public class DomainsController : Controller
     {
+        private readonly AccessUtils _accessUtils;
         private readonly AccessEntities _db;
-        private readonly Utilities _utilities;
 
         public DomainsController()
         {
             _db = new AccessEntities();
-            _utilities = new Utilities(_db);
+            _accessUtils = new AccessUtils(_db);
         }
 
         // GET: Access/Domains
         public ActionResult Index()
         {
-            return View(_utilities.GetDomains().ToList());
+            return View(_accessUtils.GetDomains().ToList());
         }
 
         // GET: Access/Domains/Details/5
@@ -32,7 +33,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var domain = _utilities.GetDomains().SingleOrDefault(item => item.Id == id);
+            var domain = _accessUtils.GetDomains().SingleOrDefault(item => item.Id == id);
             if (domain == null)
                 return HttpNotFound();
             return View(domain);
@@ -54,7 +55,7 @@ namespace SecurityFramework.Areas.Access.Controllers
             if (ModelState.IsValid)
             {
                 domain.Id = Guid.NewGuid();
-                domain.AppId = ApplicationCommon.AppAttributeValue;
+                domain.AppId = AppCommon.AppAttributeValue;
                 _db.Domains.Add(domain);
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
@@ -95,7 +96,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var domain = _utilities.GetDomains().SingleOrDefault(item => item.Id == id);
+            var domain = _accessUtils.GetDomains().SingleOrDefault(item => item.Id == id);
             if (domain == null)
                 return HttpNotFound();
             return View(domain);

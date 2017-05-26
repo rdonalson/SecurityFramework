@@ -3,7 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="jumbotron">
-        <h2>Security Framework Template</h2>
+        <h2>Security Framework</h2>
 
     </div>
 

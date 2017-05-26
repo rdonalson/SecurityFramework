@@ -105,6 +105,18 @@
     <Reference Include="Microsoft.Owin.Security.Twitter, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.1.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -223,68 +235,18 @@
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Areas\Access\Models\Entity\EnAccess.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EnAccess.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EnAccess.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Areas\Access\Models\Entity\EnAccess.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EnAccess.edmx</DependentUpon>
-      <LastGenOutput>EnAccess.cs</LastGenOutput>
-    </Content>
-    <Content Include="Areas\Access\Views\web.config" />
-    <Content Include="Contact.aspx" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.css.map">
-      <DependentUpon>bootstrap-theme.css</DependentUpon>
-    </Content>
-    <Content Include="Content\bootstrap-theme.min.css">
-      <DependentUpon>bootstrap-theme.css</DependentUpon>
-    </Content>
-    <Content Include="Content\bootstrap-theme.min.css.map">
-      <DependentUpon>bootstrap-theme.css</DependentUpon>
-    </Content>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.css.map">
-      <DependentUpon>bootstrap.css</DependentUpon>
-    </Content>
-    <Content Include="Content\bootstrap.min.css">
-      <DependentUpon>bootstrap.css</DependentUpon>
-    </Content>
-    <Content Include="Content\bootstrap.min.css.map">
-      <DependentUpon>bootstrap.css</DependentUpon>
-    </Content>
-    <Content Include="Content\gijgo\checkbox.css" />
-    <Content Include="Content\gijgo\checkbox.min.css" />
-    <Content Include="Content\gijgo\dialog.css" />
-    <Content Include="Content\gijgo\dialog.min.css" />
-    <Content Include="Content\gijgo\editor.css" />
-    <Content Include="Content\gijgo\editor.min.css" />
-    <Content Include="Content\gijgo\grid.css" />
-    <Content Include="Content\gijgo\grid.min.css" />
-    <Content Include="Content\gijgo\tree.css" />
-    <Content Include="Content\gijgo\tree.min.css" />
-    <Content Include="Content\images\icons\favicon.ico" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Default.aspx" />
-    <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Global.asax" />
-    <Content Include="Account\Web.config" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <EntityDeploy Include="Areas\Access\Models\Entity\EnAccess.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EnAccess.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <Content Include="Areas\Access\Models\Entity\EnAccess.edmx.diagram">
       <DependentUpon>EnAccess.edmx</DependentUpon>
     </Content>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Areas\Access\Models\Entity\EnAccess.tt">
+      <DependentUpon>EnAccess.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EnAccess.cs</LastGenOutput>
+    </Content>
     <Content Include="Areas\Access\Views\AccessHome\Index.cshtml" />
     <Content Include="Areas\Access\Views\DomainRoles\Create.cshtml" />
     <Content Include="Areas\Access\Views\DomainRoles\Delete.cshtml" />
@@ -358,24 +320,86 @@
     <Content Include="Areas\Access\Views\Shops\Details.cshtml" />
     <Content Include="Areas\Access\Views\Shops\Edit.cshtml" />
     <Content Include="Areas\Access\Views\Shops\Index.cshtml" />
+    <Content Include="Areas\Access\Views\web.config" />
     <Content Include="Areas\Access\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Booking\Views\BookingHome\Index.cshtml" />
-    <Content Include="Areas\Booking\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Booking\Views\web.config" />
-    <Content Include="Areas\Booking\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Operator\Views\OperatorHome\Index.cshtml" />
-    <Content Include="Areas\Operator\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Operator\Views\web.config" />
-    <Content Include="Areas\Operator\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Validation\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Validation\Views\ValidationHome\Index.cshtml" />
-    <Content Include="Areas\Validation\Views\web.config" />
-    <Content Include="Areas\Validation\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Corporate\Views\web.config" />
+    <Content Include="Areas\GlenlakePkwy\Views\Glenlake\Index.cshtml" />
+    <Content Include="Areas\GlenlakePkwy\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\GlenlakePkwy\Views\web.config" />
+    <Content Include="Areas\GlenlakePkwy\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Shipping\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Shipping\Views\Shipping\Index.cshtml" />
+    <Content Include="Areas\Shipping\Views\web.config" />
+    <Content Include="Areas\Shipping\Views\_ViewStart.cshtml" />
+    <Content Include="Contact.aspx" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.css.map">
+      <DependentUpon>bootstrap-theme.css</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap-theme.min.css">
+      <DependentUpon>bootstrap-theme.css</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap-theme.min.css.map">
+      <DependentUpon>bootstrap-theme.css</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.css.map">
+      <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap.min.css">
+      <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap.min.css.map">
+      <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
+    <Content Include="Content\gijgo\checkbox.css" />
+    <Content Include="Content\gijgo\checkbox.min.css" />
+    <Content Include="Content\gijgo\dialog.css" />
+    <Content Include="Content\gijgo\dialog.min.css" />
+    <Content Include="Content\gijgo\editor.css" />
+    <Content Include="Content\gijgo\editor.min.css" />
+    <Content Include="Content\gijgo\grid.css" />
+    <Content Include="Content\gijgo\grid.min.css" />
+    <Content Include="Content\gijgo\tree.css" />
+    <Content Include="Content\gijgo\tree.min.css" />
+    <Content Include="Content\images\icons\favicon.ico" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Default.aspx" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Account\Web.config" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="MorrisRoad\CustomerSolutions\Engagement.aspx" />
+    <Content Include="MorrisRoad\CustomerSolutions\Home.aspx" />
+    <Content Include="MorrisRoad\CustomerSolutions\Management.aspx" />
+    <Content Include="MorrisRoad\CustomerSolutions\PMD.aspx" />
+    <Content Include="MorrisRoad\Home.aspx" />
+    <Content Include="MorrisRoad\Operations\Home.aspx" />
+    <Content Include="MorrisRoad\Operations\Management.aspx" />
+    <Content Include="Opportunity\Arial\Assessment.aspx" />
+    <Content Include="Opportunity\Arial\Home.aspx" />
+    <Content Include="Opportunity\Arial\Management.aspx" />
+    <Content Include="Opportunity\Arial\Qualification.aspx" />
     <Content Include="Opportunity\Axial.aspx" />
     <Content Include="Opportunity\Home.aspx" />
-    <Content Include="Opportunity\Manage.aspx" />
+    <Content Include="Opportunity\Management.aspx" />
     <Content Include="Opportunity\Millennium.aspx" />
-    <Content Include="Opportunity\Site.Master" />
+    <Content Include="Opportunity\Opportunity.Master" />
+    <Content Include="MorrisRoad\MorrisRoad.Master" />
+    <Content Include="Areas\Corporate\Views\Corporate\Executive.cshtml" />
+    <Content Include="Areas\Corporate\Views\Corporate\HR.cshtml" />
+    <Content Include="Areas\Corporate\Views\Corporate\Index.cshtml" />
+    <Content Include="Areas\Corporate\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Corporate\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Shipping\Views\Shipping\Air.cshtml" />
+    <Content Include="Areas\Shipping\Views\Shipping\Ground.cshtml" />
     <None Include="Properties\PublishProfiles\Local IIS.pubxml" />
     <None Include="Properties\PublishProfiles\Remote Server.pubxml" />
     <None Include="Properties\Settings.settings">
@@ -572,8 +596,6 @@
     <Compile Include="Account\VerifyPhoneNumber.aspx.designer.cs">
       <DependentUpon>VerifyPhoneNumber.aspx</DependentUpon>
     </Compile>
-    <Compile Include="App_Code\Attributes.cs" />
-    <Compile Include="App_Code\Utils.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
@@ -588,11 +610,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Access\AccessAreaRegistration.cs" />
     <Compile Include="Areas\Access\Controllers\AccessHomeController.cs" />
-    <Compile Include="Areas\Access\Models\Entity\vwRole.cs">
-      <DependentUpon>EnAccess.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Access\Models\View\Role.cs" />
-    <Compile Include="Areas\Access\Models\View\Area.cs" />
     <Compile Include="Areas\Access\Controllers\DomainRolesController.cs" />
     <Compile Include="Areas\Access\Controllers\DomainsController.cs" />
     <Compile Include="Areas\Access\Controllers\GroupRolesController.cs" />
@@ -607,7 +624,6 @@
     <Compile Include="Areas\Access\Controllers\RoutesController.cs" />
     <Compile Include="Areas\Access\Controllers\ShopRolesController .cs" />
     <Compile Include="Areas\Access\Controllers\ShopsController.cs" />
-    <Compile Include="Areas\Access\Models\Common\Utilities.cs" />
     <Compile Include="Areas\Access\Models\Entity\AspNetUser.cs">
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
@@ -615,19 +631,19 @@
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Access\Models\Entity\EnAccess.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>EnAccess.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Areas\Access\Models\Entity\EnAccess.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>EnAccess.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Areas\Access\Models\Entity\EnAccess.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>EnAccess.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Areas\Access\Models\Entity\Group.cs">
       <DependentUpon>EnAccess.tt</DependentUpon>
@@ -671,21 +687,27 @@
     <Compile Include="Areas\Access\Models\Entity\vwIsInRole.cs">
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Access\Models\Entity\vwRole.cs">
+      <DependentUpon>EnAccess.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Access\Models\Entity\vwRoleRoute.cs">
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Access\Models\Entity\vwRoleUser.cs">
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Access\Models\Utils\AccessUtils.cs" />
+    <Compile Include="Areas\Access\Models\View\Area.cs" />
     <Compile Include="Areas\Access\Models\View\ListViewModel.cs" />
+    <Compile Include="Areas\Access\Models\View\Role.cs" />
     <Compile Include="Areas\Access\Models\View\Route.cs" />
     <Compile Include="Areas\Access\Models\View\User.cs" />
-    <Compile Include="Areas\Booking\BookingAreaRegistration.cs" />
-    <Compile Include="Areas\Booking\Controllers\BookingHomeController.cs" />
-    <Compile Include="Areas\Operator\Controllers\OperatorHomeController.cs" />
-    <Compile Include="Areas\Operator\OperatorAreaRegistration.cs" />
-    <Compile Include="Areas\Validation\Controllers\ValidationHomeController.cs" />
-    <Compile Include="Areas\Validation\ValidationAreaRegistration.cs" />
+    <Compile Include="Areas\Corporate\Controllers\CorporateController.cs" />
+    <Compile Include="Areas\Corporate\CorporateAreaRegistration.cs" />
+    <Compile Include="Areas\GlenlakePkwy\Controllers\GlenlakeController.cs" />
+    <Compile Include="Areas\GlenlakePkwy\GlenlakePkwyAreaRegistration.cs" />
+    <Compile Include="Areas\Shipping\Controllers\ShippingController.cs" />
+    <Compile Include="Areas\Shipping\ShippingAreaRegistration.cs" />
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -705,6 +727,90 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="MorrisRoad\CustomerSolutions\Engagement.aspx.cs">
+      <DependentUpon>Engagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MorrisRoad\CustomerSolutions\Engagement.aspx.designer.cs">
+      <DependentUpon>Engagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MorrisRoad\CustomerSolutions\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MorrisRoad\CustomerSolutions\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MorrisRoad\CustomerSolutions\Management.aspx.cs">
+      <DependentUpon>Management.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MorrisRoad\CustomerSolutions\Management.aspx.designer.cs">
+      <DependentUpon>Management.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MorrisRoad\CustomerSolutions\PMD.aspx.cs">
+      <DependentUpon>PMD.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MorrisRoad\CustomerSolutions\PMD.aspx.designer.cs">
+      <DependentUpon>PMD.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MorrisRoad\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MorrisRoad\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MorrisRoad\MorrisRoad.Master.cs">
+      <DependentUpon>MorrisRoad.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MorrisRoad\MorrisRoad.Master.designer.cs">
+      <DependentUpon>MorrisRoad.Master</DependentUpon>
+    </Compile>
+    <Compile Include="MorrisRoad\Operations\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MorrisRoad\Operations\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MorrisRoad\Operations\Management.aspx.cs">
+      <DependentUpon>Management.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MorrisRoad\Operations\Management.aspx.designer.cs">
+      <DependentUpon>Management.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Opportunity\Arial\Assessment.aspx.cs">
+      <DependentUpon>Assessment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Opportunity\Arial\Assessment.aspx.designer.cs">
+      <DependentUpon>Assessment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Opportunity\Arial\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Opportunity\Arial\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Opportunity\Arial\Management.aspx.cs">
+      <DependentUpon>Management.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Opportunity\Arial\Management.aspx.designer.cs">
+      <DependentUpon>Management.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Opportunity\Arial\Qualification.aspx.cs">
+      <DependentUpon>Qualification.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Opportunity\Arial\Qualification.aspx.designer.cs">
+      <DependentUpon>Qualification.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Opportunity\Axial.aspx.cs">
       <DependentUpon>Axial.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -719,12 +825,12 @@
     <Compile Include="Opportunity\Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Opportunity\Manage.aspx.cs">
-      <DependentUpon>Manage.aspx</DependentUpon>
+    <Compile Include="Opportunity\Management.aspx.cs">
+      <DependentUpon>Management.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Opportunity\Manage.aspx.designer.cs">
-      <DependentUpon>Manage.aspx</DependentUpon>
+    <Compile Include="Opportunity\Management.aspx.designer.cs">
+      <DependentUpon>Management.aspx</DependentUpon>
     </Compile>
     <Compile Include="Opportunity\Millennium.aspx.cs">
       <DependentUpon>Millennium.aspx</DependentUpon>
@@ -733,12 +839,12 @@
     <Compile Include="Opportunity\Millennium.aspx.designer.cs">
       <DependentUpon>Millennium.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Opportunity\Site.Master.cs">
-      <DependentUpon>Site.Master</DependentUpon>
+    <Compile Include="Opportunity\Opportunity.Master.cs">
+      <DependentUpon>Opportunity.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Opportunity\Site.Master.designer.cs">
-      <DependentUpon>Site.Master</DependentUpon>
+    <Compile Include="Opportunity\Opportunity.Master.designer.cs">
+      <DependentUpon>Opportunity.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -789,6 +895,10 @@
     <Compile Include="SystemAdmin\SystemAdmin.aspx.designer.cs">
       <DependentUpon>SystemAdmin.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\Common\Access.cs" />
+    <Compile Include="Utilities\Common\AppCommon.cs" />
+    <Compile Include="Utilities\Common\FindRoutes.cs" />
+    <Compile Include="Utilities\Common\SessionUtil.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -799,13 +909,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Access\Views\Areas\" />
     <Folder Include="Areas\Access\Views\Users\" />
-    <Folder Include="Areas\Booking\Models\" />
-    <Folder Include="Areas\Operator\Models\" />
-    <Folder Include="Areas\Validation\Models\" />
-    <Folder Include="Areas\Validation\Views\Validation\" />
+    <Folder Include="Areas\Corporate\Models\" />
+    <Folder Include="Areas\GlenlakePkwy\Models\" />
+    <Folder Include="Areas\Shipping\Models\" />
     <Folder Include="Controllers\" />
+    <Folder Include="Utilities\Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -818,6 +927,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Areas\Access\Models\Entity\EnAccess.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EnAccess.Designer.cs</LastGenOutput>
+    </EntityDeploy>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

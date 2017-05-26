@@ -3,8 +3,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using SecurityFramework.Areas.Access.Models.Common;
 using SecurityFramework.Areas.Access.Models.Entity;
+using SecurityFramework.Areas.Access.Models.Utils;
+using SecurityFramework.Utilities.Common;
 
 namespace SecurityFramework.Areas.Access.Controllers
 {
@@ -12,19 +13,19 @@ namespace SecurityFramework.Areas.Access.Controllers
     [Authorize]
     public class OrganizationsController : Controller
     {
+        private readonly AccessUtils _accessUtils;
         private readonly AccessEntities _db;
-        private readonly Utilities _utilities;
 
         public OrganizationsController()
         {
             _db = new AccessEntities();
-            _utilities = new Utilities(_db);
+            _accessUtils = new AccessUtils(_db);
         }
 
         // GET: Access/Organizations
         public ActionResult Index()
         {
-            return View(_utilities.GetOrganizations().ToList());
+            return View(_accessUtils.GetOrganizations().ToList());
         }
 
         // GET: Access/Organizations/Details/5
@@ -32,7 +33,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var organization = _utilities.GetOrganizations().SingleOrDefault(item => item.Id == id);
+            var organization = _accessUtils.GetOrganizations().SingleOrDefault(item => item.Id == id);
             if (organization == null)
                 return HttpNotFound();
             return View(organization);
@@ -41,7 +42,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         // GET: Access/Organizations/Create
         public ActionResult Create()
         {
-            ViewBag.DomainId = new SelectList(_utilities.GetDomains(), "Id", "Breadcrumb");
+            ViewBag.DomainId = new SelectList(_accessUtils.GetDomains(), "Id", "Breadcrumb");
             return View();
         }
 
@@ -55,13 +56,13 @@ namespace SecurityFramework.Areas.Access.Controllers
             if (ModelState.IsValid)
             {
                 organization.Id = Guid.NewGuid();
-                organization.AppId = ApplicationCommon.AppAttributeValue;
+                organization.AppId = AppCommon.AppAttributeValue;
                 _db.Organizations.Add(organization);
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
 
-            ViewBag.DomainId = new SelectList(_utilities.GetDomains(), "Id", "Breadcrumb", organization.DomainId);
+            ViewBag.DomainId = new SelectList(_accessUtils.GetDomains(), "Id", "Breadcrumb", organization.DomainId);
             return View(organization);
         }
 
@@ -73,7 +74,7 @@ namespace SecurityFramework.Areas.Access.Controllers
             var organization = _db.Organizations.Find(id);
             if (organization == null)
                 return HttpNotFound();
-            ViewBag.DomainId = new SelectList(_utilities.GetDomains(), "Id", "Breadcrumb", organization.DomainId);
+            ViewBag.DomainId = new SelectList(_accessUtils.GetDomains(), "Id", "Breadcrumb", organization.DomainId);
             return View(organization);
         }
 
@@ -90,7 +91,7 @@ namespace SecurityFramework.Areas.Access.Controllers
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
-            ViewBag.DomainId = new SelectList(_utilities.GetDomains(), "Id", "Breadcrumb", organization.DomainId);
+            ViewBag.DomainId = new SelectList(_accessUtils.GetDomains(), "Id", "Breadcrumb", organization.DomainId);
             return View(organization);
         }
 
@@ -99,7 +100,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var organization = _utilities.GetOrganizations().SingleOrDefault(item => item.Id == id);
+            var organization = _accessUtils.GetOrganizations().SingleOrDefault(item => item.Id == id);
             if (organization == null)
                 return HttpNotFound();
             return View(organization);

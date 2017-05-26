@@ -1,0 +1,153 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MorrisRoad.master.cs" Inherits="SecurityFramework.MorrisRoad.MorrisRoad" %>
+<%@ Import Namespace="SecurityFramework.Utilities.Common" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE"/>
+    <link rel="shortcut icon" href="~/Content/Images/Icons/favicon.ico" id="favicon" type="image/x-icon"/>
+
+    <title><%: Page.Title %> - Security Framework</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    <webopt:bundlereference runat="server" path="~/Content/css"/>
+
+</head>
+<body>
+<form id="frmMain" runat="server">
+    <asp:ScriptManager ID="smMorrisRoad" runat="server">
+        <Scripts>
+            <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+            <%--Framework Scripts--%>
+            <asp:ScriptReference Name="MsAjaxBundle"/>
+            <asp:ScriptReference Name="jquery"/>
+            <asp:ScriptReference Name="bootstrap"/>
+            <asp:ScriptReference Name="respond"/>
+            <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js"/>
+            <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js"/>
+            <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js"/>
+            <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js"/>
+            <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js"/>
+            <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js"/>
+            <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js"/>
+            <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js"/>
+            <asp:ScriptReference Name="WebFormsBundle"/>
+            <%--Site Scripts--%>
+        </Scripts>
+    </asp:ScriptManager>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" runat="server" href="~/">Main</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <%
+                        if (AppCommon.IsInRole("/MorrisRoad/Home"))
+                        {
+                    %>
+                        <li>
+                            <a runat="server" href="~/MorrisRoad/Home">Morris Road Home</a>
+                        </li>
+                    <%
+                        }
+                        if (AppCommon.IsInRole("/MorrisRoad/CustomerSolutions/Home"))
+                        {
+                    %>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle"
+                               data-toggle="dropdown"
+                               role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                Customer Solutions&nbsp;<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a runat="server" href="~/MorrisRoad/CustomerSolutions/Home">Home</a>
+                                </li>
+                                <%
+                                    if (AppCommon.IsInRole("/MorrisRoad/CustomerSolutions/Management"))
+                                    {
+                                %>
+                                    <li>
+                                        <a runat="server" href="~/MorrisRoad/CustomerSolutions/Management">Management</a>
+                                    </li>
+                                <%
+                                    }
+                                    if (AppCommon.IsInRole("/MorrisRoad/CustomerSolutions/Engagement"))
+                                    {
+                                %>
+                                    <li>
+                                        <a runat="server" href="~/MorrisRoad/CustomerSolutions/Engagement">Engagement</a>
+                                    </li>
+                                <%
+                                    }
+                                    if (AppCommon.IsInRole("/MorrisRoad/CustomerSolutions/PMD"))
+                                    {
+                                %>
+                                    <li>
+                                        <a runat="server" href="~/MorrisRoad/CustomerSolutions/PMD">PMD</a>
+                                    </li>
+                                <%
+                                    }
+                                %>
+                            </ul>
+                        </li>
+                    <%
+                        }
+                        if (AppCommon.IsInRole("/MorrisRoad/Operations/Home"))
+                        {
+                    %>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle"
+                               data-toggle="dropdown"
+                               role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                Operations&nbsp;<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a runat="server" href="~/MorrisRoad/Operations/Home">Home</a>
+                                </li>
+                                <%
+                                    if (AppCommon.IsInRole("/MorrisRoad/Operations/Management"))
+                                    {
+                                %>
+                                    <li>
+                                        <a runat="server" href="~/MorrisRoad/Operations/Management">Management</a>
+                                    </li>
+                                <%
+                                    }
+                                %>
+                            </ul>
+                        </li>
+                    <%
+                        }
+                    %>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+        <hr/>
+        <footer>
+            <p>&copy; <%: DateTime.Now.Year %> - Security Framework</p>
+        </footer>
+    </div>
+</form>
+</body>
+</html>

@@ -12,9 +12,12 @@ namespace SecurityFramework
                 "~/Content/bootstrap.css",
                 "~/Content/site.css"));
 
-            bundles.Add(new StyleBundle("~/Content/gijgo").Include(
-                "~/Content/gijgo/grid.css",
+            bundles.Add(new StyleBundle("~/Content/gijgo/grid").Include(
+                "~/Content/gijgo/grid.css"));
+
+            bundles.Add(new StyleBundle("~/Content/gijgo/tree").Include(
                 "~/Content/gijgo/tree.css"));
+
 
             bundles.Add(new ScriptBundle("~/bundles/WebFormsJs").Include(
                 "~/Scripts/WebForms/WebForms.js",
@@ -47,9 +50,11 @@ namespace SecurityFramework
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/bootstrap.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/gijgo").Include(
-                "~/Scripts/gijgo/grid/grid.js",
+            bundles.Add(new ScriptBundle("~/bundles/gijgo/tree").Include(
                 "~/Scripts/gijgo/tree/tree.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/gijgo/grid").Include(
+                "~/Scripts/gijgo/grid/grid.js"));
 
             ScriptManager.ScriptResourceMapping.AddDefinition(
                 "respond",
@@ -58,6 +63,8 @@ namespace SecurityFramework
                     Path = "~/Scripts/respond.min.js",
                     DebugPath = "~/Scripts/respond.js"
                 });
+
+
         }
     }
 }

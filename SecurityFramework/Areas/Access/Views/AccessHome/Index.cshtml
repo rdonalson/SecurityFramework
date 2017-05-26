@@ -1,11 +1,10 @@
 ﻿@{
     ViewBag.Title = "Access Home";
-
 }
+@Styles.Render("~/Content/gijgo/tree")
+@Styles.Render("~/Content/gijgo/grid")
 
 <h2>Access Home</h2>
-@Styles.Render("~/Content/css")
-@Styles.Render("~/Content/gijgo")
 
 <div >
     <table class="table table-bordered">
@@ -36,7 +35,6 @@
         </tbody>
     </table>
 </div>
-@Scripts.Render("~/bundles/gijgo")
 @section Scripts {
     <script type="text/javascript">
         var applicationPath = '@ViewBag.ApplicationPath';
@@ -47,7 +45,7 @@
                 dataSource: applicationPath + '/Access/AccessHome/GetAreas'
             });
             areaTree.on('select',
-                function (e, node, id) {
+                function(e, node, id) {
                     //debugger;
                     roleGrid.reload({ guid: id });
                     userGrid.reload({ guid: id });
@@ -94,6 +92,5 @@
         });
     </script>
 }
-
-
-
+@Scripts.Render("~/bundles/gijgo/tree")
+@Scripts.Render("~/bundles/gijgo/grid")

@@ -3,8 +3,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using SecurityFramework.Areas.Access.Models.Common;
 using SecurityFramework.Areas.Access.Models.Entity;
+using SecurityFramework.Areas.Access.Models.Utils;
+using SecurityFramework.Utilities.Common;
 
 namespace SecurityFramework.Areas.Access.Controllers
 {
@@ -12,19 +13,19 @@ namespace SecurityFramework.Areas.Access.Controllers
     [Authorize]
     public class GroupsController : Controller
     {
+        private readonly AccessUtils _accessUtils;
         private readonly AccessEntities _db;
-        private readonly Utilities _utilities;
 
         public GroupsController()
         {
             _db = new AccessEntities();
-            _utilities = new Utilities(_db);
+            _accessUtils = new AccessUtils(_db);
         }
 
         // GET: Access/Groups
         public ActionResult Index()
         {
-            return View(_utilities.GetGroups().ToList());
+            return View(_accessUtils.GetGroups().ToList());
         }
 
         // GET: Access/Groups/Details/5
@@ -32,7 +33,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var group = _utilities.GetGroups().SingleOrDefault(item => item.Id == id);
+            var group = _accessUtils.GetGroups().SingleOrDefault(item => item.Id == id);
             if (group == null)
                 return HttpNotFound();
             return View(group);
@@ -41,7 +42,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         // GET: Access/Groups/Create
         public ActionResult Create()
         {
-            ViewBag.OrganizationId = new SelectList(_utilities.GetOrganizations(), "Id", "Breadcrumb");
+            ViewBag.OrganizationId = new SelectList(_accessUtils.GetOrganizations(), "Id", "Breadcrumb");
             return View();
         }
 
@@ -55,12 +56,12 @@ namespace SecurityFramework.Areas.Access.Controllers
             if (ModelState.IsValid)
             {
                 group.Id = Guid.NewGuid();
-                group.AppId = ApplicationCommon.AppAttributeValue;
+                group.AppId = AppCommon.AppAttributeValue;
                 _db.Groups.Add(group);
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
-            ViewBag.OrganizationId = new SelectList(_utilities.GetOrganizations(), "Id", "Breadcrumb",
+            ViewBag.OrganizationId = new SelectList(_accessUtils.GetOrganizations(), "Id", "Breadcrumb",
                 group.OrganizationId);
 
             return View(group);
@@ -74,7 +75,7 @@ namespace SecurityFramework.Areas.Access.Controllers
             var group = _db.Groups.Find(id);
             if (group == null)
                 return HttpNotFound();
-            ViewBag.OrganizationId = new SelectList(_utilities.GetOrganizations(), "Id", "Breadcrumb",
+            ViewBag.OrganizationId = new SelectList(_accessUtils.GetOrganizations(), "Id", "Breadcrumb",
                 group.OrganizationId);
             return View(group);
         }
@@ -92,7 +93,7 @@ namespace SecurityFramework.Areas.Access.Controllers
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
-            ViewBag.OrganizationId = new SelectList(_utilities.GetOrganizations(), "Id", "Breadcrumb",
+            ViewBag.OrganizationId = new SelectList(_accessUtils.GetOrganizations(), "Id", "Breadcrumb",
                 group.OrganizationId);
             return View(group);
         }
@@ -102,7 +103,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var group = _utilities.GetGroups().SingleOrDefault(item => item.Id == id);
+            var group = _accessUtils.GetGroups().SingleOrDefault(item => item.Id == id);
             if (group == null)
                 return HttpNotFound();
             return View(group);

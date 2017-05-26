@@ -10,6 +10,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Http;
+using SecurityFramework.Utilities.Common;
 using Route = SecurityFramework.Areas.Access.Models.Entity.Route;
 
 namespace SecurityFramework
@@ -21,7 +22,7 @@ namespace SecurityFramework
             // Get application id
             var assembly = Assembly.GetExecutingAssembly();
             var attribute = (GuidAttribute)assembly.GetCustomAttributes(typeof(GuidAttribute), true)[0];
-            ApplicationCommon.AppAttributeValue = new Guid(attribute.Value);
+            AppCommon.AppAttributeValue = new Guid(attribute.Value);
 
             // Code that runs on application startup
             AreaRegistration.RegisterAllAreas();
@@ -33,14 +34,14 @@ namespace SecurityFramework
             IFindRoutes findRoutes = new FindRoutes();
             var root = HttpContext.Current.Server.MapPath("~");
             var files = new List<Route>();
-            findRoutes.GetAppFiles(ApplicationCommon.AppAttributeValue, new[] { root }, root, new[] { "*.cshtml", "*.aspx" }, ref files);
-            findRoutes.AddToTable(ApplicationCommon.AppAttributeValue, files);
+            findRoutes.GetAppFiles(AppCommon.AppAttributeValue, new[] { root }, root, new[] { "*.cshtml", "*.aspx" }, ref files);
+            findRoutes.AddToTable(AppCommon.AppAttributeValue, files);
 
         }
 
         protected void Application_Error(object sender, EventArgs e)
         {
-            ApplicationCommon.LastException = Server.GetLastError();
+            AppCommon.LastException = Server.GetLastError();
             // Pass the error on to the Generic Error page
             Response.Redirect("~/SystemAdmin/ApplicationError.aspx", true);
 

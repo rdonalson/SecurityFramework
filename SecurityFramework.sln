@@ -1,13 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.4
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityFramework", "SecurityFramework\SecurityFramework.csproj", "{5BF83D87-A677-4F84-B265-024180D17747}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7C54FA27-CFA7-42DC-BD77-4A7ABE85D026}"
 	ProjectSection(SolutionItems) = preProject
 		Solution Items\Create SecurityFramework Data Schema & Data.sql = Solution Items\Create SecurityFramework Data Schema & Data.sql
+		Solution Items\Demo Hierarchies in SecurityFramework.PNG = Solution Items\Demo Hierarchies in SecurityFramework.PNG
 		Solution Items\SecurityFramework Access ER Diagram.PNG = Solution Items\SecurityFramework Access ER Diagram.PNG
 	EndProjectSection
 EndProject

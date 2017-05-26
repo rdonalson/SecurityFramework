@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using SecurityFramework.Utilities.Common;
 
 namespace SecurityFramework.SystemAdmin
 {
@@ -47,7 +48,7 @@ namespace SecurityFramework.SystemAdmin
 
         private void Page_Error(object sender, EventArgs e)
         {
-            ApplicationCommon.LastException = Server.GetLastError();
+            AppCommon.LastException = Server.GetLastError();
             // Pass the error on to the Generic Error page
             Response.Redirect("~/SystemAdmin/ApplicationError.aspx", true);
         }

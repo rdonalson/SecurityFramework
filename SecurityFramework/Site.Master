@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="SecurityFramework.SiteMaster" %>
+<%@ Import Namespace="SecurityFramework.Utilities.Common" %>
 
 <!DOCTYPE html>
 
@@ -9,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
     <link rel="shortcut icon" href="~/Content/Images/Icons/favicon.ico" id="favicon" type="image/x-icon" />
 
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title><%: Page.Title %> - Security Framework</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -18,7 +19,7 @@
 </head>
 <body>
 <form runat="server">
-    <asp:ScriptManager runat="server">
+    <asp:ScriptManager ID="smMain" runat="server">
         <Scripts>
             <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
             <%--Framework Scripts--%>
@@ -47,12 +48,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" runat="server" href="~/">Application name</a>
+                <a class="navbar-brand" runat="server" href="~/">Home</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <%
-                        if (IsInRole("/Access/AccessHome"))
+                        if (AppCommon.IsInRole("/Access/AccessHome"))
                         {
                     %>
                         <li>
@@ -60,15 +61,31 @@
                         </li>
                     <%
                         }
-                        if (IsInRole("/SystemAdmin/SystemAdmin"))
+                        if (AppCommon.IsInRole("/SystemAdmin/SystemAdmin"))
                         {
                     %>
-                            <li>
-                                <a runat="server" href="~/SystemAdmin/SystemAdmin">System Admin</a>
-                            </li>
+                        <li>
+                            <a runat="server" href="~/SystemAdmin/SystemAdmin">System Admin</a>
+                        </li>
                     <%
                         }
-                        if (IsInRole("/Opportunity/Home"))
+                        if (AppCommon.IsInRole("/MorrisRoad/Home"))
+                        {
+                    %>
+                        <li>
+                            <a runat="server" href="~/MorrisRoad/Home">Morris Road</a>
+                        </li>
+                    <%
+                        }
+                        if (AppCommon.IsInRole("/GlenlakePkwy/Home"))
+                        {
+                    %>
+                        <li>
+                            <a runat="server" href="~/GlenlakePkwy/Glenlake">Glenlake Pkwy</a>
+                        </li>
+                    <%
+                        }
+                        if (AppCommon.IsInRole("/GlenlakePkwy/Home"))
                         {
                     %>
                         <li>
@@ -76,41 +93,7 @@
                         </li>
                     <%
                         }
-                        if (IsInRole("/Booking/BookingHome"))
-                        {
-                    %>
-                        <li>
-                            <a runat="server" href="~/Booking/BookingHome">Bookings</a>
-                        </li>
-                    <%
-                        }
-                        if (IsInRole("/Operator/OperatorHome"))
-                        {
-                    %>
-                        <li>
-                            <a runat="server" href="~/Operator/OperatorHome">Operators</a>
-                        </li>
-                    <%
-                        }
-                        if (IsInRole("/Validation/ValidationHome"))
-                        {
-                    %>
-                        <li>
-                            <a runat="server" href="~/Validation/ValidationHome">Validation</a>
-                        </li>
-                    <%
-                        }
-                    %>
-                    <li>
-                        <a runat="server" href="~/">Home</a>
-                    </li>
-                    <li>
-                        <a runat="server" href="~/About">About</a>
-                    </li>
-                    <li>
-                        <a runat="server" href="~/Contact">Contact</a>
-                    </li>
-                </ul>
+                    %>                  </ul>
                 <asp:LoginView runat="server" ViewStateMode="Disabled">
                     <AnonymousTemplate>
                         <ul class="nav navbar-nav navbar-right">
@@ -140,7 +123,7 @@
         <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
         <hr/>
         <footer>
-            <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
+            <p>&copy; <%: DateTime.Now.Year %> - Security Framework</p>
         </footer>
     </div>
 </form>
