@@ -400,6 +400,13 @@
     <Content Include="Areas\Corporate\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Shipping\Views\Shipping\Air.cshtml" />
     <Content Include="Areas\Shipping\Views\Shipping\Ground.cshtml" />
+    <Content Include="Areas\Louisville\Views\web.config" />
+    <Content Include="Areas\Louisville\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Louisville\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Louisville\Views\Louisville\Index.cshtml" />
+    <Content Include="Areas\Louisville\Views\Louisville\Scheduling.cshtml" />
+    <Content Include="Areas\Louisville\Views\Louisville\Freight.cshtml" />
+    <Content Include="Areas\Louisville\Views\Louisville\Maintenance.cshtml" />
     <None Include="Properties\PublishProfiles\Local IIS.pubxml" />
     <None Include="Properties\PublishProfiles\Remote Server.pubxml" />
     <None Include="Properties\Settings.settings">
@@ -706,6 +713,8 @@
     <Compile Include="Areas\Corporate\CorporateAreaRegistration.cs" />
     <Compile Include="Areas\GlenlakePkwy\Controllers\GlenlakeController.cs" />
     <Compile Include="Areas\GlenlakePkwy\GlenlakePkwyAreaRegistration.cs" />
+    <Compile Include="Areas\Louisville\Controllers\LouisvilleController.cs" />
+    <Compile Include="Areas\Louisville\LouisvilleAreaRegistration.cs" />
     <Compile Include="Areas\Shipping\Controllers\ShippingController.cs" />
     <Compile Include="Areas\Shipping\ShippingAreaRegistration.cs" />
     <Compile Include="Contact.aspx.cs">
@@ -912,6 +921,7 @@
     <Folder Include="Areas\Access\Views\Users\" />
     <Folder Include="Areas\Corporate\Models\" />
     <Folder Include="Areas\GlenlakePkwy\Models\" />
+    <Folder Include="Areas\Louisville\Models\" />
     <Folder Include="Areas\Shipping\Models\" />
     <Folder Include="Controllers\" />
     <Folder Include="Utilities\Helpers\" />
