@@ -617,6 +617,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Access\AccessAreaRegistration.cs" />
     <Compile Include="Areas\Access\Controllers\AccessHomeController.cs" />
+    <Compile Include="Areas\Access\Controllers\api\AccessHomeDataController.cs" />
     <Compile Include="Areas\Access\Controllers\DomainRolesController.cs" />
     <Compile Include="Areas\Access\Controllers\DomainsController.cs" />
     <Compile Include="Areas\Access\Controllers\GroupRolesController.cs" />
@@ -674,6 +675,9 @@
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Access\Models\Entity\Shop.cs">
+      <DependentUpon>EnAccess.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Access\Models\Entity\spUserAreas_Result.cs">
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Access\Models\Entity\vwArea.cs">
@@ -918,6 +922,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Access\Views\AccessHomeData\" />
     <Folder Include="Areas\Access\Views\Users\" />
     <Folder Include="Areas\Corporate\Models\" />
     <Folder Include="Areas\GlenlakePkwy\Models\" />

@@ -42,10 +42,10 @@
             var areaTree = $('#areaTree').tree({
                 primaryKey: 'id',
                 uiLibrary: 'bootstrap',
-                dataSource: applicationPath + '/Access/AccessHome/GetAreas'
+                dataSource: applicationPath + '/Access/AccessHomeData/GetAreas'
             });
             areaTree.on('select',
-                function(e, node, id) {
+                function (e, node, id) {
                     //debugger;
                     roleGrid.reload({ guid: id });
                     userGrid.reload({ guid: id });
@@ -61,7 +61,7 @@
         var roleGrid = $('#roleGrid').grid({
             primaryKey: 'ID',
             uiLibrary: 'bootstrap',
-            dataSource: applicationPath + '/Access/AccessHome/GetRoles',
+            dataSource: applicationPath + '/Access/AccessHomeData/GetRoles',
             autoLoad: false,
             selectionType: 'single',
             selectionMethod: 'basic',
@@ -73,7 +73,7 @@
         var userGrid = $('#userGrid').grid({
             primaryKey: 'ID',
             uiLibrary: 'bootstrap',
-            dataSource: applicationPath + '/Access/AccessHome/GetUsers',
+            dataSource: applicationPath + '/Access/AccessHomeData/GetUsers',
             autoLoad: false,
             columns: [
                 { field: 'ID', hidden: true },
@@ -83,7 +83,7 @@
         var routeGrid = $('#routeGrid').grid({
             primaryKey: 'ID',
             uiLibrary: 'bootstrap',
-            dataSource: applicationPath + '/Access/AccessHome/GetRoutes',
+            dataSource: applicationPath + '/Access/AccessHomeData/GetRoutes',
             autoLoad: false,
             columns: [
                 { field: 'ID', hidden: true },

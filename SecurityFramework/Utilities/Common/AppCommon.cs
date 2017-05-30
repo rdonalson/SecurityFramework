@@ -25,7 +25,7 @@ namespace SecurityFramework.Utilities.Common
         ///     Storage for the UserProfile up
         /// </summary>
         /// ---------------------------------------------------------------------------------------------
-        private static User UserProfile
+        public static User UserProfile
         {
             get
             {

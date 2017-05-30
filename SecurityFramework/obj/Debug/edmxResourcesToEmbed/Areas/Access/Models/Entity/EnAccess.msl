@@ -228,5 +228,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="spUserAreas" FunctionName="AccessModel.Store.spUserAreas">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AccessModel.spUserAreas_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="Area" ColumnName="Area" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

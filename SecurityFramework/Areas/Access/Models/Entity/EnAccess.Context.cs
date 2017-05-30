@@ -63,5 +63,18 @@ namespace SecurityFramework.Areas.Access.Models.Entity
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spIsInRole", appIdParameter, userIdParameter, routeParameter);
         }
+    
+        public virtual ObjectResult<spUserAreas_Result> spUserAreas(Nullable<System.Guid> appId, string userId)
+        {
+            var appIdParameter = appId.HasValue ?
+                new ObjectParameter("AppId", appId) :
+                new ObjectParameter("AppId", typeof(System.Guid));
+    
+            var userIdParameter = userId != null ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spUserAreas_Result>("spUserAreas", appIdParameter, userIdParameter);
+        }
     }
 }
