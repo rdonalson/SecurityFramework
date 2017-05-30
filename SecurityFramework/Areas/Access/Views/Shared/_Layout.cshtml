@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using SecurityFramework.Utilities.Common
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -8,15 +9,9 @@
     <title>@ViewBag.Title - Security Framework</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-
-    @*<link href="~/Content/gijgo/tree.css" rel="stylesheet" />
-    <link href="~/Content/gijgo/grid.css" rel="stylesheet" />*@
-    @*@Styles.Render("~/Content/gijgo")*@
-    @*<script src="~/Scripts/gijgo/tree/tree.js"></script>
-    <script src="~/Scripts/gijgo/grid/grid.js"></script>*@
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top">
@@ -41,12 +36,51 @@
                         Areas & Objects&nbsp;<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li>@Html.ActionLink("Domains", "Index", "Domains")</li>
+                        @*<li>@Html.ActionLink("Domains", "Index", "Domains")</li>
                         <li>@Html.ActionLink("Organizations", "Index", "Organizations")</li>
                         <li>@Html.ActionLink("Groups", "Index", "Groups")</li>
                         <li>@Html.ActionLink("Offices", "Index", "Offices")</li>
                         <li>@Html.ActionLink("Shops", "Index", "Shops")</li>
-                        <li>@Html.ActionLink("Routes", "Index", "Routes")</li>
+                        <li>@Html.ActionLink("Routes", "Index", "Routes")</li>*@
+
+                        @{
+                            if (AppCommon.IsInRole("/Access/Domains"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Domains", "Index", "Domains")
+                                </li>
+                            }
+                            if (AppCommon.IsInRole("/Access/Organizations"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Organizations", "Index", "Organizations")
+                                </li>
+                            }
+                            if (AppCommon.IsInRole("/Access/Groups"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Groups", "Index", "Groups")
+                                </li>
+                            }
+                            if (AppCommon.IsInRole("/Access/Offices"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Offices", "Index", "Offices")
+                                </li>
+                            }
+                            if (AppCommon.IsInRole("/Access/Shops"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Shops", "Index", "Shops")
+                                </li>
+                            }
+                            if (AppCommon.IsInRole("/Access/Routes"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Shops", "Index", "Routes")
+                                </li>
+                            }
+                        }
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -58,11 +92,44 @@
                         Roles&nbsp;<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li>@Html.ActionLink("Domain-Roles", "Index", "DomainRoles")</li>
+                        @*<li>@Html.ActionLink("Domain-Roles", "Index", "DomainRoles")</li>
                         <li>@Html.ActionLink("Organization-Roles", "Index", "OrganizationRoles")</li>
                         <li>@Html.ActionLink("Group-Roles", "Index", "GroupRoles")</li>
                         <li>@Html.ActionLink("Office-Roles", "Index", "OfficeRoles")</li>
-                        <li>@Html.ActionLink("Shop-Roles", "Index", "ShopRoles")</li>
+                        <li>@Html.ActionLink("Shop-Roles", "Index", "ShopRoles")</li>*@
+
+                        @{
+                            if (AppCommon.IsInRole("/Access/DomainRoles"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Domain-Roles", "Index", "DomainRoles")
+                                </li>
+                            }
+                            if (AppCommon.IsInRole("/Access/OrganizationRoles"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Organization-Roles", "Index", "OrganizationRoles")
+                                </li>
+                            }
+                            if (AppCommon.IsInRole("/Access/GroupRoles"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Group-Roles", "Index", "GroupRoles")
+                                </li>
+                            }
+                            if (AppCommon.IsInRole("/Access/OfficeRoles"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Office-Roles", "Index", "OfficeRoles")
+                                </li>
+                            }
+                            if (AppCommon.IsInRole("/Access/ShopRoles"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Shop-Roles", "Index", "ShopRoles")
+                                </li>
+                            }
+                        }
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -74,8 +141,22 @@
                         Users, Routes in Roles&nbsp;<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li>@Html.ActionLink("Users in Roles", "Index", "RoleUsers")</li>
-                        <li>@Html.ActionLink("Routes in Roles", "Index", "RoleRoutes")</li>
+                        @*<li>@Html.ActionLink("Users in Roles", "Index", "RoleUsers")</li>
+                        <li>@Html.ActionLink("Routes in Roles", "Index", "RoleRoutes")</li>*@
+                        @{
+                            if (AppCommon.IsInRole("/Access/RoleUsers"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Users in Roles", "Index", "RoleUsers")
+                                </li>
+                            }
+                            if (AppCommon.IsInRole("/Access/RoleRoutes"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Routes in Roles", "Index", "RoleRoutes")
+                                </li>
+                            }
+                        }
                     </ul>
                 </li>
             </ul>

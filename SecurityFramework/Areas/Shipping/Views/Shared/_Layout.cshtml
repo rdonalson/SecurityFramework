@@ -19,14 +19,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @Html.ActionLink("Glenlake Pkwy", "Index", "Glenlake", new { area = "GlenlakePkwy" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Glenlake Pkwy", "Index", "Glenlake", new {area = "GlenlakePkwy"}, new {@class = "navbar-brand"})
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
+                <li>
+                    @Html.ActionLink("Shipping Home", "Index", "Shipping")
+                </li>
                 @{
-                    <li>
-                        @Html.ActionLink("Shipping Home", "Index", "Shipping")
-                    </li>
 
                     if (AppCommon.IsInRole("/Shipping/Shipping/Ground"))
                     {
