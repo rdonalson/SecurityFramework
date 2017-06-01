@@ -36,13 +36,6 @@
                         Areas & Objects&nbsp;<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        @*<li>@Html.ActionLink("Domains", "Index", "Domains")</li>
-                        <li>@Html.ActionLink("Organizations", "Index", "Organizations")</li>
-                        <li>@Html.ActionLink("Groups", "Index", "Groups")</li>
-                        <li>@Html.ActionLink("Offices", "Index", "Offices")</li>
-                        <li>@Html.ActionLink("Shops", "Index", "Shops")</li>
-                        <li>@Html.ActionLink("Routes", "Index", "Routes")</li>*@
-
                         @{
                             if (AppCommon.IsInRole("/Access/Domains"))
                             {
@@ -77,7 +70,7 @@
                             if (AppCommon.IsInRole("/Access/Routes"))
                             {
                                 <li>
-                                    @Html.ActionLink("Shops", "Index", "Routes")
+                                    @Html.ActionLink("Routes", "Index", "Routes")
                                 </li>
                             }
                         }
@@ -92,12 +85,7 @@
                         Roles&nbsp;<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        @*<li>@Html.ActionLink("Domain-Roles", "Index", "DomainRoles")</li>
-                        <li>@Html.ActionLink("Organization-Roles", "Index", "OrganizationRoles")</li>
-                        <li>@Html.ActionLink("Group-Roles", "Index", "GroupRoles")</li>
-                        <li>@Html.ActionLink("Office-Roles", "Index", "OfficeRoles")</li>
-                        <li>@Html.ActionLink("Shop-Roles", "Index", "ShopRoles")</li>*@
-
+                        
                         @{
                             if (AppCommon.IsInRole("/Access/DomainRoles"))
                             {
@@ -141,8 +129,6 @@
                         Users, Routes in Roles&nbsp;<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        @*<li>@Html.ActionLink("Users in Roles", "Index", "RoleUsers")</li>
-                        <li>@Html.ActionLink("Routes in Roles", "Index", "RoleRoutes")</li>*@
                         @{
                             if (AppCommon.IsInRole("/Access/RoleUsers"))
                             {
