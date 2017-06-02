@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -29,7 +27,12 @@ namespace SecurityFramework.Utilities.Common
 
         /// -----------------------------------------------------------------------------------------------
         /// <summary>
-        ///     Overridden version of Authorize Core that verifies a user's access to the requested url
+        ///     Overridden version of Authorize Core that verifies a user's access to the requested url.
+        ///     Uses the "PathAndQuery" route property to compare against the value in the database.
+        ///     With MVC section there will occasionally be an ID value tacked on the end that has to be
+        ///     removed before comparision
+        ///     When it is a standard Web Form then it will be a query string that has to be removed.
+        ///     The result is then sent to the IsInRole function for verification
         /// </summary>
         /// <param name="httpContext">HttpContextBase</param>
         /// <returns>bool</returns>
@@ -38,7 +41,25 @@ namespace SecurityFramework.Utilities.Common
         {
             AppCommon.SetupUser();
             _httpContext = httpContext;
-            if (_httpContext.Request.Url != null) _pathAndQuery = _httpContext.Request.Url.PathAndQuery;
+            _pathAndQuery = string.Empty;
+            if (_httpContext.Request.Url != null)
+            {
+                var id = _httpContext.Request.RequestContext.RouteData.Values["id"];
+                if (id != null)
+                {
+                    var builder = new StringBuilder();
+                    var delimiter = '/';
+                    var segments = _httpContext.Request.Url.PathAndQuery.Split(delimiter);
+                    foreach (var segment in segments)
+                        if (!segment.Contains(id.ToString()) && !string.IsNullOrEmpty(segment))
+                            builder.Append(delimiter + segment);
+                    _pathAndQuery = builder.ToString();
+                }
+                else
+                {
+                    _pathAndQuery = _httpContext.Request.Url.PathAndQuery;
+                }
+            }
             return AppCommon.IsInRole(_pathAndQuery);
         }
 

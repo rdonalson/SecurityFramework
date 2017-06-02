@@ -1,17 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace SecurityFramework.MorrisRoad.Operations
 {
-    public partial class Home : System.Web.UI.Page
+    public partial class Home : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+        }
 
+        protected void btnASP_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/MorrisRoad/Operations/Management?Param1=abc&ampParam2=34.23");
         }
     }
 }
