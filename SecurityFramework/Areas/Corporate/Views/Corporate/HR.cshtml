@@ -3,3 +3,26 @@
 }
 
 <h2>Glenlake Pkwy | Corporate | HR</h2>
+
+<table class="table table-striped">
+    <tbody>
+    <tr>
+        <td class="control-label col-md-2">Param1:</td>
+        <td>&nbsp;</td>
+        <td>
+            <input type="text" class="form-control" value="@ViewData["param1"]">
+        </td>
+    </tr>
+    <tr>
+        <td class="control-label col-md-2">Param2:</td>
+        <td>&nbsp;</td>
+        <td>
+            <input type="text" class="form-control" value="@ViewData["param2"]" >
+        </td>    
+    </tr>
+    </tbody>
+</table>
+
+<div>
+    @Html.ActionLink("Back", "Index", new { @class = "btn btn-success" })
+</div>

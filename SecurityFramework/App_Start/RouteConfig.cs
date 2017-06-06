@@ -24,6 +24,11 @@ namespace SecurityFramework
                     url: "{controller}/{action}/{id}",
                     defaults: new { action = "Index", id = UrlParameter.Optional }
                 );
+
         }
     }
 }
+
+/* Archive
+//routes.MapMvcAttributeRoutes();
+ */

@@ -3,3 +3,36 @@
 }
 
 <h2>Glenlake Pkwy | Corporate | Home</h2>
+
+<div >
+    @Html.ActionLink("Send", "HR", new {param1 = "Rick", param2 = 122}, new {@class = "btn btn-success"})
+</div>
+<hr/>
+<div>
+    @Html.ActionLink("Send", "HR", new {param2 = 122}, new {@class = "btn btn-default"})
+</div>
+<hr/>
+<div class="form-group">
+    @using (Html.BeginForm("HR", "Corporate"))
+    {
+        <table>
+            <tr>
+                <td class="control-label col-md-2">Amount:</td>
+                <td>&nbsp;</td>
+                <td>
+                    <input class="form-control" name="Amount" id="Amount"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="control-label col-md-2">Name:</td>
+                <td>&nbsp;</td>
+                <td>
+                    <input class="form-control" name="Name" id="Name"/>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <br/>
+        <input type="submit" value="Submit"/>
+    }
+</div>

@@ -10,7 +10,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         // GET: Access/AccessHome
         public ActionResult Index()
         {
-            ViewBag.ApplicationPath = AppCommon.AppPath == "/" ? "" : AppCommon.AppPath;
+            ViewBag.ApplicationPath = AppCommon.GetAppPath(); //AppCommon.AppPath == "/" ? "" : AppCommon.AppPath;
             return View();
         }
     }

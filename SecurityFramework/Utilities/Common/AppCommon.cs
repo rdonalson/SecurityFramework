@@ -20,6 +20,11 @@ namespace SecurityFramework.Utilities.Common
         public static string RequestUrl { get; set; }
         public static Exception LastException { get; set; }
 
+        public static string GetAppPath()
+        {
+            return AppPath == "/" ? "" : AppPath;
+        }
+
         /// ---------------------------------------------------------------------------------------------
         /// <summary>
         ///     Storage for the UserProfile up
@@ -74,19 +79,18 @@ namespace SecurityFramework.Utilities.Common
         /// <summary>
         ///     Verifies User has access to route
         /// </summary>
-        /// <param name="pathAndQuery">string</param>
+        /// <param name="route">string</param>
         /// <returns>bool</returns>
         /// -----------------------------------------------------------------------------------------------
-        public static bool IsInRole(string pathAndQuery)
+        public static bool IsInRole(string route)
         {
             if (UserProfile == null) return false;
             using (var entities = new AccessEntities())
             {
-                pathAndQuery = AppPath == "/" ? pathAndQuery : pathAndQuery.Replace(AppPath, string.Empty);
                 return Convert.ToBoolean(entities.spIsInRole(
                         AppAttributeValue,
                         UserProfile.Id.ToString(),
-                        pathAndQuery)
+                        route)
                     .FirstOrDefault());
             }
         }

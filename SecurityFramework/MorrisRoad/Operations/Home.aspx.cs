@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.UI;
+using SecurityFramework.Utilities.Common;
 
 namespace SecurityFramework.MorrisRoad.Operations
 {
@@ -11,7 +12,9 @@ namespace SecurityFramework.MorrisRoad.Operations
 
         protected void btnASP_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/MorrisRoad/Operations/Management?Param1=abc&ampParam2=34.23");
+            Response.Redirect("~/MorrisRoad/Operations/Management?Param1=abc&Param2=34.23");
         }
+
+        protected string AppPath => AppCommon.GetAppPath(); 
     }
 }
