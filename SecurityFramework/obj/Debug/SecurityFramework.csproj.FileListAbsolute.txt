@@ -281,3 +281,4 @@ D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\bin\System.W
 D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\obj\Debug\SecurityFramework.dll
 D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\obj\Debug\SecurityFramework.pdb
 D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\obj\Debug\SecurityFramework.csprojResolveAssemblyReference.cache
+C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\obj\Debug\SecurityFramework.csprojResolveAssemblyReference.cache

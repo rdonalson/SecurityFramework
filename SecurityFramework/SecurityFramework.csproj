@@ -293,11 +293,6 @@
     <Content Include="Areas\Access\Views\RoleRoutes\Details.cshtml" />
     <Content Include="Areas\Access\Views\RoleRoutes\Edit.cshtml" />
     <Content Include="Areas\Access\Views\RoleRoutes\Index.cshtml" />
-    <Content Include="Areas\Access\Views\Roles\Create.cshtml" />
-    <Content Include="Areas\Access\Views\Roles\Delete.cshtml" />
-    <Content Include="Areas\Access\Views\Roles\Details.cshtml" />
-    <Content Include="Areas\Access\Views\Roles\Edit.cshtml" />
-    <Content Include="Areas\Access\Views\Roles\Index.cshtml" />
     <Content Include="Areas\Access\Views\RoleUsers\Create.cshtml" />
     <Content Include="Areas\Access\Views\RoleUsers\Delete.cshtml" />
     <Content Include="Areas\Access\Views\RoleUsers\Details.cshtml" />
@@ -628,7 +623,6 @@
     <Compile Include="Areas\Access\Controllers\OrganizationRolesController.cs" />
     <Compile Include="Areas\Access\Controllers\OrganizationsController.cs" />
     <Compile Include="Areas\Access\Controllers\RoleRoutesController.cs" />
-    <Compile Include="Areas\Access\Controllers\RolesController.cs" />
     <Compile Include="Areas\Access\Controllers\RoleUsersController.cs" />
     <Compile Include="Areas\Access\Controllers\RoutesController.cs" />
     <Compile Include="Areas\Access\Controllers\ShopRolesController .cs" />
@@ -924,7 +918,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Access\Views\AccessHomeData\" />
-    <Folder Include="Areas\Access\Views\Users\" />
     <Folder Include="Areas\Corporate\Models\" />
     <Folder Include="Areas\GlenlakePkwy\Models\" />
     <Folder Include="Areas\Louisville\Models\" />
