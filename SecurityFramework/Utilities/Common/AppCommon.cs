@@ -22,7 +22,7 @@ namespace SecurityFramework.Utilities.Common
 
         public static string GetAppPath()
         {
-            return AppPath == "/" ? "" : AppPath;
+            return AppPath == "/" ? String.Empty : AppPath;
         }
 
         /// ---------------------------------------------------------------------------------------------

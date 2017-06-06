@@ -86,6 +86,7 @@ namespace SecurityFramework.Utilities.Common
                 HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 _route = context.Request.Url.AbsolutePath;
+                _route = AppCommon.GetAppPath() == String.Empty ? _route : _route.Replace(AppCommon.GetAppPath(), String.Empty);
                 if (!AppCommon.IsInRole(_route))
                     context.Response.Redirect(DefaultUrl + _route);
             }
