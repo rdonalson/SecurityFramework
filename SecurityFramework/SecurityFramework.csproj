@@ -675,6 +675,9 @@
     <Compile Include="Areas\Access\Models\Entity\spUserAreas_Result.cs">
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Access\Models\Entity\spUserRoles_Result.cs">
+      <DependentUpon>EnAccess.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Access\Models\Entity\vwArea.cs">
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
@@ -685,6 +688,9 @@
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Access\Models\Entity\vwAreaAndRoleAndUser.cs">
+      <DependentUpon>EnAccess.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Access\Models\Entity\vwAreaAndSubArea.cs">
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Access\Models\Entity\vwAreaTree.cs">
@@ -917,7 +923,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Access\Views\AccessHomeData\" />
     <Folder Include="Areas\Corporate\Models\" />
     <Folder Include="Areas\GlenlakePkwy\Models\" />
     <Folder Include="Areas\Louisville\Models\" />
@@ -942,6 +947,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EnAccess.Designer.cs</LastGenOutput>
     </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

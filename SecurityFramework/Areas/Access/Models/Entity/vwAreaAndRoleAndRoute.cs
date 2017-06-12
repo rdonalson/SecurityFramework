@@ -14,12 +14,15 @@ namespace SecurityFramework.Areas.Access.Models.Entity
     
     public partial class vwAreaAndRoleAndRoute
     {
+        public Nullable<System.Guid> AreaId { get; set; }
         public int AreaSeq { get; set; }
         public int Seq { get; set; }
+        public string BreadCrumb { get; set; }
         public string AreaAndRole { get; set; }
         public System.Guid Id { get; set; }
         public System.Guid RoleId { get; set; }
         public System.Guid RouteId { get; set; }
+        public Nullable<System.Guid> AppId { get; set; }
         public string RoutePath { get; set; }
     }
 }

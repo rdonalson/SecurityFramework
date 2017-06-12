@@ -21,5 +21,6 @@ namespace SecurityFramework.Areas.Access.Models.Entity
         public System.Guid Id { get; set; }
         public System.Guid RoleId { get; set; }
         public string UserId { get; set; }
+        public Nullable<System.Guid> AreaId { get; set; }
     }
 }

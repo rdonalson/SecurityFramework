@@ -97,6 +97,8 @@
     <EntitySetMapping Name="AspNetUsers">
       <EntityTypeMapping TypeName="AccessModel.AspNetUser">
         <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
@@ -113,52 +115,10 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="vwAreas">
-      <EntityTypeMapping TypeName="AccessModel.vwArea">
-        <MappingFragment StoreEntitySet="vwAreas">
-          <ScalarProperty Name="BreadcrubTrail" ColumnName="BreadcrubTrail" />
-          <ScalarProperty Name="DomId" ColumnName="DomId" />
-          <ScalarProperty Name="Domain" ColumnName="Domain" />
-          <ScalarProperty Name="OrgId" ColumnName="OrgId" />
-          <ScalarProperty Name="Organization" ColumnName="Organization" />
-          <ScalarProperty Name="GrpId" ColumnName="GrpId" />
-          <ScalarProperty Name="Group" ColumnName="Group" />
-          <ScalarProperty Name="OffId" ColumnName="OffId" />
-          <ScalarProperty Name="Office" ColumnName="Office" />
-          <ScalarProperty Name="ShpId" ColumnName="ShpId" />
-          <ScalarProperty Name="Shop" ColumnName="Shop" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vwAreasAndRoles">
-      <EntityTypeMapping TypeName="AccessModel.vwAreaAndRole">
-        <MappingFragment StoreEntitySet="vwAreasAndRoles">
-          <ScalarProperty Name="AreaSeq" ColumnName="AreaSeq" />
-          <ScalarProperty Name="Area" ColumnName="Area" />
-          <ScalarProperty Name="AreaName" ColumnName="AreaName" />
-          <ScalarProperty Name="Roles" ColumnName="Roles" />
-          <ScalarProperty Name="Seq" ColumnName="Seq" />
-          <ScalarProperty Name="AreaAndRole" ColumnName="AreaAndRole" />
-          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vwAreasAndRolesAndRoutes">
-      <EntityTypeMapping TypeName="AccessModel.vwAreaAndRoleAndRoute">
-        <MappingFragment StoreEntitySet="vwAreasAndRolesAndRoutes">
-          <ScalarProperty Name="AreaSeq" ColumnName="AreaSeq" />
-          <ScalarProperty Name="Seq" ColumnName="Seq" />
-          <ScalarProperty Name="AreaAndRole" ColumnName="AreaAndRole" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-          <ScalarProperty Name="RouteId" ColumnName="RouteId" />
-          <ScalarProperty Name="RoutePath" ColumnName="RoutePath" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="vwAreasAndRolesAndUsers">
       <EntityTypeMapping TypeName="AccessModel.vwAreaAndRoleAndUser">
         <MappingFragment StoreEntitySet="vwAreasAndRolesAndUsers">
+          <ScalarProperty Name="AreaId" ColumnName="AreaId" />
           <ScalarProperty Name="AreaSeq" ColumnName="AreaSeq" />
           <ScalarProperty Name="Seq" ColumnName="Seq" />
           <ScalarProperty Name="AreaAndRole" ColumnName="AreaAndRole" />
@@ -194,19 +154,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="vwRolesRoutes">
-      <EntityTypeMapping TypeName="AccessModel.vwRoleRoute">
-        <MappingFragment StoreEntitySet="vwRoleRoutes">
-          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-          <ScalarProperty Name="RouteId" ColumnName="RouteId" />
-          <ScalarProperty Name="AppId" ColumnName="AppId" />
-          <ScalarProperty Name="FilePath" ColumnName="FilePath" />
-          <ScalarProperty Name="FileName" ColumnName="FileName" />
-          <ScalarProperty Name="AppPath" ColumnName="AppPath" />
-          <ScalarProperty Name="RoutePath" ColumnName="RoutePath" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="vwRolesUsers">
       <EntityTypeMapping TypeName="AccessModel.vwRoleUser">
         <MappingFragment StoreEntitySet="vwRoleUser">
@@ -237,5 +184,86 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spUserRoles" FunctionName="AccessModel.Store.spUserRoles">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AccessModel.spUserRoles_Result">
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="vwAreas">
+      <EntityTypeMapping TypeName="AccessModel.vwArea">
+        <MappingFragment StoreEntitySet="vwAreas">
+          <ScalarProperty Name="Shop" ColumnName="Shop" />
+          <ScalarProperty Name="ShpId" ColumnName="ShpId" />
+          <ScalarProperty Name="Office" ColumnName="Office" />
+          <ScalarProperty Name="OffId" ColumnName="OffId" />
+          <ScalarProperty Name="Group" ColumnName="Group" />
+          <ScalarProperty Name="GrpId" ColumnName="GrpId" />
+          <ScalarProperty Name="Organization" ColumnName="Organization" />
+          <ScalarProperty Name="OrgId" ColumnName="OrgId" />
+          <ScalarProperty Name="Domain" ColumnName="Domain" />
+          <ScalarProperty Name="DomId" ColumnName="DomId" />
+          <ScalarProperty Name="BreadCrumb" ColumnName="BreadCrumb" />
+          <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwAreasAndRoles">
+      <EntityTypeMapping TypeName="AccessModel.vwAreaAndRole">
+        <MappingFragment StoreEntitySet="vwAreasAndRoles">
+          <ScalarProperty Name="AppId" ColumnName="AppId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="BreadCrumb" ColumnName="BreadCrumb" />
+          <ScalarProperty Name="AreaAndRole" ColumnName="AreaAndRole" />
+          <ScalarProperty Name="Seq" ColumnName="Seq" />
+          <ScalarProperty Name="Roles" ColumnName="Roles" />
+          <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+          <ScalarProperty Name="AreaName" ColumnName="AreaName" />
+          <ScalarProperty Name="Area" ColumnName="Area" />
+          <ScalarProperty Name="AreaSeq" ColumnName="AreaSeq" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwAreasAndRolesAndRoutes">
+      <EntityTypeMapping TypeName="AccessModel.vwAreaAndRoleAndRoute">
+        <MappingFragment StoreEntitySet="vwAreasAndRolesAndRoutes">
+          <ScalarProperty Name="RoutePath" ColumnName="RoutePath" />
+          <ScalarProperty Name="AppId" ColumnName="AppId" />
+          <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AreaAndRole" ColumnName="AreaAndRole" />
+          <ScalarProperty Name="BreadCrumb" ColumnName="BreadCrumb" />
+          <ScalarProperty Name="Seq" ColumnName="Seq" />
+          <ScalarProperty Name="AreaSeq" ColumnName="AreaSeq" />
+          <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwAreasAndSubAreas">
+      <EntityTypeMapping TypeName="AccessModel.vwAreaAndSubArea">
+        <MappingFragment StoreEntitySet="vwAreasAndSubAreas">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="AppId" ColumnName="AppId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Area" ColumnName="Area" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwRoleRoutes">
+      <EntityTypeMapping TypeName="AccessModel.vwRoleRoute">
+        <MappingFragment StoreEntitySet="vwRoleRoutes">
+          <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+          <ScalarProperty Name="RoutePath" ColumnName="RoutePath" />
+          <ScalarProperty Name="AppPath" ColumnName="AppPath" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+          <ScalarProperty Name="AppId" ColumnName="AppId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

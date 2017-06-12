@@ -14,7 +14,8 @@ namespace SecurityFramework.Areas.Access.Models.Entity
     
     public partial class vwArea
     {
-        public string BreadcrubTrail { get; set; }
+        public Nullable<System.Guid> AreaId { get; set; }
+        public string BreadCrumb { get; set; }
         public System.Guid DomId { get; set; }
         public string Domain { get; set; }
         public Nullable<System.Guid> OrgId { get; set; }

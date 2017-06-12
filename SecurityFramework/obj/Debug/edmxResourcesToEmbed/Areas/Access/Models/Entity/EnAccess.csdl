@@ -129,55 +129,8 @@
     <NavigationProperty Name="RoleUsers" Relationship="Self.FK_RoleUsers_AspNetUsers" FromRole="AspNetUsers" ToRole="RoleUsers" />
     <NavigationProperty Name="AspNetUsers1" Relationship="Self.FK_AspNetUsers_AspNetUsers" FromRole="AspNetUsers" ToRole="AspNetUsers1" />
     <NavigationProperty Name="AspNetUser1" Relationship="Self.FK_AspNetUsers_AspNetUsers" FromRole="AspNetUsers1" ToRole="AspNetUsers" />
-  </EntityType>
-  <EntityType Name="vwArea">
-    <Key>
-      <PropertyRef Name="DomId" />
-      <PropertyRef Name="Domain" />
-    </Key>
-    <Property Name="BreadcrubTrail" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
-    <Property Name="DomId" Type="Guid" Nullable="false" />
-    <Property Name="Domain" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="OrgId" Type="Guid" />
-    <Property Name="Organization" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="GrpId" Type="Guid" />
-    <Property Name="Group" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="OffId" Type="Guid" />
-    <Property Name="Office" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="ShpId" Type="Guid" />
-    <Property Name="Shop" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-  </EntityType>
-  <EntityType Name="vwAreaAndRole">
-    <Key>
-      <PropertyRef Name="AreaSeq" />
-      <PropertyRef Name="Area" />
-      <PropertyRef Name="Roles" />
-      <PropertyRef Name="Seq" />
-      <PropertyRef Name="RoleId" />
-    </Key>
-    <Property Name="AreaSeq" Type="Int32" Nullable="false" />
-    <Property Name="Area" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="AreaName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Roles" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Seq" Type="Int32" Nullable="false" />
-    <Property Name="AreaAndRole" Type="String" MaxLength="218" FixedLength="false" Unicode="false" />
-    <Property Name="RoleId" Type="Guid" Nullable="false" />
-  </EntityType>
-  <EntityType Name="vwAreaAndRoleAndRoute">
-    <Key>
-      <PropertyRef Name="AreaSeq" />
-      <PropertyRef Name="Seq" />
-      <PropertyRef Name="Id" />
-      <PropertyRef Name="RoleId" />
-      <PropertyRef Name="RouteId" />
-    </Key>
-    <Property Name="AreaSeq" Type="Int32" Nullable="false" />
-    <Property Name="Seq" Type="Int32" Nullable="false" />
-    <Property Name="AreaAndRole" Type="String" MaxLength="218" FixedLength="false" Unicode="false" />
-    <Property Name="Id" Type="Guid" Nullable="false" />
-    <Property Name="RoleId" Type="Guid" Nullable="false" />
-    <Property Name="RouteId" Type="Guid" Nullable="false" />
-    <Property Name="RoutePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="vwAreaAndRoleAndUser">
     <Key>
@@ -194,6 +147,7 @@
     <Property Name="Id" Type="Guid" Nullable="false" />
     <Property Name="RoleId" Type="Guid" Nullable="false" />
     <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AreaId" Type="Guid" />
   </EntityType>
   <EntityType Name="vwAreaTree">
     <Key>
@@ -222,19 +176,6 @@
     <Property Name="RouteId" Type="Guid" Nullable="false" />
     <Property Name="RoutePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="RouteAppId" Type="Guid" />
-  </EntityType>
-  <EntityType Name="vwRoleRoute">
-    <Key>
-      <PropertyRef Name="RoleId" />
-      <PropertyRef Name="RouteId" />
-    </Key>
-    <Property Name="RoleId" Type="Guid" Nullable="false" />
-    <Property Name="RouteId" Type="Guid" Nullable="false" />
-    <Property Name="AppId" Type="Guid" />
-    <Property Name="FilePath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-    <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="AppPath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="RoutePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="vwRoleUser">
     <Key>
@@ -440,13 +381,9 @@
     <EntitySet Name="Routes" EntityType="Self.Route" />
     <EntitySet Name="Shops" EntityType="Self.Shop" />
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
-    <EntitySet Name="vwAreas" EntityType="Self.vwArea" />
-    <EntitySet Name="vwAreasAndRoles" EntityType="AccessModel.vwAreaAndRole" />
-    <EntitySet Name="vwAreasAndRolesAndRoutes" EntityType="AccessModel.vwAreaAndRoleAndRoute" />
     <EntitySet Name="vwAreasAndRolesAndUsers" EntityType="AccessModel.vwAreaAndRoleAndUser" />
     <EntitySet Name="vwAreaTrees" EntityType="Self.vwAreaTree" />
     <EntitySet Name="vwIsInRoles" EntityType="Self.vwIsInRole" />
-    <EntitySet Name="vwRolesRoutes" EntityType="Self.vwRoleRoute" />
     <EntitySet Name="vwRolesUsers" EntityType="Self.vwRoleUser" />
     <AssociationSet Name="FK_Organizations_Domains" Association="Self.FK_Organizations_Domains">
       <End Role="Domains" EntitySet="Domains" />
@@ -514,6 +451,15 @@
       <Parameter Name="AppId" Mode="In" Type="Guid" />
       <Parameter Name="UserId" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="spUserRoles" ReturnType="Collection(AccessModel.spUserRoles_Result)">
+      <Parameter Name="AppId" Mode="In" Type="Guid" />
+      <Parameter Name="UserId" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="vwAreas" EntityType="AccessModel.vwArea" />
+    <EntitySet Name="vwAreasAndRoles" EntityType="AccessModel.vwAreaAndRole" />
+    <EntitySet Name="vwAreasAndRolesAndRoutes" EntityType="AccessModel.vwAreaAndRoleAndRoute" />
+    <EntitySet Name="vwAreasAndSubAreas" EntityType="AccessModel.vwAreaAndSubArea" />
+    <EntitySet Name="vwRoleRoutes" EntityType="AccessModel.vwRoleRoute" />
   </EntityContainer>
   <EntityType Name="vwRole">
     <Key>
@@ -531,4 +477,89 @@
     <Property Type="Guid" Name="ParentId" Nullable="true" />
     <Property Type="String" Name="Area" Nullable="false" MaxLength="100" />
   </ComplexType>
+  <ComplexType Name="spUserRoles_Result">
+    <Property Type="Guid" Name="RoleId" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+  </ComplexType>
+  <EntityType Name="vwArea">
+    <Key>
+      <PropertyRef Name="DomId" />
+      <PropertyRef Name="Domain" />
+    </Key>
+    <Property Name="AreaId" Type="Guid" />
+    <Property Name="BreadCrumb" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <Property Name="DomId" Type="Guid" Nullable="false" />
+    <Property Name="Domain" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="OrgId" Type="Guid" />
+    <Property Name="Organization" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="GrpId" Type="Guid" />
+    <Property Name="Group" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="OffId" Type="Guid" />
+    <Property Name="Office" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ShpId" Type="Guid" />
+    <Property Name="Shop" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="vwAreaAndRole">
+    <Key>
+      <PropertyRef Name="AreaSeq" />
+      <PropertyRef Name="Area" />
+      <PropertyRef Name="Roles" />
+      <PropertyRef Name="Seq" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="AreaSeq" Type="Int32" Nullable="false" />
+    <Property Name="Area" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="AreaName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="AreaId" Type="Guid" />
+    <Property Name="Roles" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Seq" Type="Int32" Nullable="false" />
+    <Property Name="AreaAndRole" Type="String" MaxLength="218" FixedLength="false" Unicode="false" />
+    <Property Name="BreadCrumb" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <Property Name="RoleId" Type="Guid" Nullable="false" />
+    <Property Name="AppId" Type="Guid" />
+  </EntityType>
+  <EntityType Name="vwAreaAndRoleAndRoute">
+    <Key>
+      <PropertyRef Name="AreaSeq" />
+      <PropertyRef Name="Seq" />
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="RoleId" />
+      <PropertyRef Name="RouteId" />
+    </Key>
+    <Property Name="AreaId" Type="Guid" />
+    <Property Name="AreaSeq" Type="Int32" Nullable="false" />
+    <Property Name="Seq" Type="Int32" Nullable="false" />
+    <Property Name="BreadCrumb" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <Property Name="AreaAndRole" Type="String" MaxLength="218" FixedLength="false" Unicode="false" />
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="RoleId" Type="Guid" Nullable="false" />
+    <Property Name="RouteId" Type="Guid" Nullable="false" />
+    <Property Name="AppId" Type="Guid" />
+    <Property Name="RoutePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="vwAreaAndSubArea">
+    <Key>
+      <PropertyRef Name="Area" />
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="AppId" />
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Area" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="AppId" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="vwRoleRoute">
+    <Key>
+      <PropertyRef Name="RoleId" />
+      <PropertyRef Name="RouteId" />
+    </Key>
+    <Property Name="RoleId" Type="Guid" Nullable="false" />
+    <Property Name="AppId" Type="Guid" />
+    <Property Name="FilePath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="AppPath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="RoutePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="RouteId" Type="Guid" Nullable="false" />
+  </EntityType>
 </Schema>

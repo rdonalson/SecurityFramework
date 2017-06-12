@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\Areas\Access\Models\Entity\EnAccess.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\Areas\Access\Models\Entity\EnAccess.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

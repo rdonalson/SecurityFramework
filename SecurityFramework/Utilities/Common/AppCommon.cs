@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNet.Identity;
@@ -20,11 +19,6 @@ namespace SecurityFramework.Utilities.Common
         public static string RequestUrl { get; set; }
         public static Exception LastException { get; set; }
 
-        public static string GetAppPath()
-        {
-            return AppPath == "/" ? String.Empty : AppPath;
-        }
-
         /// ---------------------------------------------------------------------------------------------
         /// <summary>
         ///     Storage for the UserProfile up
@@ -42,6 +36,11 @@ namespace SecurityFramework.Utilities.Common
             set => SessionUtil.SetInSession($"UserProfile", value);
         }
 
+        public static string GetAppPath()
+        {
+            return AppPath == "/" ? string.Empty : AppPath;
+        }
+
         /// -----------------------------------------------------------------------------------------------
         /// <summary>
         ///     Sets up the Current User's Profile
@@ -50,18 +49,37 @@ namespace SecurityFramework.Utilities.Common
         public static void SetupUser()
         {
             if (UserProfile == null)
-            {
-                var userName = HttpContext.Current.User.Identity.GetUserName();
-                var userId = HttpContext.Current.User.Identity.GetUserId();
-                if (!string.IsNullOrEmpty(userName))
+                using (var entities = new AccessEntities())
                 {
-                    var user = new User(
-                        userName,
-                        new Guid(userId)
-                    );
-                    UserProfile = user;
+                    var userName = HttpContext.Current.User.Identity.GetUserName();
+                    var userId = HttpContext.Current.User.Identity.GetUserId();
+                    var aspNetUser = entities.AspNetUsers.Find(userId);
+                    if (!string.IsNullOrEmpty(userName))
+                    {
+                        if (aspNetUser != null)
+                        {
+                            var user = new User(
+                                userName,
+                                new Guid(userId),
+                                aspNetUser.SysAdmin,
+                                aspNetUser.FirstName,
+                                aspNetUser.LastName
+                            );
+                            UserProfile = user;
+                        }
+                        else
+                        {
+                            var user = new User(
+                                userName,
+                                new Guid(userId),
+                                false, 
+                                "",
+                                ""
+                            );
+                            UserProfile = user;
+                        }
+                    }
                 }
-            }
         }
 
         /// -----------------------------------------------------------------------------------------------
@@ -95,6 +113,4 @@ namespace SecurityFramework.Utilities.Common
             }
         }
     }
-
-
 }

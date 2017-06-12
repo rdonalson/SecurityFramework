@@ -101,6 +101,8 @@
     <Property Name="AccessFailedCount" Type="int" Nullable="false" />
     <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
     <Property Name="SysAdmin" Type="bit" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="256" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="256" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'SecurityFramework.Access.vwAreas' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -109,7 +111,8 @@ warning 6002: The table/view 'SecurityFramework.Access.vwAreas' does not have a 
       <PropertyRef Name="DomId" />
       <PropertyRef Name="Domain" />
     </Key>
-    <Property Name="BreadcrubTrail" Type="varchar" MaxLength="512" />
+    <Property Name="AreaId" Type="uniqueidentifier" />
+    <Property Name="BreadCrumb" Type="varchar" MaxLength="512" />
     <Property Name="DomId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Domain" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="OrgId" Type="uniqueidentifier" />
@@ -134,10 +137,13 @@ warning 6002: The table/view 'SecurityFramework.Access.vwAreasAndRoles' does not
     <Property Name="AreaSeq" Type="int" Nullable="false" />
     <Property Name="Area" Type="varchar" MaxLength="12" Nullable="false" />
     <Property Name="AreaName" Type="varchar" MaxLength="100" />
+    <Property Name="AreaId" Type="uniqueidentifier" />
     <Property Name="Roles" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Seq" Type="int" Nullable="false" />
     <Property Name="AreaAndRole" Type="varchar" MaxLength="218" />
+    <Property Name="BreadCrumb" Type="varchar" MaxLength="512" />
     <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="AppId" Type="uniqueidentifier" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'SecurityFramework.Access.vwAreasAndRolesAndRoutes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -149,12 +155,15 @@ warning 6002: The table/view 'SecurityFramework.Access.vwAreasAndRolesAndRoutes'
       <PropertyRef Name="RoleId" />
       <PropertyRef Name="RouteId" />
     </Key>
+    <Property Name="AreaId" Type="uniqueidentifier" />
     <Property Name="AreaSeq" Type="int" Nullable="false" />
     <Property Name="Seq" Type="int" Nullable="false" />
+    <Property Name="BreadCrumb" Type="varchar" MaxLength="512" />
     <Property Name="AreaAndRole" Type="varchar" MaxLength="218" />
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="RouteId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="AppId" Type="uniqueidentifier" />
     <Property Name="RoutePath" Type="varchar" MaxLength="200" />
   </EntityType>
   <!--Errors Found During Generation:
@@ -167,6 +176,7 @@ warning 6002: The table/view 'SecurityFramework.Access.vwAreasAndRolesAndUsers' 
       <PropertyRef Name="RoleId" />
       <PropertyRef Name="UserId" />
     </Key>
+    <Property Name="AreaId" Type="uniqueidentifier" />
     <Property Name="AreaSeq" Type="int" Nullable="false" />
     <Property Name="Seq" Type="int" Nullable="false" />
     <Property Name="AreaAndRole" Type="varchar" MaxLength="218" />
@@ -174,6 +184,20 @@ warning 6002: The table/view 'SecurityFramework.Access.vwAreasAndRolesAndUsers' 
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'SecurityFramework.Access.vwAreasAndSubAreas' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwAreasAndSubAreas">
+    <Key>
+      <PropertyRef Name="Area" />
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="AppId" />
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Area" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="AppId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'SecurityFramework.Access.vwAreaTrees' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -215,12 +239,12 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleRoutes' does not ha
       <PropertyRef Name="RouteId" />
     </Key>
     <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="RouteId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="AppId" Type="uniqueidentifier" />
     <Property Name="FilePath" Type="varchar" MaxLength="500" />
     <Property Name="FileName" Type="varchar" MaxLength="100" />
     <Property Name="AppPath" Type="varchar" MaxLength="255" />
     <Property Name="RoutePath" Type="varchar" MaxLength="200" />
+    <Property Name="RouteId" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'SecurityFramework.Access.vwRoles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -439,6 +463,10 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have
     <Parameter Name="AppId" Type="uniqueidentifier" Mode="In" />
     <Parameter Name="UserId" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="spUserRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Access">
+    <Parameter Name="AppId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="UserId" Type="varchar" Mode="In" />
+  </Function>
   <EntityContainer Name="AccessModelStoreContainer">
     <EntitySet Name="Domains" EntityType="Self.Domains" Schema="Access" store:Type="Tables" />
     <EntitySet Name="Groups" EntityType="Self.Groups" Schema="Access" store:Type="Tables" />
@@ -452,7 +480,8 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="vwAreas" EntityType="Self.vwAreas" store:Type="Views" store:Schema="Access">
       <DefiningQuery>SELECT 
-    [vwAreas].[BreadcrubTrail] AS [BreadcrubTrail], 
+    [vwAreas].[AreaId] AS [AreaId], 
+    [vwAreas].[BreadCrumb] AS [BreadCrumb], 
     [vwAreas].[DomId] AS [DomId], 
     [vwAreas].[Domain] AS [Domain], 
     [vwAreas].[OrgId] AS [OrgId], 
@@ -470,25 +499,32 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have
     [vwAreasAndRoles].[AreaSeq] AS [AreaSeq], 
     [vwAreasAndRoles].[Area] AS [Area], 
     [vwAreasAndRoles].[AreaName] AS [AreaName], 
+    [vwAreasAndRoles].[AreaId] AS [AreaId], 
     [vwAreasAndRoles].[Roles] AS [Roles], 
     [vwAreasAndRoles].[Seq] AS [Seq], 
     [vwAreasAndRoles].[AreaAndRole] AS [AreaAndRole], 
-    [vwAreasAndRoles].[RoleId] AS [RoleId]
+    [vwAreasAndRoles].[BreadCrumb] AS [BreadCrumb], 
+    [vwAreasAndRoles].[RoleId] AS [RoleId], 
+    [vwAreasAndRoles].[AppId] AS [AppId]
     FROM [Access].[vwAreasAndRoles] AS [vwAreasAndRoles]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vwAreasAndRolesAndRoutes" EntityType="Self.vwAreasAndRolesAndRoutes" store:Type="Views" store:Schema="Access">
       <DefiningQuery>SELECT 
+    [vwAreasAndRolesAndRoutes].[AreaId] AS [AreaId], 
     [vwAreasAndRolesAndRoutes].[AreaSeq] AS [AreaSeq], 
     [vwAreasAndRolesAndRoutes].[Seq] AS [Seq], 
+    [vwAreasAndRolesAndRoutes].[BreadCrumb] AS [BreadCrumb], 
     [vwAreasAndRolesAndRoutes].[AreaAndRole] AS [AreaAndRole], 
     [vwAreasAndRolesAndRoutes].[Id] AS [Id], 
     [vwAreasAndRolesAndRoutes].[RoleId] AS [RoleId], 
     [vwAreasAndRolesAndRoutes].[RouteId] AS [RouteId], 
+    [vwAreasAndRolesAndRoutes].[AppId] AS [AppId], 
     [vwAreasAndRolesAndRoutes].[RoutePath] AS [RoutePath]
     FROM [Access].[vwAreasAndRolesAndRoutes] AS [vwAreasAndRolesAndRoutes]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vwAreasAndRolesAndUsers" EntityType="Self.vwAreasAndRolesAndUsers" store:Type="Views" store:Schema="Access">
       <DefiningQuery>SELECT 
+    [vwAreasAndRolesAndUsers].[AreaId] AS [AreaId], 
     [vwAreasAndRolesAndUsers].[AreaSeq] AS [AreaSeq], 
     [vwAreasAndRolesAndUsers].[Seq] AS [Seq], 
     [vwAreasAndRolesAndUsers].[AreaAndRole] AS [AreaAndRole], 
@@ -497,6 +533,14 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have
     [vwAreasAndRolesAndUsers].[RoleId] AS [RoleId], 
     [vwAreasAndRolesAndUsers].[UserId] AS [UserId]
     FROM [Access].[vwAreasAndRolesAndUsers] AS [vwAreasAndRolesAndUsers]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vwAreasAndSubAreas" EntityType="Self.vwAreasAndSubAreas" store:Type="Views" store:Schema="Access">
+      <DefiningQuery>SELECT 
+    [vwAreasAndSubAreas].[Area] AS [Area], 
+    [vwAreasAndSubAreas].[Id] AS [Id], 
+    [vwAreasAndSubAreas].[AppId] AS [AppId], 
+    [vwAreasAndSubAreas].[Name] AS [Name]
+    FROM [Access].[vwAreasAndSubAreas] AS [vwAreasAndSubAreas]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vwAreaTrees" EntityType="Self.vwAreaTrees" store:Type="Views" store:Schema="Access">
       <DefiningQuery>SELECT 
@@ -522,12 +566,12 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRoleUser' does not have
     <EntitySet Name="vwRoleRoutes" EntityType="Self.vwRoleRoutes" store:Type="Views" store:Schema="Access">
       <DefiningQuery>SELECT 
     [vwRoleRoutes].[RoleId] AS [RoleId], 
-    [vwRoleRoutes].[RouteId] AS [RouteId], 
     [vwRoleRoutes].[AppId] AS [AppId], 
     [vwRoleRoutes].[FilePath] AS [FilePath], 
     [vwRoleRoutes].[FileName] AS [FileName], 
     [vwRoleRoutes].[AppPath] AS [AppPath], 
-    [vwRoleRoutes].[RoutePath] AS [RoutePath]
+    [vwRoleRoutes].[RoutePath] AS [RoutePath], 
+    [vwRoleRoutes].[RouteId] AS [RouteId]
     FROM [Access].[vwRoleRoutes] AS [vwRoleRoutes]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vwRoles" EntityType="Self.vwRoles" store:Type="Views" store:Schema="Access">

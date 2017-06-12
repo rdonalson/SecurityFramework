@@ -12,6 +12,9 @@
 <table class="table">
     <tr>
         <th>
+            Bread Crumb
+        </th>
+        <th>
             Area & Role
         </th>
         <th>
@@ -23,6 +26,9 @@
     @foreach (var item in Model)
     {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BreadCrumb)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AreaAndRole)
             </td>

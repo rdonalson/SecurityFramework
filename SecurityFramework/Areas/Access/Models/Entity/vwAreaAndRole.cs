@@ -17,9 +17,12 @@ namespace SecurityFramework.Areas.Access.Models.Entity
         public int AreaSeq { get; set; }
         public string Area { get; set; }
         public string AreaName { get; set; }
+        public Nullable<System.Guid> AreaId { get; set; }
         public string Roles { get; set; }
         public int Seq { get; set; }
         public string AreaAndRole { get; set; }
+        public string BreadCrumb { get; set; }
         public System.Guid RoleId { get; set; }
+        public Nullable<System.Guid> AppId { get; set; }
     }
 }

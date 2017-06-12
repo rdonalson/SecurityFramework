@@ -91,7 +91,7 @@ namespace SecurityFramework.Areas.Access.Controllers.api
 
         public JsonResult GetRoutes(Guid guid)
         {
-            var list = _db.vwRolesRoutes.ToList();
+            var list = _db.vwRoleRoutes.ToList();
 
             var records = list.Where(l => l.RoleId == guid)
                 .OrderBy(l => l.RoutePath)

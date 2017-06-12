@@ -10,16 +10,10 @@
 namespace SecurityFramework.Areas.Access.Models.Entity
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class vwRoleRoute
+    public partial class spUserRoles_Result
     {
         public System.Guid RoleId { get; set; }
-        public Nullable<System.Guid> AppId { get; set; }
-        public string FilePath { get; set; }
-        public string FileName { get; set; }
-        public string AppPath { get; set; }
-        public string RoutePath { get; set; }
-        public System.Guid RouteId { get; set; }
+        public string Name { get; set; }
     }
 }

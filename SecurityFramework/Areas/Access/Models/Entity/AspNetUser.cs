@@ -33,6 +33,8 @@ namespace SecurityFramework.Areas.Access.Models.Entity
         public int AccessFailedCount { get; set; }
         public string UserName { get; set; }
         public bool SysAdmin { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RoleUser> RoleUsers { get; set; }

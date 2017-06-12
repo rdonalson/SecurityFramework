@@ -139,6 +139,7 @@ C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\Microsoft.
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\bin\System.Web.Providers.xml
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\obj\Debug\SecurityFramework.dll
 C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\obj\Debug\SecurityFramework.pdb
+C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\obj\Debug\SecurityFramework.csprojResolveAssemblyReference.cache
 D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\bin\ApplicationInsights.config
 D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\bin\roslyn\csc.exe
 D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\bin\roslyn\csc.exe.config
@@ -280,5 +281,3 @@ D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\bin\Microsof
 D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\bin\System.Web.Providers.xml
 D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\obj\Debug\SecurityFramework.dll
 D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\obj\Debug\SecurityFramework.pdb
-D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\obj\Debug\SecurityFramework.csprojResolveAssemblyReference.cache
-C:\Users\cnf4kkr\Source\Repos\SecurityFramework\SecurityFramework\obj\Debug\SecurityFramework.csprojResolveAssemblyReference.cache
