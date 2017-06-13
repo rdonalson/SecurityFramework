@@ -49,35 +49,24 @@ namespace SecurityFramework.Utilities.Common
         public static void SetupUser()
         {
             if (UserProfile == null)
-                using (var entities = new AccessEntities())
+                if (HttpContext.Current.User.Identity != null)
                 {
-                    var userName = HttpContext.Current.User.Identity.GetUserName();
-                    var userId = HttpContext.Current.User.Identity.GetUserId();
-                    var aspNetUser = entities.AspNetUsers.Find(userId);
-                    if (!string.IsNullOrEmpty(userName))
+                    if (HttpContext.Current.User.Identity.IsAuthenticated)
                     {
-                        if (aspNetUser != null)
-                        {
-                            var user = new User(
-                                userName,
-                                new Guid(userId),
-                                aspNetUser.SysAdmin,
-                                aspNetUser.FirstName,
-                                aspNetUser.LastName
-                            );
-                            UserProfile = user;
-                        }
-                        else
-                        {
-                            var user = new User(
-                                userName,
-                                new Guid(userId),
-                                false, 
-                                "",
-                                ""
-                            );
-                            UserProfile = user;
-                        }
+                        var userName = HttpContext.Current.User.Identity.GetUserName();
+                        var userId = HttpContext.Current.User.Identity.GetUserId();
+                        var firstName = HttpContext.Current.User.Identity.GetFirstName();
+                        var lastName = HttpContext.Current.User.Identity.GetLastName();
+                        var sysAdmin = HttpContext.Current.User.Identity.GetSysAdmin();
+
+                        var user = new User(
+                            userName,
+                            new Guid(userId),
+                            sysAdmin,
+                            firstName,
+                            lastName
+                        );
+                        UserProfile = user;
                     }
                 }
         }
@@ -114,3 +103,63 @@ namespace SecurityFramework.Utilities.Common
         }
     }
 }
+
+
+/* Archive
+         public static void SetupUser()
+        {
+            if (UserProfile == null)
+                using (var entities = new AccessEntities())
+                {
+                    var userName = HttpContext.Current.User.Identity.GetUserName();
+                    var userId = HttpContext.Current.User.Identity.GetUserId();
+                    var aspNetUser = entities.AspNetUsers.Find(userId);
+                    if (!string.IsNullOrEmpty(userName))
+                    {
+                        if (aspNetUser != null)
+                        {
+                            var user = new User(
+                                userName,
+                                new Guid(userId),
+                                aspNetUser.SysAdmin,
+                                aspNetUser.FirstName,
+                                aspNetUser.LastName
+                            );
+                            UserProfile = user;
+                        }
+                        else
+                        {
+                            var user = new User(
+                                userName,
+                                new Guid(userId),
+                                false, 
+                                "",
+                                ""
+                            );
+                            UserProfile = user;
+                        }
+                    }
+                }
+        }
+
+
+        if (UserProfile == null)
+            {
+                var userName = HttpContext.Current.User.Identity.GetUserName();
+                var userId = HttpContext.Current.User.Identity.GetUserId();
+                var firstName = HttpContext.Current.User.Identity.GetFirstName();
+                var lastName = HttpContext.Current.User.Identity.GetLastName();
+                var sysAdmin = HttpContext.Current.User.Identity.GetSysAdmin();
+                if (!string.IsNullOrEmpty(userName))
+                {
+                    var user = new User(
+                        userName,
+                        new Guid(userId),
+                        sysAdmin,
+                        firstName,
+                        lastName
+                    );
+                    UserProfile = user;
+                }
+            }
+     */

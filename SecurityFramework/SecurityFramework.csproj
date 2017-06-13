@@ -360,7 +360,7 @@
     <Content Include="Content\images\icons\favicon.ico" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
-    <Content Include="favicon.ico" />
+    <Content Include="Content\images\icons\_favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Account\Web.config" />

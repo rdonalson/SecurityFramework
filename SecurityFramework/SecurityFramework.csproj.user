@@ -3,7 +3,7 @@
   <PropertyGroup>
     <UseIISExpress>true</UseIISExpress>
     <WebStackScaffolding_AreaDialogWidth>600</WebStackScaffolding_AreaDialogWidth>
-    <ProjectView>ShowAllFiles</ProjectView>
+    <ProjectView>ProjectFiles</ProjectView>
     <WebStackScaffolding_ControllerDialogWidth>600</WebStackScaffolding_ControllerDialogWidth>
     <WebStackScaffolding_IsLayoutPageSelected>True</WebStackScaffolding_IsLayoutPageSelected>
     <WebStackScaffolding_IsPartialViewSelected>False</WebStackScaffolding_IsPartialViewSelected>
@@ -11,7 +11,7 @@
     <WebStackScaffolding_LayoutPageFile />
     <WebStackScaffolding_DbContextTypeFullName>SecurityFramework.Areas.Access.Models.Entity.AccessEntities</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
-    <NameOfLastUsedPublishProfile>Local IIS</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>Remote Server</NameOfLastUsedPublishProfile>
     <WebStackScaffolding_ViewDialogWidth>600</WebStackScaffolding_ViewDialogWidth>
   </PropertyGroup>
   <ProjectExtensions>
@@ -19,7 +19,7 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <StartPageUrl>Default.aspx</StartPageUrl>
-          <StartAction>SpecificPage</StartAction>
+          <StartAction>URL</StartAction>
           <AspNetDebugging>True</AspNetDebugging>
           <SilverlightDebugging>False</SilverlightDebugging>
           <NativeDebugging>False</NativeDebugging>

@@ -1,5 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="SecurityFramework.SiteMaster" %>
 <%@ Import Namespace="SecurityFramework.Utilities.Common" %>
+<%@ Import Namespace="SecurityFramework.Models" %>
 
 <!DOCTYPE html>
 
@@ -118,7 +119,8 @@
                     <LoggedInTemplate>
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName() %> !</a>
+                                <%--<a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName() %> !</a>--%>
+                                <a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetDisplayName() %> !</a>
                             </li>
                             <li>
                                 <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut"/>
