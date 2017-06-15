@@ -37,16 +37,16 @@ namespace SecurityFramework.Areas.Access.Models.Entity
         public virtual DbSet<Route> Routes { get; set; }
         public virtual DbSet<Shop> Shops { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<vwAreaAndRoleAndUser> vwAreasAndRolesAndUsers { get; set; }
         public virtual DbSet<vwAreaTree> vwAreaTrees { get; set; }
         public virtual DbSet<vwIsInRole> vwIsInRoles { get; set; }
-        public virtual DbSet<vwRoleUser> vwRolesUsers { get; set; }
         public virtual DbSet<vwRole> vwRoles { get; set; }
         public virtual DbSet<vwArea> vwAreas { get; set; }
         public virtual DbSet<vwAreaAndRole> vwAreasAndRoles { get; set; }
         public virtual DbSet<vwAreaAndRoleAndRoute> vwAreasAndRolesAndRoutes { get; set; }
         public virtual DbSet<vwAreaAndSubArea> vwAreasAndSubAreas { get; set; }
-        public virtual DbSet<vwRoleRoute> vwRoleRoutes { get; set; }
+        public virtual DbSet<vwAreaAndRoleAndUser> vwAreasAndRolesAndUsers { get; set; }
+        public virtual DbSet<vwRoleUser> vwRolesUsers { get; set; }
+        public virtual DbSet<vwRoleRoute> vwRolesRoutes { get; set; }
     
         public virtual ObjectResult<Nullable<int>> spIsInRole(Nullable<System.Guid> appId, string userId, string route)
         {

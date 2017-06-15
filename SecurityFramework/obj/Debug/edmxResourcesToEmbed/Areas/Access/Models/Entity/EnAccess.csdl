@@ -132,23 +132,6 @@
     <Property Name="FirstName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
     <Property Name="LastName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
   </EntityType>
-  <EntityType Name="vwAreaAndRoleAndUser">
-    <Key>
-      <PropertyRef Name="AreaSeq" />
-      <PropertyRef Name="Seq" />
-      <PropertyRef Name="Id" />
-      <PropertyRef Name="RoleId" />
-      <PropertyRef Name="UserId" />
-    </Key>
-    <Property Name="AreaSeq" Type="Int32" Nullable="false" />
-    <Property Name="Seq" Type="Int32" Nullable="false" />
-    <Property Name="AreaAndRole" Type="String" MaxLength="218" FixedLength="false" Unicode="false" />
-    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-    <Property Name="Id" Type="Guid" Nullable="false" />
-    <Property Name="RoleId" Type="Guid" Nullable="false" />
-    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="AreaId" Type="Guid" />
-  </EntityType>
   <EntityType Name="vwAreaTree">
     <Key>
       <PropertyRef Name="Id" />
@@ -176,17 +159,6 @@
     <Property Name="RouteId" Type="Guid" Nullable="false" />
     <Property Name="RoutePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="RouteAppId" Type="Guid" />
-  </EntityType>
-  <EntityType Name="vwRoleUser">
-    <Key>
-      <PropertyRef Name="RoleId" />
-      <PropertyRef Name="UserId" />
-      <PropertyRef Name="UserName" />
-    </Key>
-    <Property Name="RoleId" Type="Guid" Nullable="false" />
-    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
   </EntityType>
   <Association Name="FK_Organizations_Domains">
     <End Role="Domains" Type="Self.Domain" Multiplicity="1" />
@@ -381,10 +353,8 @@
     <EntitySet Name="Routes" EntityType="Self.Route" />
     <EntitySet Name="Shops" EntityType="Self.Shop" />
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
-    <EntitySet Name="vwAreasAndRolesAndUsers" EntityType="AccessModel.vwAreaAndRoleAndUser" />
     <EntitySet Name="vwAreaTrees" EntityType="Self.vwAreaTree" />
     <EntitySet Name="vwIsInRoles" EntityType="Self.vwIsInRole" />
-    <EntitySet Name="vwRolesUsers" EntityType="Self.vwRoleUser" />
     <AssociationSet Name="FK_Organizations_Domains" Association="Self.FK_Organizations_Domains">
       <End Role="Domains" EntitySet="Domains" />
       <End Role="Organizations" EntitySet="Organizations" />
@@ -459,7 +429,9 @@
     <EntitySet Name="vwAreasAndRoles" EntityType="AccessModel.vwAreaAndRole" />
     <EntitySet Name="vwAreasAndRolesAndRoutes" EntityType="AccessModel.vwAreaAndRoleAndRoute" />
     <EntitySet Name="vwAreasAndSubAreas" EntityType="AccessModel.vwAreaAndSubArea" />
-    <EntitySet Name="vwRoleRoutes" EntityType="AccessModel.vwRoleRoute" />
+    <EntitySet Name="vwAreasAndRolesAndUsers" EntityType="AccessModel.vwAreaAndRoleAndUser" />
+    <EntitySet Name="vwRolesUsers" EntityType="AccessModel.vwRoleUser" />
+    <EntitySet Name="vwRolesRoutes" EntityType="AccessModel.vwRoleRoute" />
   </EntityContainer>
   <EntityType Name="vwRole">
     <Key>
@@ -548,6 +520,37 @@
     <Property Name="Id" Type="Guid" Nullable="false" />
     <Property Name="AppId" Type="Guid" Nullable="false" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="vwAreaAndRoleAndUser">
+    <Key>
+      <PropertyRef Name="AreaSeq" />
+      <PropertyRef Name="Seq" />
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="RoleId" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="AppId" Type="Guid" />
+    <Property Name="AreaId" Type="Guid" />
+    <Property Name="AreaSeq" Type="Int32" Nullable="false" />
+    <Property Name="Seq" Type="Int32" Nullable="false" />
+    <Property Name="BreadCrumb" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <Property Name="AreaAndRole" Type="String" MaxLength="218" FixedLength="false" Unicode="false" />
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="RoleId" Type="Guid" Nullable="false" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayName" Type="String" MaxLength="514" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="vwRoleUser">
+    <Key>
+      <PropertyRef Name="RoleId" />
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Name="RoleId" Type="Guid" Nullable="false" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayName" Type="String" MaxLength="514" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="vwRoleRoute">
     <Key>

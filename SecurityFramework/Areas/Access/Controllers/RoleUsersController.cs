@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using SecurityFramework.Areas.Access.Models.Entity;
+using SecurityFramework.Areas.Access.Models.Utils;
+using SecurityFramework.Models;
 using SecurityFramework.Utilities.Common;
 
 namespace SecurityFramework.Areas.Access.Controllers
@@ -12,25 +14,21 @@ namespace SecurityFramework.Areas.Access.Controllers
     [Authorize]
     public class RoleUsersController : Controller
     {
-        private readonly AccessEntities _db = new AccessEntities();
+        private readonly AccessUtils _accessUtils;
+        private readonly AccessEntities _db;
+        private readonly bool _isSysAdmin;
 
-        public ActionResult ListBox()
+        public RoleUsersController()
         {
-            var areasAndRoles = _db.vwAreasAndRoles
-                .OrderBy(item => item.AreaSeq)
-                .ThenBy(item => item.Seq);
-            ViewBag.RoleId = new SelectList(areasAndRoles, "RoleId", "AreaAndRole");
-            return View();
+            _db = new AccessEntities();
+            _accessUtils = new AccessUtils(_db);
+            _isSysAdmin = System.Web.HttpContext.Current.User.Identity.GetSysAdmin();
         }
 
         // GET: Access/RoleUsers
         public ActionResult Index()
         {
-            var roleUsers = _db.vwAreasAndRolesAndUsers
-                .OrderBy(item => item.AreaSeq)
-                .ThenBy(item => item.Seq)
-                .ThenBy(item => item.UserId);
-            return View(roleUsers.ToList());
+            return View(_accessUtils.GetAreasAndRolesAndUsers());
         }
 
         // GET: Access/RoleUsers/Details/5
@@ -38,20 +36,23 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var roleUser = _db.vwAreasAndRolesAndUsers.SingleOrDefault(item => item.Id == id);
+            var roleUser = _accessUtils.GetAreasAndRolesAndUsers().SingleOrDefault(item => item.Id == id);
             if (roleUser == null)
                 return HttpNotFound();
+
             return View(roleUser);
         }
 
         // GET: Access/RoleUsers/Create
         public ActionResult Create()
         {
-            var areasAndRoles = _db.vwAreasAndRoles
-                .OrderBy(item => item.AreaSeq)
-                .ThenBy(item => item.Seq);
-            ViewBag.RoleId = new SelectList(areasAndRoles, "RoleId", "AreaAndRole");
-            ViewBag.UserId = new SelectList(_db.AspNetUsers, "Id", "Email");
+            ViewBag.RoleId = new SelectList(
+                _accessUtils.GetAreasAndRoles(),
+                $"RoleId", $"AreaAndRole");
+            ViewBag.UserId = new SelectList(
+                _accessUtils.GetAreasAndRolesAndUsers(),
+                $"UserId", $"DisplayName");
+
             return View();
         }
 
@@ -69,11 +70,14 @@ namespace SecurityFramework.Areas.Access.Controllers
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
-            var areasAndRoles = _db.vwAreasAndRoles
-                .OrderBy(item => item.AreaSeq)
-                .ThenBy(item => item.Seq);
-            ViewBag.RoleId = new SelectList(areasAndRoles, "RoleId", "AreaAndRole", roleUser.RoleId);
-            ViewBag.UserId = new SelectList(_db.AspNetUsers, "Id", "Email", roleUser.UserId);
+
+            ViewBag.RoleId = new SelectList(
+                _accessUtils.GetAreasAndRoles(),
+                $"RoleId", $"AreaAndRole", roleUser.RoleId);
+            ViewBag.UserId = new SelectList(
+                _accessUtils.GetAreasAndRolesAndUsers(),
+                $"UserId", $"DisplayName", roleUser.UserId);
+
             return View(roleUser);
         }
 
@@ -85,11 +89,14 @@ namespace SecurityFramework.Areas.Access.Controllers
             var roleUser = _db.RoleUsers.Find(id);
             if (roleUser == null)
                 return HttpNotFound();
-            var areasAndRoles = _db.vwAreasAndRoles
-                .OrderBy(item => item.AreaSeq)
-                .ThenBy(item => item.Seq);
-            ViewBag.RoleId = new SelectList(areasAndRoles, "RoleId", "AreaAndRole", roleUser.RoleId);
-            ViewBag.UserId = new SelectList(_db.AspNetUsers, "Id", "Email", roleUser.UserId);
+
+            ViewBag.RoleId = new SelectList(
+                _accessUtils.GetAreasAndRoles(),
+                $"RoleId", $"AreaAndRole", roleUser.RoleId);
+            ViewBag.UserId = new SelectList(
+                _accessUtils.GetAreasAndRolesAndUsers(),
+                $"UserId", $"DisplayName", roleUser.UserId);
+
             return View(roleUser);
         }
 
@@ -106,11 +113,14 @@ namespace SecurityFramework.Areas.Access.Controllers
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
-            var areasAndRoles = _db.vwAreasAndRoles
-                .OrderBy(item => item.AreaSeq)
-                .ThenBy(item => item.Seq);
-            ViewBag.RoleId = new SelectList(areasAndRoles, "RoleId", "AreaAndRole", roleUser.RoleId);
-            ViewBag.UserId = new SelectList(_db.AspNetUsers, "Id", "Email", roleUser.UserId);
+
+            ViewBag.RoleId = new SelectList(
+                _accessUtils.GetAreasAndRoles()
+                , $"RoleId", $"AreaAndRole", roleUser.RoleId);
+            ViewBag.UserId = new SelectList(
+                _accessUtils.GetAreasAndRolesAndUsers(),
+                $"UserId", $"DisplayName", roleUser.UserId);
+
             return View(roleUser);
         }
 
@@ -119,8 +129,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //RoleUser roleUser = _db.RoleUsers.Find(id);
-            var roleUser = _db.vwAreasAndRolesAndUsers.SingleOrDefault(item => item.Id == id);
+            var roleUser = _accessUtils.GetAreasAndRolesAndUsers().SingleOrDefault(item => item.Id == id);
             if (roleUser == null)
                 return HttpNotFound();
             return View(roleUser);
@@ -138,9 +147,20 @@ namespace SecurityFramework.Areas.Access.Controllers
             return RedirectToAction($"Index");
         }
 
-        public new void Dispose()
+        public new void Dispose(bool disposing)
         {
-            _db.Dispose();
+            if (disposing)
+                _db.Dispose();
+            base.Dispose(disposing);
+        }
+
+        public ActionResult ListBox()
+        {
+            var areasAndRoles = _db.vwAreasAndRoles
+                .OrderBy(item => item.AreaSeq)
+                .ThenBy(item => item.Seq);
+            ViewBag.RoleId = new SelectList(areasAndRoles, "RoleId", "AreaAndRole");
+            return View();
         }
     }
 }

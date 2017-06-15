@@ -139,3 +139,4 @@ D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\bin\Microsof
 D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\bin\System.Web.Providers.xml
 D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\obj\Debug\SecurityFramework.dll
 D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\obj\Debug\SecurityFramework.pdb
+D:\P01A\CS-CTG\WebDev\Prototype\SecurityFramework\SecurityFramework\obj\Debug\SecurityFramework.csprojResolveAssemblyReference.cache

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using SecurityFramework.Areas.Access.Models.Entity;
 using SecurityFramework.Areas.Access.Models.View;
+using SecurityFramework.Models;
 using SecurityFramework.Utilities.Common;
-using User = SecurityFramework.Models.User;
 
 namespace SecurityFramework.Areas.Access.Models.Utils
 {
@@ -19,25 +20,69 @@ namespace SecurityFramework.Areas.Access.Models.Utils
         private readonly Guid _appId;
         private readonly List<Guid> _areaGuids;
         private readonly AccessEntities _db;
+        private readonly bool _isSysAdmin;
         private readonly List<Guid> _roleGuids;
-        private readonly User _user;
 
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Constructor
+        /// </summary>
+        /// <param name="db"></param>
+        /// -----------------------------------------------------------------------------------------------
         public AccessUtils(AccessEntities db)
         {
             _db = db;
             _appId = AppCommon.AppAttributeValue;
-            _user = AppCommon.UserProfile;
+            _isSysAdmin = HttpContext.Current.User.Identity.GetSysAdmin();
             _accessRoutesFilter = "/Access/";
+
             var appid = AppCommon.AppAttributeValue;
             var userid = AppCommon.UserProfile.Id.ToString();
             _areaGuids = _db.spUserAreas(appid, userid).Select(l => l.Id).ToList();
             _roleGuids = _db.spUserRoles(appid, userid).Select(l => l.RoleId).ToList();
         }
 
-        public IQueryable<vwAreaAndRoleAndRoute> GetAreaAndRoleAndRoutes()
+        #region Areas, Roles & Users
+
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Aread, Roled & Users from the view, "vwAreasAndRolesAndUsers"
+        ///     Switched by _isSysAdmin, then filtered by _appId & _roleGuids
+        /// </summary>
+        /// <returns>IQueryable[vwAreaAndRoleAndUser]</returns>
+        /// -----------------------------------------------------------------------------------------------
+        public IQueryable<vwAreaAndRoleAndUser> GetAreasAndRolesAndUsers()
+        {
+            IQueryable<vwAreaAndRoleAndUser> list;
+            if (_isSysAdmin)
+                list = from view in _db.vwAreasAndRolesAndUsers
+                    where view.AppId == _appId
+                    orderby view.AreaSeq, view.Seq, view.DisplayName
+                       select view;
+            else
+                list = from view in _db.vwAreasAndRolesAndUsers
+                       where _roleGuids.Contains(view.RoleId)
+                          && view.AppId == _appId
+                    orderby view.AreaSeq, view.Seq, view.DisplayName
+                       select view;
+            return list;
+        }
+
+        #endregion Areas, Roles & Users
+
+        #region Areas, Roles & Routes
+
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Area, Role & Routes from the view, "vwAreasAndRolesAndRoutes"
+        ///     Switched by _isSysAdmin, then filtered by _appId, _roleGuids & _accessRoutesFilter
+        /// </summary>
+        /// <returns>IQueryable[vwAreaAndRoleAndRoute]</returns>
+        /// -----------------------------------------------------------------------------------------------
+        public IQueryable<vwAreaAndRoleAndRoute> GetAreasAndRolesAndRoutes()
         {
             IQueryable<vwAreaAndRoleAndRoute> list;
-            if (_user.IsSysAdmin)
+            if (_isSysAdmin)
                 list = from view in _db.vwAreasAndRolesAndRoutes
                     where view.AppId == _appId
                     orderby view.AreaSeq, view.Seq, view.RoutePath
@@ -52,27 +97,40 @@ namespace SecurityFramework.Areas.Access.Models.Utils
             return list;
         }
 
-
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Area & Routes from the view, "vwAreasAndRoles"
+        ///     Switched by _isSysAdmin, then filtered by _appId, _roleGuids & _accessRoutesFilter
+        /// </summary>
+        /// <returns>IQueryable[vwAreaAndRole]</returns>
+        /// -----------------------------------------------------------------------------------------------
         public IQueryable<vwAreaAndRole> GetAreasAndRoles()
         {
             IQueryable<vwAreaAndRole> list;
-            if (_user.IsSysAdmin)
+            if (_isSysAdmin)
                 list = from view in _db.vwAreasAndRoles
-                    where view.AppId == _appId
-                    orderby view.BreadCrumb
-                    select view;
+                       where view.AppId == _appId
+                       orderby view.AreaSeq, view.AreaSeq, view.BreadCrumb
+                       select view;
             else
                 list = from view in _db.vwAreasAndRoles
-                    where _roleGuids.Contains(view.RoleId)
-                          && view.AppId == _appId
-                    orderby view.BreadCrumb
-                    select view;
+                       where _roleGuids.Contains(view.RoleId)
+                             && view.AppId == _appId
+                       orderby view.AreaSeq, view.AreaSeq, view.BreadCrumb
+                       select view;
             return list;
         }
 
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Role & Routes from the view, "vwRoleRoutes"
+        ///     Switched by _isSysAdmin, then filtered by _appId, _roleGuids & _accessRoutesFilter
+        /// </summary>
+        /// <returns>IQueryable[vwRoleRoute]</returns>
+        /// -----------------------------------------------------------------------------------------------
         public IQueryable<vwRoleRoute> GetRolesAndRoutes()
         {
-            var list = from view in _db.vwRoleRoutes
+            var list = from view in _db.vwRolesRoutes
                 where _roleGuids.Contains(view.RoleId)
                       && view.AppId == _appId
                       && !view.RoutePath.Contains(_accessRoutesFilter)
@@ -81,8 +139,17 @@ namespace SecurityFramework.Areas.Access.Models.Utils
             return list;
         }
 
-        #region Areas
+        #endregion Areas, Roles & Routes
 
+        #region Areas & Sub-areas
+
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Areas from the table, "Domains"
+        ///     Filtered by _appId & _areaGuids
+        /// </summary>
+        /// <returns>IQueryable[ListViewModel]</returns>
+        /// -----------------------------------------------------------------------------------------------
         public IQueryable<ListViewModel> GetDomains()
         {
             var domains = from dom in _db.Domains
@@ -98,6 +165,14 @@ namespace SecurityFramework.Areas.Access.Models.Utils
             return domains;
         }
 
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Areas & Sub-areas from the tables, "Domains" & "Organizations"
+        ///     Filtered by _appId & _areaGuids
+        ///     Create a "Bread Crumb Trail" for user reference
+        /// </summary>
+        /// <returns>IQueryable[ListViewModel]</returns>
+        /// -----------------------------------------------------------------------------------------------
         public IQueryable<ListViewModel> GetOrganizations()
         {
             var organizations = from dom in _db.Domains
@@ -115,6 +190,14 @@ namespace SecurityFramework.Areas.Access.Models.Utils
             return organizations;
         }
 
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Areas & Sub-areas from the tables, "Domains", "Organizations" & "Groups"
+        ///     Filtered by _appId & _areaGuids
+        ///     Create a "Bread Crumb Trail" for user reference
+        /// </summary>
+        /// <returns>IQueryable[ListViewModel]</returns>
+        /// -----------------------------------------------------------------------------------------------
         public IQueryable<ListViewModel> GetGroups()
         {
             var groups = from dom in _db.Domains
@@ -132,6 +215,14 @@ namespace SecurityFramework.Areas.Access.Models.Utils
             return groups;
         }
 
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Areas & Sub-areas from the tables, "Domains", "Organizations", "Groups" & "Offices"
+        ///     Filtered by _appId & _areaGuids
+        ///     Create a "Bread Crumb Trail" for user reference
+        /// </summary>
+        /// <returns>IQueryable[ListViewModel]</returns>
+        /// -----------------------------------------------------------------------------------------------
         public IQueryable<ListViewModel> GetOffices()
         {
             var offices = from dom in _db.Domains
@@ -153,6 +244,14 @@ namespace SecurityFramework.Areas.Access.Models.Utils
             return offices;
         }
 
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Areas & Sub-areas from the tables, "Domains", "Organizations", "Groups", "Offices" & "Shops"
+        ///     Filtered by _appId & _areaGuids
+        ///     Create a "Bread Crumb Trail" for user reference
+        /// </summary>
+        /// <returns>IQueryable[ListViewModel]</returns>
+        /// -----------------------------------------------------------------------------------------------
         public IQueryable<ListViewModel> GetShops()
         {
             var shops = from dom in _db.Domains
@@ -176,10 +275,18 @@ namespace SecurityFramework.Areas.Access.Models.Utils
             return shops;
         }
 
-        #endregion Areas
+        #endregion Areas & Sub-areas
 
-        #region Roles
+        #region Areas & Sub-area Roles
 
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Areas & Sub-area Roles from the tables, "Domains" & "Roles"
+        ///     Filtered by _appId & _areaGuids
+        ///     Create a "Bread Crumb Trail" for user reference
+        /// </summary>
+        /// <returns>IQueryable[ListViewModel]</returns>
+        /// -----------------------------------------------------------------------------------------------
         public IQueryable<ListViewModel> GetDomainRoles()
         {
             var domainRoles = from dom in _db.Domains
@@ -198,6 +305,14 @@ namespace SecurityFramework.Areas.Access.Models.Utils
             return domainRoles;
         }
 
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Areas & Sub-area Roles from the tables, "Domains", "Organizations" & "Roles"
+        ///     Filtered by _appId & _areaGuids
+        ///     Create a "Bread Crumb Trail" for user reference
+        /// </summary>
+        /// <returns>IQueryable[ListViewModel]</returns>
+        /// -----------------------------------------------------------------------------------------------
         public IQueryable<ListViewModel> GetOrganizationRoles()
         {
             var organizationRoles = from dom in _db.Domains
@@ -218,6 +333,14 @@ namespace SecurityFramework.Areas.Access.Models.Utils
             return organizationRoles;
         }
 
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Areas & Sub-area Roles from the tables, "Domains", "Organizations", "Groups" & "Roles"
+        ///     Filtered by _appId & _areaGuids
+        ///     Create a "Bread Crumb Trail" for user reference
+        /// </summary>
+        /// <returns>IQueryable[ListViewModel]</returns>
+        /// -----------------------------------------------------------------------------------------------
         public IQueryable<ListViewModel> GetGroupRoles()
         {
             var groupRoles = from dom in _db.Domains
@@ -240,6 +363,14 @@ namespace SecurityFramework.Areas.Access.Models.Utils
             return groupRoles;
         }
 
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Areas & Sub-area Roles from the tables, "Domains", "Organizations", "Groups", "Offices"
+        ///     & "Roles".  Filtered by _appId & _areaGuids
+        ///     Create a "Bread Crumb Trail" for user reference
+        /// </summary>
+        /// <returns>IQueryable[ListViewModel]</returns>
+        /// -----------------------------------------------------------------------------------------------
         public IQueryable<ListViewModel> GetOfficeRoles()
         {
             var officeRoles = from dom in _db.Domains
@@ -263,6 +394,14 @@ namespace SecurityFramework.Areas.Access.Models.Utils
             return officeRoles;
         }
 
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Areas & Sub-area Roles from the tables, "Domains", "Organizations", "Groups", "Offices",
+        ///     "Shops" & "Roles".  Filtered by _appId & _areaGuids
+        ///     Create a "Bread Crumb Trail" for user reference
+        /// </summary>
+        /// <returns>IQueryable[ListViewModel]</returns>
+        /// -----------------------------------------------------------------------------------------------
         public IQueryable<ListViewModel> GetShopRoles()
         {
             var shopRoles = from dom in _db.Domains
@@ -289,6 +428,6 @@ namespace SecurityFramework.Areas.Access.Models.Utils
             return shopRoles;
         }
 
-        #endregion Roles
+        #endregion Areas & Sub-area Roles
     }
 }

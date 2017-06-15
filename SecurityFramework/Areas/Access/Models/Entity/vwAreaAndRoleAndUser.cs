@@ -14,13 +14,15 @@ namespace SecurityFramework.Areas.Access.Models.Entity
     
     public partial class vwAreaAndRoleAndUser
     {
+        public Nullable<System.Guid> AppId { get; set; }
+        public Nullable<System.Guid> AreaId { get; set; }
         public int AreaSeq { get; set; }
         public int Seq { get; set; }
+        public string BreadCrumb { get; set; }
         public string AreaAndRole { get; set; }
-        public string Email { get; set; }
         public System.Guid Id { get; set; }
         public System.Guid RoleId { get; set; }
         public string UserId { get; set; }
-        public Nullable<System.Guid> AreaId { get; set; }
+        public string DisplayName { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using System.Net;
 using System.Web.Mvc;
 using SecurityFramework.Areas.Access.Models.Entity;
 using SecurityFramework.Areas.Access.Models.Utils;
+using SecurityFramework.Models;
 using SecurityFramework.Utilities.Common;
 
 namespace SecurityFramework.Areas.Access.Controllers
@@ -16,16 +17,18 @@ namespace SecurityFramework.Areas.Access.Controllers
     {
         private readonly AccessUtils _accessUtils;
         private readonly AccessEntities _db;
+        private readonly bool _isSysAdmin;
 
         public RoleRoutesController()
         {
             _db = new AccessEntities();
             _accessUtils = new AccessUtils(_db);
+            _isSysAdmin = System.Web.HttpContext.Current.User.Identity.GetSysAdmin();
         }
         // GET: Access/RoleRoutes
         public ActionResult Index()
         {
-            return View(_accessUtils.GetAreaAndRoleAndRoutes());
+            return View(_accessUtils.GetAreasAndRolesAndRoutes());
         }
 
         // GET: Access/RoleRoutes/Details/5
@@ -33,9 +36,10 @@ namespace SecurityFramework.Areas.Access.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var roleRoute = _accessUtils.GetAreaAndRoleAndRoutes().SingleOrDefault(item => item.Id == id);
+            var roleRoute = _accessUtils.GetAreasAndRolesAndRoutes().SingleOrDefault(item => item.Id == id);
             if (roleRoute == null)
                 return HttpNotFound();
+
             return View(roleRoute);
         }
 
@@ -43,13 +47,14 @@ namespace SecurityFramework.Areas.Access.Controllers
         public ActionResult Create()
         {
             ViewBag.RoleId = new SelectList(_accessUtils.GetAreasAndRoles(), "RoleId", "AreaAndRole");
-            if (AppCommon.UserProfile.IsSysAdmin)
+            if (_isSysAdmin)
             {
                 var routes = _db.Routes.OrderBy(item => item.RoutePath);
                 ViewBag.RouteId = new SelectList(routes, "Id", "RoutePath");
             }
             else
                 ViewBag.RouteId = new SelectList(_accessUtils.GetRolesAndRoutes(), "RouteId", "RoutePath");
+
             return View();
         }
 
@@ -69,13 +74,14 @@ namespace SecurityFramework.Areas.Access.Controllers
             }
 
             ViewBag.RoleId = new SelectList(_accessUtils.GetAreasAndRoles(), "RoleId", "AreaAndRole", roleRoute.RoleId);
-            if (AppCommon.UserProfile.IsSysAdmin)
+            if (_isSysAdmin)
             {
                 var routes = _db.Routes.OrderBy(item => item.RoutePath);
                 ViewBag.RouteId = new SelectList(routes, "Id", "RoutePath", roleRoute.RouteId);
             }
             else
                 ViewBag.RouteId = new SelectList(_accessUtils.GetRolesAndRoutes(), "RouteId", "RoutePath", roleRoute.RouteId);
+
             return View(roleRoute);
         }
 
@@ -88,13 +94,14 @@ namespace SecurityFramework.Areas.Access.Controllers
             if (roleRoute == null)
                 return HttpNotFound();
             ViewBag.RoleId = new SelectList(_accessUtils.GetAreasAndRoles(), "RoleId", "AreaAndRole", roleRoute.RoleId);
-            if (AppCommon.UserProfile.IsSysAdmin)
+            if (_isSysAdmin)
             {
                 var routes = _db.Routes.OrderBy(item => item.RoutePath);
                 ViewBag.RouteId = new SelectList(routes, "Id", "RoutePath", roleRoute.RouteId);
             }
             else
                 ViewBag.RouteId = new SelectList(_accessUtils.GetRolesAndRoutes(), "RouteId", "RoutePath", roleRoute.RouteId);
+
             return View(roleRoute);
         }
 
@@ -112,13 +119,14 @@ namespace SecurityFramework.Areas.Access.Controllers
                 return RedirectToAction($"Index");
             }
             ViewBag.RoleId = new SelectList(_accessUtils.GetAreasAndRoles(), "RoleId", "AreaAndRole", roleRoute.RoleId);
-            if (AppCommon.UserProfile.IsSysAdmin)
+            if (_isSysAdmin)
             {
                 var routes = _db.Routes.OrderBy(item => item.RoutePath);
                 ViewBag.RouteId = new SelectList(routes, "Id", "RoutePath", roleRoute.RouteId);
             }
             else
                 ViewBag.RouteId = new SelectList(_accessUtils.GetRolesAndRoutes(), "RouteId", "RoutePath", roleRoute.RouteId);
+
             return View(roleRoute);
         }
 
