@@ -18,9 +18,9 @@ namespace SecurityFramework.Areas.Access.Controllers
         public ActionResult Index()
         {
             return View(_db.Routes.ToList()
-                .Where(item => !item.RoutePath.Contains("/Access/")
-                               && !item.RoutePath.Contains("/Account/")
-                               && !item.RoutePath.Contains("/SystemAdmin/"))
+                .Where(item => !item.RoutePath.Contains($"/Access/")
+                               && !item.RoutePath.Contains($"/Account/")
+                               && !item.RoutePath.Contains($"/SystemAdmin/"))
                 .OrderBy(item => item.RoutePath));
         }
 
@@ -46,7 +46,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FilePath,FileName,AppPath,RoutePath")] Route route)
+        public ActionResult Create([Bind(Include = @"Id,FilePath,FileName,AppPath,Name")] Route route)
         {
             if (ModelState.IsValid)
             {
@@ -75,7 +75,7 @@ namespace SecurityFramework.Areas.Access.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FilePath,FileName,AppPath,RoutePath")] Route route)
+        public ActionResult Edit([Bind(Include = @"Id,FilePath,FileName,AppPath,Name")] Route route)
         {
             if (ModelState.IsValid)
             {

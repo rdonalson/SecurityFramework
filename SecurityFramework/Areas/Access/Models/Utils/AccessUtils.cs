@@ -22,12 +22,13 @@ namespace SecurityFramework.Areas.Access.Models.Utils
         private readonly AccessEntities _db;
         private readonly bool _isSysAdmin;
         private readonly List<Guid> _roleGuids;
+        private readonly string _systemAdminRouteFilter;
 
         /// -----------------------------------------------------------------------------------------------
         /// <summary>
         ///     Constructor
         /// </summary>
-        /// <param name="db"></param>
+        /// <param name="db">AccessEntities</param>
         /// -----------------------------------------------------------------------------------------------
         public AccessUtils(AccessEntities db)
         {
@@ -35,6 +36,7 @@ namespace SecurityFramework.Areas.Access.Models.Utils
             _appId = AppCommon.AppAttributeValue;
             _isSysAdmin = HttpContext.Current.User.Identity.GetSysAdmin();
             _accessRoutesFilter = "/Access/";
+            _systemAdminRouteFilter = "/SystemAdmin/";
 
             var appid = AppCommon.AppAttributeValue;
             var userid = AppCommon.UserProfile.Id.ToString();
@@ -42,7 +44,79 @@ namespace SecurityFramework.Areas.Access.Models.Utils
             _roleGuids = _db.spUserRoles(appid, userid).Select(l => l.RoleId).ToList();
         }
 
+        #region Users
+
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Users only if SysAdmin is logged in
+        /// </summary>
+        /// <returns>IQueryable[UserViewModel]</returns>
+        /// -----------------------------------------------------------------------------------------------
+        public List<UserViewModel> GetUsers()
+        {
+            IQueryable<UserViewModel> list;
+            if (_isSysAdmin)
+                list = from view in _db.AspNetUsers
+                    select new UserViewModel
+                    {
+                        Id = view.Id,
+                        FirstName = view.FirstName,
+                        LastName = view.LastName,
+                        DisplayName = view.LastName + ", " + view.FirstName,
+                        Email = view.Email,
+                        UserName = view.UserName,
+                        PhoneNumber = view.PhoneNumber,
+                        SysAdmin = view.SysAdmin
+                    };
+            else
+                list = null;
+            return list?.OrderBy(item => item.LastName).ThenBy(item => item.FirstName).ToList();
+        }
+
+        #endregion Users
+
         #region Areas, Roles & Users
+
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Aread, Roled & Users from the view, "vwAreasAndRolesAndUsers"
+        ///     Switched by _isSysAdmin, then filtered by _appId & _roleGuids
+        /// </summary>
+        /// <returns>IQueryable[DropdownViewModel]</returns>
+        /// -----------------------------------------------------------------------------------------------
+        public List<DropdownViewModel> GetRolesAndUsers()
+        {
+            IQueryable<DropdownViewModel> list;
+            if (_isSysAdmin)
+                list = from view in _db.vwUsers
+                    group view by new
+                    {
+                        view.Id,
+                        view.DisplayName
+                    }
+                    into grouping
+                    select new DropdownViewModel
+                    {
+                        Id = grouping.Key.Id,
+                        Name = grouping.Key.DisplayName
+                    };
+            else
+                list = from view in _db.vwAreasAndRolesAndUsers
+                    where _roleGuids.Contains(view.RoleId)
+                          && view.AppId == _appId
+                    group view by new
+                    {
+                        view.UserId,
+                        view.DisplayName
+                    }
+                    into grouping
+                    select new DropdownViewModel
+                    {
+                        Id = grouping.Key.UserId,
+                        Name = grouping.Key.DisplayName
+                    };
+            return list.OrderBy(item => item.Name).ToList();
+        }
 
         /// -----------------------------------------------------------------------------------------------
         /// <summary>
@@ -57,14 +131,14 @@ namespace SecurityFramework.Areas.Access.Models.Utils
             if (_isSysAdmin)
                 list = from view in _db.vwAreasAndRolesAndUsers
                     where view.AppId == _appId
-                    orderby view.AreaSeq, view.Seq, view.DisplayName
-                       select view;
+                    orderby view.AreaAndRole, view.DisplayName, view.BreadCrumb
+                    select view;
             else
                 list = from view in _db.vwAreasAndRolesAndUsers
-                       where _roleGuids.Contains(view.RoleId)
+                    where _roleGuids.Contains(view.RoleId)
                           && view.AppId == _appId
-                    orderby view.AreaSeq, view.Seq, view.DisplayName
-                       select view;
+                    orderby view.AreaAndRole, view.DisplayName, view.BreadCrumb
+                    select view;
             return list;
         }
 
@@ -85,14 +159,14 @@ namespace SecurityFramework.Areas.Access.Models.Utils
             if (_isSysAdmin)
                 list = from view in _db.vwAreasAndRolesAndRoutes
                     where view.AppId == _appId
-                    orderby view.AreaSeq, view.Seq, view.RoutePath
+                    orderby view.AreaAndRole, view.RoutePath, view.BreadCrumb
                     select view;
             else
                 list = from view in _db.vwAreasAndRolesAndRoutes
                     where _roleGuids.Contains(view.RoleId)
                           && view.AppId == _appId
                           && !view.RoutePath.Contains(_accessRoutesFilter)
-                    orderby view.AreaSeq, view.Seq, view.RoutePath
+                    orderby view.AreaAndRole, view.RoutePath, view.BreadCrumb
                     select view;
             return list;
         }
@@ -100,43 +174,88 @@ namespace SecurityFramework.Areas.Access.Models.Utils
         /// -----------------------------------------------------------------------------------------------
         /// <summary>
         ///     Get Area & Routes from the view, "vwAreasAndRoles"
-        ///     Switched by _isSysAdmin, then filtered by _appId, _roleGuids & _accessRoutesFilter
+        ///     Switched by _isSysAdmin, then filtered by _appId, & _roleGuids
         /// </summary>
-        /// <returns>IQueryable[vwAreaAndRole]</returns>
+        /// <returns>IQueryable[DropdownViewModel]</returns>
         /// -----------------------------------------------------------------------------------------------
-        public IQueryable<vwAreaAndRole> GetAreasAndRoles()
+        public IQueryable<DropdownViewModel> GetAreasAndRoles()
         {
-            IQueryable<vwAreaAndRole> list;
+            IQueryable<DropdownViewModel> list;
             if (_isSysAdmin)
                 list = from view in _db.vwAreasAndRoles
-                       where view.AppId == _appId
-                       orderby view.AreaSeq, view.AreaSeq, view.BreadCrumb
-                       select view;
+                    where view.AppId == _appId
+                    group view by new
+                    {
+                        Id = view.RoleId,
+                        Name = view.BreadCrumb + " : " + view.Roles
+                    }
+                    into grouping
+                    select new DropdownViewModel
+                    {
+                        Id = grouping.Key.Id.ToString(),
+                        Name = grouping.Key.Name
+                    };
             else
                 list = from view in _db.vwAreasAndRoles
-                       where _roleGuids.Contains(view.RoleId)
-                             && view.AppId == _appId
-                       orderby view.AreaSeq, view.AreaSeq, view.BreadCrumb
-                       select view;
-            return list;
+                    where _roleGuids.Contains(view.RoleId)
+                          && view.AppId == _appId
+                    group view by new
+                    {
+                        Id = view.RoleId,
+                        Name = view.BreadCrumb + " : " + view.Roles
+                    }
+                    into grouping
+                    select new DropdownViewModel
+                    {
+                        Id = grouping.Key.Id.ToString(),
+                        Name = grouping.Key.Name
+                    };
+            return list.OrderBy(item => item.Name);
         }
 
         /// -----------------------------------------------------------------------------------------------
         /// <summary>
         ///     Get Role & Routes from the view, "vwRoleRoutes"
-        ///     Switched by _isSysAdmin, then filtered by _appId, _roleGuids & _accessRoutesFilter
+        ///     Group by Id & Name
+        ///     Filtered by _appId, _roleGuids & _accessRoutesFilter
         /// </summary>
-        /// <returns>IQueryable[vwRoleRoute]</returns>
+        /// <returns>IQueryable[DropdownViewModel]</returns>
         /// -----------------------------------------------------------------------------------------------
-        public IQueryable<vwRoleRoute> GetRolesAndRoutes()
+        public IQueryable<DropdownViewModel> GetRolesAndRoutes()
         {
-            var list = from view in _db.vwRolesRoutes
-                where _roleGuids.Contains(view.RoleId)
-                      && view.AppId == _appId
-                      && !view.RoutePath.Contains(_accessRoutesFilter)
-                orderby view.RoutePath
-                select view;
-            return list;
+            IQueryable<DropdownViewModel> list;
+            if (_isSysAdmin)
+                list = from view in _db.vwRolesRoutes
+                    where view.AppId == _appId
+                          && !view.RoutePath.Contains(_systemAdminRouteFilter)
+                    group view by new
+                    {
+                        view.RouteId,
+                        view.RoutePath
+                    }
+                    into grouping
+                    select new DropdownViewModel
+                    {
+                        Id = grouping.Key.RouteId.ToString(),
+                        Name = grouping.Key.RoutePath
+                    };
+            else
+                list = from view in _db.vwRolesRoutes
+                    where _roleGuids.Contains(view.RoleId)
+                          && view.AppId == _appId
+                          && !view.RoutePath.Contains(_accessRoutesFilter)
+                    group view by new
+                    {
+                        view.RouteId,
+                        view.RoutePath
+                    }
+                    into grouping
+                    select new DropdownViewModel
+                    {
+                        Id = grouping.Key.RouteId.ToString(),
+                        Name = grouping.Key.RoutePath
+                    };
+            return list.OrderBy(item => item.Name);
         }
 
         #endregion Areas, Roles & Routes
@@ -431,3 +550,66 @@ namespace SecurityFramework.Areas.Access.Models.Utils
         #endregion Areas & Sub-area Roles
     }
 }
+
+
+/* Archive
+ * 
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Routes sorted by Name and filter out the System Admin folder items, since these
+        ///     should never be selected because they can be accessed globally anyway.
+        ///     They are also filtered on the AppId of the current application.
+        /// </summary>
+        /// <returns>IQueryable[Route]</returns>
+        /// -----------------------------------------------------------------------------------------------
+        //public IQueryable<Route> GetRoutes()
+        //{
+        //    var list = from view in _db.Routes
+        //        where view.AppId == _appId
+        //              && !view.RoutePath.Contains(_systemAdminRouteFilter)
+        //        orderby view.RoutePath
+        //        select view;
+        //    return list;
+        //}
+        
+     * * 
+ *         /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Get Area & Routes from the view, "vwAreasAndRoles"
+        ///     Switched by _isSysAdmin, then filtered by _appId, _roleGuids & _accessRoutesFilter
+        /// </summary>
+        /// <returns>IQueryable[vwAreaAndRole]</returns>
+        /// -----------------------------------------------------------------------------------------------
+        public IQueryable<vwAreaAndRole> GetAreasAndRoles()
+        {
+            IQueryable<vwAreaAndRole> list;
+            if (_isSysAdmin)
+                list = from view in _db.vwAreasAndRoles
+                    where view.AppId == _appId
+                    orderby view.AreaSeq, view.AreaSeq, view.BreadCrumb
+                    select view;
+            else
+                list = from view in _db.vwAreasAndRoles
+                    where _roleGuids.Contains(view.RoleId)
+                          && view.AppId == _appId
+                    orderby view.AreaSeq, view.AreaSeq, view.BreadCrumb
+                    select view;
+            return list;
+        }
+ * 
+        ///// -----------------------------------------------------------------------------------------------
+        ///// <summary>
+        /////     Get users sorted by last and then by first name
+        /////     and the sysadmin is filtered out
+        ///// </summary>
+        ///// <returns>IQueryable[vwUser]</returns>
+        ///// -----------------------------------------------------------------------------------------------
+        //public IQueryable<vwUser> GetUsers()
+        //{
+        //    var list = from view in _db.vwUsers
+        //        orderby view.LastName, view.FirstName
+        //        select view;
+        //    return list;
+        //} * 
+ * 
+ */

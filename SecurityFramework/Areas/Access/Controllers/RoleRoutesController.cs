@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -11,27 +10,94 @@ using SecurityFramework.Utilities.Common;
 
 namespace SecurityFramework.Areas.Access.Controllers
 {
+    /// ===============================================================================================
+    /// <summary>
+    ///     Roles & Routes Controller
+    /// </summary>
+    /// ===============================================================================================
     [VerifyAccess]
     [Authorize]
     public class RoleRoutesController : Controller
     {
         private readonly AccessUtils _accessUtils;
         private readonly AccessEntities _db;
-        private readonly bool _isSysAdmin;
 
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Constructor
+        /// </summary>
+        /// -----------------------------------------------------------------------------------------------
         public RoleRoutesController()
         {
             _db = new AccessEntities();
             _accessUtils = new AccessUtils(_db);
-            _isSysAdmin = System.Web.HttpContext.Current.User.Identity.GetSysAdmin();
         }
-        // GET: Access/RoleRoutes
+
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     GET: Access/RoleRoutes
+        /// </summary>
+        /// <returns>ActionResult</returns>
+        /// -----------------------------------------------------------------------------------------------
         public ActionResult Index()
         {
             return View(_accessUtils.GetAreasAndRolesAndRoutes());
         }
 
-        // GET: Access/RoleRoutes/Details/5
+        #region Create
+
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     GET: Access/RoleRoutes/Create
+        /// </summary>
+        /// <returns>ActionResult</returns>
+        /// -----------------------------------------------------------------------------------------------
+        public ActionResult Create()
+        {
+            ViewBag.RoleId = new SelectList(_accessUtils.GetAreasAndRoles(), $"Id", $"Name");
+            ViewBag.RouteId = new SelectList(_accessUtils.GetRolesAndRoutes(), $"Id", $"Name");
+
+            return View();
+        }
+
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     POST: Access/RoleRoutes/Create
+        ///     To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        ///     more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// </summary>
+        /// <param name="roleRoute">RoleRoute</param>
+        /// <returns>ActionResult</returns>
+        /// -----------------------------------------------------------------------------------------------
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = @"Id,RoleId,RouteId")] RoleRoute roleRoute)
+        {
+            if (ModelState.IsValid)
+            {
+                roleRoute.Id = Guid.NewGuid();
+                _db.RoleRoutes.Add(roleRoute);
+                _db.SaveChanges();
+                return RedirectToAction($"Index");
+            }
+
+            ViewBag.RoleId = new SelectList(_accessUtils.GetAreasAndRoles(), $"Id", $"Name", roleRoute.RoleId);
+            ViewBag.RouteId = new SelectList(_accessUtils.GetRolesAndRoutes(), $"Id", $"Name", roleRoute.RouteId);
+
+            return View(roleRoute);
+        }
+
+        #endregion Create
+
+        #region Edit
+
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     GET: Access/RoleRoutes/Details/5
+        /// </summary>
+        /// <param name="id">Guid?</param>
+        /// <returns>ActionResult</returns>
+        /// -----------------------------------------------------------------------------------------------
         public ActionResult Details(Guid? id)
         {
             if (id == null)
@@ -43,49 +109,13 @@ namespace SecurityFramework.Areas.Access.Controllers
             return View(roleRoute);
         }
 
-        // GET: Access/RoleRoutes/Create
-        public ActionResult Create()
-        {
-            ViewBag.RoleId = new SelectList(_accessUtils.GetAreasAndRoles(), "RoleId", "AreaAndRole");
-            if (_isSysAdmin)
-            {
-                var routes = _db.Routes.OrderBy(item => item.RoutePath);
-                ViewBag.RouteId = new SelectList(routes, "Id", "RoutePath");
-            }
-            else
-                ViewBag.RouteId = new SelectList(_accessUtils.GetRolesAndRoutes(), "RouteId", "RoutePath");
-
-            return View();
-        }
-
-        // POST: Access/RoleRoutes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,RoleId,RouteId")] RoleRoute roleRoute)
-        {
-            if (ModelState.IsValid)
-            {
-                roleRoute.Id = Guid.NewGuid();
-                _db.RoleRoutes.Add(roleRoute);
-                _db.SaveChanges();
-                return RedirectToAction($"Index");
-            }
-
-            ViewBag.RoleId = new SelectList(_accessUtils.GetAreasAndRoles(), "RoleId", "AreaAndRole", roleRoute.RoleId);
-            if (_isSysAdmin)
-            {
-                var routes = _db.Routes.OrderBy(item => item.RoutePath);
-                ViewBag.RouteId = new SelectList(routes, "Id", "RoutePath", roleRoute.RouteId);
-            }
-            else
-                ViewBag.RouteId = new SelectList(_accessUtils.GetRolesAndRoutes(), "RouteId", "RoutePath", roleRoute.RouteId);
-
-            return View(roleRoute);
-        }
-
-        // GET: Access/RoleRoutes/Edit/5
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     GET: Access/RoleRoutes/Edit/5
+        /// </summary>
+        /// <param name="id">Guid?</param>
+        /// <returns>ActionResult</returns>
+        /// -----------------------------------------------------------------------------------------------
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -93,24 +123,24 @@ namespace SecurityFramework.Areas.Access.Controllers
             var roleRoute = _db.RoleRoutes.Find(id);
             if (roleRoute == null)
                 return HttpNotFound();
-            ViewBag.RoleId = new SelectList(_accessUtils.GetAreasAndRoles(), "RoleId", "AreaAndRole", roleRoute.RoleId);
-            if (_isSysAdmin)
-            {
-                var routes = _db.Routes.OrderBy(item => item.RoutePath);
-                ViewBag.RouteId = new SelectList(routes, "Id", "RoutePath", roleRoute.RouteId);
-            }
-            else
-                ViewBag.RouteId = new SelectList(_accessUtils.GetRolesAndRoutes(), "RouteId", "RoutePath", roleRoute.RouteId);
+            ViewBag.RoleId = new SelectList(_accessUtils.GetAreasAndRoles(), $"Id", $"Name", roleRoute.RoleId);
+            ViewBag.RouteId = new SelectList(_accessUtils.GetRolesAndRoutes(), $"Id", $"Name", roleRoute.RouteId);
 
             return View(roleRoute);
         }
 
-        // POST: Access/RoleRoutes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     POST:  Access/RoleRoutes/Edit/5
+        ///     To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        ///     more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// </summary>
+        /// <param name="roleRoute">RoleRoute</param>
+        /// <returns>ActionResult</returns>
+        /// -----------------------------------------------------------------------------------------------
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,RoleId,RouteId")] RoleRoute roleRoute)
+        public ActionResult Edit([Bind(Include = @"Id,RoleId,RouteId")] RoleRoute roleRoute)
         {
             if (ModelState.IsValid)
             {
@@ -118,19 +148,23 @@ namespace SecurityFramework.Areas.Access.Controllers
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
-            ViewBag.RoleId = new SelectList(_accessUtils.GetAreasAndRoles(), "RoleId", "AreaAndRole", roleRoute.RoleId);
-            if (_isSysAdmin)
-            {
-                var routes = _db.Routes.OrderBy(item => item.RoutePath);
-                ViewBag.RouteId = new SelectList(routes, "Id", "RoutePath", roleRoute.RouteId);
-            }
-            else
-                ViewBag.RouteId = new SelectList(_accessUtils.GetRolesAndRoutes(), "RouteId", "RoutePath", roleRoute.RouteId);
+            ViewBag.RoleId = new SelectList(_accessUtils.GetAreasAndRoles(), $"Id", $"Name",roleRoute.RoleId);
+            ViewBag.RouteId = new SelectList(_accessUtils.GetRolesAndRoutes(), $"Id", $"Name", roleRoute.RouteId);
 
             return View(roleRoute);
         }
 
-        // GET: Access/RoleRoutes/Delete/5
+        #endregion Edit
+
+        #region Delete
+
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     GET: Access/RoleRoutes/Delete/5
+        /// </summary>
+        /// <param name="id">Guid?</param>
+        /// <returns>ActionResult</returns>
+        /// -----------------------------------------------------------------------------------------------
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -141,7 +175,13 @@ namespace SecurityFramework.Areas.Access.Controllers
             return View(roleRoute);
         }
 
-        // POST: Access/RoleRoutes/Delete/5
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     POST: Access/RoleRoutes/Delete/5
+        /// </summary>
+        /// <param name="id">Guid</param>
+        /// <returns>ActionResult</returns>
+        /// -----------------------------------------------------------------------------------------------
         [HttpPost]
         [ActionName(nameof(Delete))]
         [ValidateAntiForgeryToken]
@@ -153,6 +193,14 @@ namespace SecurityFramework.Areas.Access.Controllers
             return RedirectToAction($"Index");
         }
 
+        #endregion Delete
+
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Cleanup
+        /// </summary>
+        /// <param name="disposing">bool</param>
+        /// -----------------------------------------------------------------------------------------------
         protected override void Dispose(bool disposing)
         {
             if (disposing)

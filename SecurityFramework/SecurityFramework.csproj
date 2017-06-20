@@ -235,16 +235,13 @@
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Areas\Access\Models\Entity\EnAccess.Context.tt">
-      <DependentUpon>EnAccess.edmx</DependentUpon>
       <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EnAccess.edmx</DependentUpon>
       <LastGenOutput>EnAccess.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Areas\Access\Models\Entity\EnAccess.edmx.diagram">
-      <DependentUpon>EnAccess.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Access\Models\Entity\EnAccess.tt">
-      <DependentUpon>EnAccess.edmx</DependentUpon>
       <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EnAccess.edmx</DependentUpon>
       <LastGenOutput>EnAccess.cs</LastGenOutput>
     </Content>
     <Content Include="Areas\Access\Views\AccessHome\Index.cshtml" />
@@ -402,6 +399,17 @@
     <Content Include="Areas\Louisville\Views\Louisville\Scheduling.cshtml" />
     <Content Include="Areas\Louisville\Views\Louisville\Freight.cshtml" />
     <Content Include="Areas\Louisville\Views\Louisville\Maintenance.cshtml" />
+    <EntityDeploy Include="Areas\Access\Models\Entity\EnAccess.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EnAccess.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\Access\Models\Entity\EnAccess.edmx.diagram">
+      <DependentUpon>EnAccess.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\Access\Views\Users\Delete.cshtml" />
+    <Content Include="Areas\Access\Views\Users\Details.cshtml" />
+    <Content Include="Areas\Access\Views\Users\Edit.cshtml" />
+    <Content Include="Areas\Access\Views\Users\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Local IIS.pubxml" />
     <None Include="Properties\PublishProfiles\Remote Server.pubxml" />
     <None Include="Properties\Settings.settings">
@@ -487,7 +495,9 @@
     <Content Include="SystemAdmin\PageNotFound.aspx" />
     <Content Include="SystemAdmin\SystemAdmin.aspx" />
     <Content Include="ViewSwitcher.ascx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
     <Content Include="Views\web.config" />
@@ -627,6 +637,7 @@
     <Compile Include="Areas\Access\Controllers\RoutesController.cs" />
     <Compile Include="Areas\Access\Controllers\ShopRolesController .cs" />
     <Compile Include="Areas\Access\Controllers\ShopsController.cs" />
+    <Compile Include="Areas\Access\Controllers\UsersController.cs" />
     <Compile Include="Areas\Access\Models\Entity\AspNetUser.cs">
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
@@ -634,19 +645,19 @@
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Access\Models\Entity\EnAccess.Context.cs">
-      <DependentUpon>EnAccess.Context.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EnAccess.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Access\Models\Entity\EnAccess.cs">
-      <DependentUpon>EnAccess.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Access\Models\Entity\EnAccess.Designer.cs">
-      <DependentUpon>EnAccess.edmx</DependentUpon>
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EnAccess.edmx</DependentUpon>
     </Compile>
     <Compile Include="Areas\Access\Models\Entity\Group.cs">
       <DependentUpon>EnAccess.tt</DependentUpon>
@@ -705,12 +716,15 @@
     <Compile Include="Areas\Access\Models\Entity\vwRoleRoute.cs">
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Access\Models\Entity\vwRoleUser.cs">
+    <Compile Include="Areas\Access\Models\Entity\vwRolesUser.cs">
+      <DependentUpon>EnAccess.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Access\Models\Entity\vwUser.cs">
       <DependentUpon>EnAccess.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Access\Models\Utils\AccessUtils.cs" />
     <Compile Include="Areas\Access\Models\View\Area.cs" />
-    <Compile Include="Areas\Access\Models\View\ListViewModel.cs" />
+    <Compile Include="Areas\Access\Models\View\ViewModels.cs" />
     <Compile Include="Areas\Access\Models\View\Role.cs" />
     <Compile Include="Areas\Access\Models\View\Route.cs" />
     <Compile Include="Areas\Access\Models\View\User.cs" />
@@ -941,12 +955,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="Areas\Access\Models\Entity\EnAccess.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EnAccess.Designer.cs</LastGenOutput>
-    </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

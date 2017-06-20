@@ -9,11 +9,11 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table table-condensed-max">
     <tr>
-        <th>Bread Crumb</th>
         <th>Area & Role</th>
         <th>Route</th>
+        <th>Bread Crumb</th>
         <th></th>
     </tr>
 
@@ -21,13 +21,13 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.BreadCrumb)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.AreaAndRole)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RoutePath)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BreadCrumb)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
@@ -38,3 +38,6 @@
     }
 
 </table>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>

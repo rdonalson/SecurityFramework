@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
@@ -274,12 +273,29 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
             <PropertyRef Name="RoleId" />
             <PropertyRef Name="UserId" />
             <PropertyRef Name="UserName" />
+            <PropertyRef Name="SysAdmin" />
           </Key>
           <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="DisplayName" Type="nvarchar" MaxLength="514" />
+          <Property Name="SysAdmin" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SecurityFramework.Access.vwUsers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="SysAdmin" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="SysAdmin" Type="bit" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="256" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="256" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="513" />
         </EntityType>
         <Association Name="FK_AspNetUsers_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
@@ -599,8 +615,19 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
     [vwRolesUsers].[UserId] AS [UserId], 
     [vwRolesUsers].[Email] AS [Email], 
     [vwRolesUsers].[UserName] AS [UserName], 
-    [vwRolesUsers].[DisplayName] AS [DisplayName]
+    [vwRolesUsers].[DisplayName] AS [DisplayName], 
+    [vwRolesUsers].[SysAdmin] AS [SysAdmin]
     FROM [Access].[vwRolesUsers] AS [vwRolesUsers]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwUsers" EntityType="Self.vwUsers" store:Type="Views" store:Schema="Access">
+            <DefiningQuery>SELECT 
+    [vwUsers].[Id] AS [Id], 
+    [vwUsers].[UserName] AS [UserName], 
+    [vwUsers].[SysAdmin] AS [SysAdmin], 
+    [vwUsers].[FirstName] AS [FirstName], 
+    [vwUsers].[LastName] AS [LastName], 
+    [vwUsers].[DisplayName] AS [DisplayName]
+    FROM [Access].[vwUsers] AS [vwUsers]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_AspNetUsers_AspNetUsers" Association="Self.FK_AspNetUsers_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -662,10 +689,7 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="AccessModel" Alias="Self" annotation:UseStrongSpatialTypes="false"
-              xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation"
-              xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation"
-              xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="AccessModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Domain">
           <Key>
             <PropertyRef Name="Id" />
@@ -673,8 +697,7 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="AppId" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Organizations" Relationship="Self.FK_Organizations_Domains" FromRole="Domains"
-                              ToRole="Organizations" />
+          <NavigationProperty Name="Organizations" Relationship="Self.FK_Organizations_Domains" FromRole="Domains" ToRole="Organizations" />
           <NavigationProperty Name="Roles" Relationship="Self.FK_Roles_Domains" FromRole="Domains" ToRole="Roles" />
         </EntityType>
         <EntityType Name="Group">
@@ -685,8 +708,7 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
           <Property Name="AppId" Type="Guid" Nullable="false" />
           <Property Name="OrganizationId" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Organization" Relationship="Self.FK_Groups_Organizations" FromRole="Groups"
-                              ToRole="Organizations" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_Groups_Organizations" FromRole="Groups" ToRole="Organizations" />
           <NavigationProperty Name="Offices" Relationship="Self.FK_Offices_Groups" FromRole="Groups" ToRole="Offices" />
           <NavigationProperty Name="Roles" Relationship="Self.FK_Roles_Groups" FromRole="Groups" ToRole="Roles" />
         </EntityType>
@@ -710,12 +732,9 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
           <Property Name="AppId" Type="Guid" Nullable="false" />
           <Property Name="DomainId" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Domain" Relationship="Self.FK_Organizations_Domains" FromRole="Organizations"
-                              ToRole="Domains" />
-          <NavigationProperty Name="Groups" Relationship="Self.FK_Groups_Organizations" FromRole="Organizations"
-                              ToRole="Groups" />
-          <NavigationProperty Name="Roles" Relationship="Self.FK_Roles_Organizations" FromRole="Organizations"
-                              ToRole="Roles" />
+          <NavigationProperty Name="Domain" Relationship="Self.FK_Organizations_Domains" FromRole="Organizations" ToRole="Domains" />
+          <NavigationProperty Name="Groups" Relationship="Self.FK_Groups_Organizations" FromRole="Organizations" ToRole="Groups" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_Roles_Organizations" FromRole="Organizations" ToRole="Roles" />
         </EntityType>
         <EntityType Name="RoleRoute">
           <Key>
@@ -725,8 +744,7 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
           <Property Name="RoleId" Type="Guid" Nullable="false" />
           <Property Name="RouteId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Role" Relationship="Self.FK_RoleRoutes_Roles" FromRole="RoleRoutes" ToRole="Roles" />
-          <NavigationProperty Name="Route" Relationship="Self.FK_RoleRoutes_Routes" FromRole="RoleRoutes"
-                              ToRole="Routes" />
+          <NavigationProperty Name="Route" Relationship="Self.FK_RoleRoutes_Routes" FromRole="RoleRoutes" ToRole="Routes" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -743,13 +761,10 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
           <NavigationProperty Name="Domain" Relationship="Self.FK_Roles_Domains" FromRole="Roles" ToRole="Domains" />
           <NavigationProperty Name="Group" Relationship="Self.FK_Roles_Groups" FromRole="Roles" ToRole="Groups" />
           <NavigationProperty Name="Office" Relationship="Self.FK_Roles_Offices" FromRole="Roles" ToRole="Offices" />
-          <NavigationProperty Name="Organization" Relationship="Self.FK_Roles_Organizations" FromRole="Roles"
-                              ToRole="Organizations" />
-          <NavigationProperty Name="RoleRoutes" Relationship="Self.FK_RoleRoutes_Roles" FromRole="Roles"
-                              ToRole="RoleRoutes" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_Roles_Organizations" FromRole="Roles" ToRole="Organizations" />
+          <NavigationProperty Name="RoleRoutes" Relationship="Self.FK_RoleRoutes_Roles" FromRole="Roles" ToRole="RoleRoutes" />
           <NavigationProperty Name="Shop" Relationship="Self.FK_Roles_Shops" FromRole="Roles" ToRole="Shops" />
-          <NavigationProperty Name="RoleUsers" Relationship="Self.FK_RoleUsers_Roles" FromRole="Roles"
-                              ToRole="RoleUsers" />
+          <NavigationProperty Name="RoleUsers" Relationship="Self.FK_RoleUsers_Roles" FromRole="Roles" ToRole="RoleUsers" />
         </EntityType>
         <EntityType Name="RoleUser">
           <Key>
@@ -759,8 +774,7 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
           <Property Name="RoleId" Type="Guid" Nullable="false" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Role" Relationship="Self.FK_RoleUsers_Roles" FromRole="RoleUsers" ToRole="Roles" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_RoleUsers_AspNetUsers" FromRole="RoleUsers"
-                              ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_RoleUsers_AspNetUsers" FromRole="RoleUsers" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="Route">
           <Key>
@@ -772,8 +786,7 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
           <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="AppPath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="RoutePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="RoleRoutes" Relationship="Self.FK_RoleRoutes_Routes" FromRole="Routes"
-                              ToRole="RoleRoutes" />
+          <NavigationProperty Name="RoleRoutes" Relationship="Self.FK_RoleRoutes_Routes" FromRole="Routes" ToRole="RoleRoutes" />
         </EntityType>
         <EntityType Name="Shop">
           <Key>
@@ -803,14 +816,98 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SysAdmin" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="RoleUsers" Relationship="Self.FK_RoleUsers_AspNetUsers" FromRole="AspNetUsers"
-                              ToRole="RoleUsers" />
-          <NavigationProperty Name="AspNetUsers1" Relationship="Self.FK_AspNetUsers_AspNetUsers" FromRole="AspNetUsers"
-                              ToRole="AspNetUsers1" />
-          <NavigationProperty Name="AspNetUser1" Relationship="Self.FK_AspNetUsers_AspNetUsers" FromRole="AspNetUsers1"
-                              ToRole="AspNetUsers" />
           <Property Name="FirstName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RoleUsers" Relationship="Self.FK_RoleUsers_AspNetUsers" FromRole="AspNetUsers" ToRole="RoleUsers" />
+          <NavigationProperty Name="AspNetUsers1" Relationship="Self.FK_AspNetUsers_AspNetUsers" FromRole="AspNetUsers" ToRole="AspNetUsers1" />
+          <NavigationProperty Name="AspNetUser1" Relationship="Self.FK_AspNetUsers_AspNetUsers" FromRole="AspNetUsers1" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="vwArea">
+          <Key>
+            <PropertyRef Name="DomId" />
+            <PropertyRef Name="Domain" />
+          </Key>
+          <Property Name="AreaId" Type="Guid" />
+          <Property Name="BreadCrumb" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="DomId" Type="Guid" Nullable="false" />
+          <Property Name="Domain" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrgId" Type="Guid" />
+          <Property Name="Organization" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="GrpId" Type="Guid" />
+          <Property Name="Group" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OffId" Type="Guid" />
+          <Property Name="Office" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ShpId" Type="Guid" />
+          <Property Name="Shop" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwAreaAndRole">
+          <Key>
+            <PropertyRef Name="AreaSeq" />
+            <PropertyRef Name="Area" />
+            <PropertyRef Name="Roles" />
+            <PropertyRef Name="Seq" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="AreaSeq" Type="Int32" Nullable="false" />
+          <Property Name="Area" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AreaName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AreaId" Type="Guid" />
+          <Property Name="Roles" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Seq" Type="Int32" Nullable="false" />
+          <Property Name="AreaAndRole" Type="String" MaxLength="218" FixedLength="false" Unicode="false" />
+          <Property Name="BreadCrumb" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="AppId" Type="Guid" />
+        </EntityType>
+        <EntityType Name="vwAreaAndRoleAndRoute">
+          <Key>
+            <PropertyRef Name="AreaSeq" />
+            <PropertyRef Name="Seq" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="RouteId" />
+          </Key>
+          <Property Name="AreaId" Type="Guid" />
+          <Property Name="AreaSeq" Type="Int32" Nullable="false" />
+          <Property Name="Seq" Type="Int32" Nullable="false" />
+          <Property Name="BreadCrumb" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="AreaAndRole" Type="String" MaxLength="218" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="RouteId" Type="Guid" Nullable="false" />
+          <Property Name="AppId" Type="Guid" />
+          <Property Name="RoutePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwAreaAndRoleAndUser">
+          <Key>
+            <PropertyRef Name="AreaSeq" />
+            <PropertyRef Name="Seq" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="AppId" Type="Guid" />
+          <Property Name="AreaId" Type="Guid" />
+          <Property Name="AreaSeq" Type="Int32" Nullable="false" />
+          <Property Name="Seq" Type="Int32" Nullable="false" />
+          <Property Name="BreadCrumb" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="AreaAndRole" Type="String" MaxLength="218" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="514" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vwAreaAndSubArea">
+          <Key>
+            <PropertyRef Name="Area" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="AppId" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Area" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="AppId" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="vwAreaTree">
           <Key>
@@ -839,6 +936,57 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
           <Property Name="RouteId" Type="Guid" Nullable="false" />
           <Property Name="RoutePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="RouteAppId" Type="Guid" />
+        </EntityType>
+        <EntityType Name="vwRole">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Sequence" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Sequence" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AreaId" Type="Guid" />
+        </EntityType>
+        <EntityType Name="vwRoleRoute">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="RouteId" />
+          </Key>
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="AppId" Type="Guid" />
+          <Property Name="FilePath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AppPath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RoutePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RouteId" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vwRolesUser">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="SysAdmin" />
+          </Key>
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="514" FixedLength="false" Unicode="true" />
+          <Property Name="SysAdmin" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vwUser">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="SysAdmin" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SysAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayName" Type="String" MaxLength="513" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Organizations_Domains">
           <End Role="Domains" Type="Self.Domain" Multiplicity="1" />
@@ -1033,8 +1181,17 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
           <EntitySet Name="Routes" EntityType="Self.Route" />
           <EntitySet Name="Shops" EntityType="Self.Shop" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="vwAreas" EntityType="Self.vwArea" />
+          <EntitySet Name="vwAreasAndRoles" EntityType="AccessModel.vwAreaAndRole" />
+          <EntitySet Name="vwAreasAndRolesAndRoutes" EntityType="AccessModel.vwAreaAndRoleAndRoute" />
+          <EntitySet Name="vwAreasAndRolesAndUsers" EntityType="AccessModel.vwAreaAndRoleAndUser" />
+          <EntitySet Name="vwAreasAndSubAreas" EntityType="AccessModel.vwAreaAndSubArea" />
           <EntitySet Name="vwAreaTrees" EntityType="Self.vwAreaTree" />
           <EntitySet Name="vwIsInRoles" EntityType="Self.vwIsInRole" />
+          <EntitySet Name="vwRoles" EntityType="Self.vwRole" />
+          <EntitySet Name="vwRolesRoutes" EntityType="AccessModel.vwRoleRoute" />
+          <EntitySet Name="vwRolesUsers" EntityType="Self.vwRolesUser" />
+          <EntitySet Name="vwUsers" EntityType="Self.vwUser" />
           <AssociationSet Name="FK_Organizations_Domains" Association="Self.FK_Organizations_Domains">
             <End Role="Domains" EntitySet="Domains" />
             <End Role="Organizations" EntitySet="Organizations" />
@@ -1096,7 +1253,6 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
             <Parameter Name="UserId" Mode="In" Type="String" />
             <Parameter Name="Route" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="vwRoles" EntityType="AccessModel.vwRole" />
           <FunctionImport Name="spUserAreas" ReturnType="Collection(AccessModel.spUserAreas_Result)">
             <Parameter Name="AppId" Mode="In" Type="Guid" />
             <Parameter Name="UserId" Mode="In" Type="String" />
@@ -1105,25 +1261,7 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
             <Parameter Name="AppId" Mode="In" Type="Guid" />
             <Parameter Name="UserId" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="vwAreas" EntityType="AccessModel.vwArea" />
-          <EntitySet Name="vwAreasAndRoles" EntityType="AccessModel.vwAreaAndRole" />
-          <EntitySet Name="vwAreasAndRolesAndRoutes" EntityType="AccessModel.vwAreaAndRoleAndRoute" />
-          <EntitySet Name="vwAreasAndSubAreas" EntityType="AccessModel.vwAreaAndSubArea" />
-          <EntitySet Name="vwAreasAndRolesAndUsers" EntityType="AccessModel.vwAreaAndRoleAndUser" />
-          <EntitySet Name="vwRolesUsers" EntityType="AccessModel.vwRoleUser" />
-          <EntitySet Name="vwRolesRoutes" EntityType="AccessModel.vwRoleRoute" />
         </EntityContainer>
-        <EntityType Name="vwRole">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Sequence" />
-            <PropertyRef Name="Name" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Sequence" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="AreaId" Type="Guid" />
-        </EntityType>
         <ComplexType Name="spUserAreas_Result">
           <Property Type="Guid" Name="Id" Nullable="false" />
           <Property Type="Guid" Name="ParentId" Nullable="true" />
@@ -1133,118 +1271,6 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
           <Property Type="Guid" Name="RoleId" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
         </ComplexType>
-        <EntityType Name="vwArea">
-          <Key>
-            <PropertyRef Name="DomId" />
-            <PropertyRef Name="Domain" />
-          </Key>
-          <Property Name="AreaId" Type="Guid" />
-          <Property Name="BreadCrumb" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
-          <Property Name="DomId" Type="Guid" Nullable="false" />
-          <Property Name="Domain" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="OrgId" Type="Guid" />
-          <Property Name="Organization" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="GrpId" Type="Guid" />
-          <Property Name="Group" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="OffId" Type="Guid" />
-          <Property Name="Office" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ShpId" Type="Guid" />
-          <Property Name="Shop" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="vwAreaAndRole">
-          <Key>
-            <PropertyRef Name="AreaSeq" />
-            <PropertyRef Name="Area" />
-            <PropertyRef Name="Roles" />
-            <PropertyRef Name="Seq" />
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="AreaSeq" Type="Int32" Nullable="false" />
-          <Property Name="Area" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="AreaName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="AreaId" Type="Guid" />
-          <Property Name="Roles" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Seq" Type="Int32" Nullable="false" />
-          <Property Name="AreaAndRole" Type="String" MaxLength="218" FixedLength="false" Unicode="false" />
-          <Property Name="BreadCrumb" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
-          <Property Name="RoleId" Type="Guid" Nullable="false" />
-          <Property Name="AppId" Type="Guid" />
-        </EntityType>
-        <EntityType Name="vwAreaAndRoleAndRoute">
-          <Key>
-            <PropertyRef Name="AreaSeq" />
-            <PropertyRef Name="Seq" />
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="RoleId" />
-            <PropertyRef Name="RouteId" />
-          </Key>
-          <Property Name="AreaId" Type="Guid" />
-          <Property Name="AreaSeq" Type="Int32" Nullable="false" />
-          <Property Name="Seq" Type="Int32" Nullable="false" />
-          <Property Name="BreadCrumb" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
-          <Property Name="AreaAndRole" Type="String" MaxLength="218" FixedLength="false" Unicode="false" />
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="RoleId" Type="Guid" Nullable="false" />
-          <Property Name="RouteId" Type="Guid" Nullable="false" />
-          <Property Name="AppId" Type="Guid" />
-          <Property Name="RoutePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="vwAreaAndSubArea">
-          <Key>
-            <PropertyRef Name="Area" />
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="AppId" />
-            <PropertyRef Name="Name" />
-          </Key>
-          <Property Name="Area" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="AppId" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="vwAreaAndRoleAndUser">
-          <Key>
-            <PropertyRef Name="AreaSeq" />
-            <PropertyRef Name="Seq" />
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="RoleId" />
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="AppId" Type="Guid" />
-          <Property Name="AreaId" Type="Guid" />
-          <Property Name="AreaSeq" Type="Int32" Nullable="false" />
-          <Property Name="Seq" Type="Int32" Nullable="false" />
-          <Property Name="BreadCrumb" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
-          <Property Name="AreaAndRole" Type="String" MaxLength="218" FixedLength="false" Unicode="false" />
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="RoleId" Type="Guid" Nullable="false" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="DisplayName" Type="String" MaxLength="514" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="vwRoleUser">
-          <Key>
-            <PropertyRef Name="RoleId" />
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="UserName" />
-          </Key>
-          <Property Name="RoleId" Type="Guid" Nullable="false" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="DisplayName" Type="String" MaxLength="514" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="vwRoleRoute">
-          <Key>
-            <PropertyRef Name="RoleId" />
-            <PropertyRef Name="RouteId" />
-          </Key>
-          <Property Name="RoleId" Type="Guid" Nullable="false" />
-          <Property Name="AppId" Type="Guid" />
-          <Property Name="FilePath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="AppPath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="RoutePath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="RouteId" Type="Guid" Nullable="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1347,8 +1373,6 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="AccessModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
@@ -1362,6 +1386,84 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="SysAdmin" ColumnName="SysAdmin" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwAreas">
+            <EntityTypeMapping TypeName="AccessModel.vwArea">
+              <MappingFragment StoreEntitySet="vwAreas">
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+                <ScalarProperty Name="BreadCrumb" ColumnName="BreadCrumb" />
+                <ScalarProperty Name="DomId" ColumnName="DomId" />
+                <ScalarProperty Name="Domain" ColumnName="Domain" />
+                <ScalarProperty Name="OrgId" ColumnName="OrgId" />
+                <ScalarProperty Name="Organization" ColumnName="Organization" />
+                <ScalarProperty Name="GrpId" ColumnName="GrpId" />
+                <ScalarProperty Name="Group" ColumnName="Group" />
+                <ScalarProperty Name="OffId" ColumnName="OffId" />
+                <ScalarProperty Name="Office" ColumnName="Office" />
+                <ScalarProperty Name="ShpId" ColumnName="ShpId" />
+                <ScalarProperty Name="Shop" ColumnName="Shop" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwAreasAndRoles">
+            <EntityTypeMapping TypeName="AccessModel.vwAreaAndRole">
+              <MappingFragment StoreEntitySet="vwAreasAndRoles">
+                <ScalarProperty Name="AreaSeq" ColumnName="AreaSeq" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="AreaName" ColumnName="AreaName" />
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+                <ScalarProperty Name="Roles" ColumnName="Roles" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="AreaAndRole" ColumnName="AreaAndRole" />
+                <ScalarProperty Name="BreadCrumb" ColumnName="BreadCrumb" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwAreasAndRolesAndRoutes">
+            <EntityTypeMapping TypeName="AccessModel.vwAreaAndRoleAndRoute">
+              <MappingFragment StoreEntitySet="vwAreasAndRolesAndRoutes">
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+                <ScalarProperty Name="AreaSeq" ColumnName="AreaSeq" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="BreadCrumb" ColumnName="BreadCrumb" />
+                <ScalarProperty Name="AreaAndRole" ColumnName="AreaAndRole" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="RoutePath" ColumnName="RoutePath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwAreasAndRolesAndUsers">
+            <EntityTypeMapping TypeName="AccessModel.vwAreaAndRoleAndUser">
+              <MappingFragment StoreEntitySet="vwAreasAndRolesAndUsers">
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+                <ScalarProperty Name="AreaSeq" ColumnName="AreaSeq" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="BreadCrumb" ColumnName="BreadCrumb" />
+                <ScalarProperty Name="AreaAndRole" ColumnName="AreaAndRole" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwAreasAndSubAreas">
+            <EntityTypeMapping TypeName="AccessModel.vwAreaAndSubArea">
+              <MappingFragment StoreEntitySet="vwAreasAndSubAreas">
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1390,17 +1492,54 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spIsInRole" FunctionName="AccessModel.Store.spIsInRole" />
           <EntitySetMapping Name="vwRoles">
             <EntityTypeMapping TypeName="AccessModel.vwRole">
               <MappingFragment StoreEntitySet="vwRoles">
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vwRolesRoutes">
+            <EntityTypeMapping TypeName="AccessModel.vwRoleRoute">
+              <MappingFragment StoreEntitySet="vwRolesRoutes">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="AppPath" ColumnName="AppPath" />
+                <ScalarProperty Name="RoutePath" ColumnName="RoutePath" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwRolesUsers">
+            <EntityTypeMapping TypeName="AccessModel.vwRolesUser">
+              <MappingFragment StoreEntitySet="vwRolesUsers">
+                <ScalarProperty Name="SysAdmin" ColumnName="SysAdmin" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwUsers">
+            <EntityTypeMapping TypeName="AccessModel.vwUser">
+              <MappingFragment StoreEntitySet="vwUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="SysAdmin" ColumnName="SysAdmin" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spIsInRole" FunctionName="AccessModel.Store.spIsInRole" />
           <FunctionImportMapping FunctionImportName="spUserAreas" FunctionName="AccessModel.Store.spUserAreas">
             <ResultMapping>
               <ComplexTypeMapping TypeName="AccessModel.spUserAreas_Result">
@@ -1418,106 +1557,6 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="vwAreas">
-            <EntityTypeMapping TypeName="AccessModel.vwArea">
-              <MappingFragment StoreEntitySet="vwAreas">
-                <ScalarProperty Name="Shop" ColumnName="Shop" />
-                <ScalarProperty Name="ShpId" ColumnName="ShpId" />
-                <ScalarProperty Name="Office" ColumnName="Office" />
-                <ScalarProperty Name="OffId" ColumnName="OffId" />
-                <ScalarProperty Name="Group" ColumnName="Group" />
-                <ScalarProperty Name="GrpId" ColumnName="GrpId" />
-                <ScalarProperty Name="Organization" ColumnName="Organization" />
-                <ScalarProperty Name="OrgId" ColumnName="OrgId" />
-                <ScalarProperty Name="Domain" ColumnName="Domain" />
-                <ScalarProperty Name="DomId" ColumnName="DomId" />
-                <ScalarProperty Name="BreadCrumb" ColumnName="BreadCrumb" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vwAreasAndRoles">
-            <EntityTypeMapping TypeName="AccessModel.vwAreaAndRole">
-              <MappingFragment StoreEntitySet="vwAreasAndRoles">
-                <ScalarProperty Name="AppId" ColumnName="AppId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="BreadCrumb" ColumnName="BreadCrumb" />
-                <ScalarProperty Name="AreaAndRole" ColumnName="AreaAndRole" />
-                <ScalarProperty Name="Seq" ColumnName="Seq" />
-                <ScalarProperty Name="Roles" ColumnName="Roles" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-                <ScalarProperty Name="AreaName" ColumnName="AreaName" />
-                <ScalarProperty Name="Area" ColumnName="Area" />
-                <ScalarProperty Name="AreaSeq" ColumnName="AreaSeq" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vwAreasAndRolesAndRoutes">
-            <EntityTypeMapping TypeName="AccessModel.vwAreaAndRoleAndRoute">
-              <MappingFragment StoreEntitySet="vwAreasAndRolesAndRoutes">
-                <ScalarProperty Name="RoutePath" ColumnName="RoutePath" />
-                <ScalarProperty Name="AppId" ColumnName="AppId" />
-                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AreaAndRole" ColumnName="AreaAndRole" />
-                <ScalarProperty Name="BreadCrumb" ColumnName="BreadCrumb" />
-                <ScalarProperty Name="Seq" ColumnName="Seq" />
-                <ScalarProperty Name="AreaSeq" ColumnName="AreaSeq" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vwAreasAndSubAreas">
-            <EntityTypeMapping TypeName="AccessModel.vwAreaAndSubArea">
-              <MappingFragment StoreEntitySet="vwAreasAndSubAreas">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="AppId" ColumnName="AppId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Area" ColumnName="Area" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vwAreasAndRolesAndUsers">
-            <EntityTypeMapping TypeName="AccessModel.vwAreaAndRoleAndUser">
-              <MappingFragment StoreEntitySet="vwAreasAndRolesAndUsers">
-                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AreaAndRole" ColumnName="AreaAndRole" />
-                <ScalarProperty Name="BreadCrumb" ColumnName="BreadCrumb" />
-                <ScalarProperty Name="Seq" ColumnName="Seq" />
-                <ScalarProperty Name="AreaSeq" ColumnName="AreaSeq" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-                <ScalarProperty Name="AppId" ColumnName="AppId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vwRolesUsers">
-            <EntityTypeMapping TypeName="AccessModel.vwRoleUser">
-              <MappingFragment StoreEntitySet="vwRolesUsers">
-                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vwRolesRoutes">
-            <EntityTypeMapping TypeName="AccessModel.vwRoleRoute">
-              <MappingFragment StoreEntitySet="vwRolesRoutes">
-                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
-                <ScalarProperty Name="RoutePath" ColumnName="RoutePath" />
-                <ScalarProperty Name="AppPath" ColumnName="AppPath" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
-                <ScalarProperty Name="AppId" ColumnName="AppId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -4,19 +4,28 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c9aee99c625f4073b30481fe19d218c5" Name="diaAccess">
-        <EntityTypeShape EntityType="AccessModel.Domain" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AccessModel.Group" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="AccessModel.Office" Width="1.5" PointX="7.5" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="AccessModel.Organization" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="AccessModel.RoleRoute" Width="1.5" PointX="14.25" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="AccessModel.Role" Width="1.5" PointX="12" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="AccessModel.RoleUser" Width="1.5" PointX="14.25" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="AccessModel.Route" Width="1.5" PointX="12" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AccessModel.Shop" Width="1.5" PointX="9.75" PointY="9.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="AccessModel.AspNetUser" Width="1.5" PointX="12" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AccessModel.vwAreaTree" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="AccessModel.vwIsInRole" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
+      <Diagram DiagramId="e53c7a3e18784141a97cd25302c0ed95" Name="Diagram1">
+        <EntityTypeShape EntityType="AccessModel.Domain" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.Group" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.Office" Width="1.5" PointX="7.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.Organization" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.RoleRoute" Width="1.5" PointX="14.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.Role" Width="1.5" PointX="12" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.RoleUser" Width="1.5" PointX="14.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.Route" Width="1.5" PointX="12" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.Shop" Width="1.5" PointX="9.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.AspNetUser" Width="1.5" PointX="12" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwArea" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwAreaAndRole" Width="1.75" PointX="2.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwAreaAndRoleAndRoute" Width="2.25" PointX="5.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwAreaAndRoleAndUser" Width="2.125" PointX="2.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwAreaAndSubArea" Width="2" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwAreaTree" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwIsInRole" Width="1.5" PointX="5.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwRole" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwRoleRoute" Width="1.5" PointX="7.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwRolesUser" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AccessModel.vwUser" Width="1.5" PointX="14.75" PointY="9.75" IsExpanded="true" />
         <AssociationConnector Association="AccessModel.FK_Organizations_Domains" ManuallyRouted="false" />
         <AssociationConnector Association="AccessModel.FK_Roles_Domains" ManuallyRouted="false" />
         <AssociationConnector Association="AccessModel.FK_Groups_Organizations" ManuallyRouted="false" />
@@ -31,14 +40,6 @@
         <AssociationConnector Association="AccessModel.FK_RoleUsers_Roles" ManuallyRouted="false" />
         <AssociationConnector Association="AccessModel.FK_RoleUsers_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="AccessModel.FK_AspNetUsers_AspNetUsers" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="AccessModel.vwRole" Width="1.5" PointX="2.75" PointY="1.5" />
-        <EntityTypeShape EntityType="AccessModel.vwArea" Width="1.5" PointX="2.75" PointY="8.5" />
-        <EntityTypeShape EntityType="AccessModel.vwAreaAndRole" Width="2.375" PointX="4.75" PointY="8.5" />
-        <EntityTypeShape EntityType="AccessModel.vwAreaAndRoleAndRoute" Width="2.375" PointX="4.75" PointY="12.5" />
-        <EntityTypeShape EntityType="AccessModel.vwAreaAndSubArea" Width="2" PointX="4.75" PointY="1.5" />
-        <EntityTypeShape EntityType="AccessModel.vwAreaAndRoleAndUser" Width="2.375" PointX="7.75" PointY="12.5" />
-        <EntityTypeShape EntityType="AccessModel.vwRoleUser" Width="1.5" PointX="7.75" PointY="1.5" />
-        <EntityTypeShape EntityType="AccessModel.vwRoleRoute" Width="1.5" PointX="0.75" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

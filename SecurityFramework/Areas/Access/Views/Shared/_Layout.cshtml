@@ -73,7 +73,13 @@
                                     @Html.ActionLink("Routes", "Index", "Routes")
                                 </li>
                             }
-                        }
+                            if (AppCommon.IsInRole("/Access/Users"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Users", "Index", "Users")
+                                </li>
+                            }                       
+                            }
                     </ul>
                 </li>
                 <li class="dropdown">

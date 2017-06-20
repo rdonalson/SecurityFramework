@@ -10,14 +10,26 @@ using SecurityFramework.Utilities.Common;
 
 namespace SecurityFramework.Areas.Access.Controllers
 {
+    /// ===============================================================================================
+    /// <summary>
+    ///     Roles & Users Controller
+    /// </summary>
+    /// ===============================================================================================
     [VerifyAccess]
     [Authorize]
     public class RoleUsersController : Controller
     {
+        // Declarations
         private readonly AccessUtils _accessUtils;
+
         private readonly AccessEntities _db;
         private readonly bool _isSysAdmin;
 
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Constructor
+        /// </summary>
+        /// -----------------------------------------------------------------------------------------------
         public RoleUsersController()
         {
             _db = new AccessEntities();
@@ -25,43 +37,44 @@ namespace SecurityFramework.Areas.Access.Controllers
             _isSysAdmin = System.Web.HttpContext.Current.User.Identity.GetSysAdmin();
         }
 
-        // GET: Access/RoleUsers
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     GET: Access/RoleUsers
+        /// </summary>
+        /// <returns>ActionResult</returns>
+        /// -----------------------------------------------------------------------------------------------
         public ActionResult Index()
         {
             return View(_accessUtils.GetAreasAndRolesAndUsers());
         }
 
-        // GET: Access/RoleUsers/Details/5
-        public ActionResult Details(Guid? id)
-        {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var roleUser = _accessUtils.GetAreasAndRolesAndUsers().SingleOrDefault(item => item.Id == id);
-            if (roleUser == null)
-                return HttpNotFound();
+        #region Create
 
-            return View(roleUser);
-        }
-
-        // GET: Access/RoleUsers/Create
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     GET: Access/RoleUsers/Create
+        /// </summary>
+        /// <returns>ActionResult</returns>
+        /// -----------------------------------------------------------------------------------------------
         public ActionResult Create()
         {
-            ViewBag.RoleId = new SelectList(
-                _accessUtils.GetAreasAndRoles(),
-                $"RoleId", $"AreaAndRole");
-            ViewBag.UserId = new SelectList(
-                _accessUtils.GetAreasAndRolesAndUsers(),
-                $"UserId", $"DisplayName");
-
+            ViewBag.RoleId = new SelectList(_accessUtils.GetAreasAndRoles(), $"Id", $"Name");
+            ViewBag.UserId = new SelectList(_accessUtils.GetRolesAndUsers(), $"Id", $"Name");
             return View();
         }
 
-        // POST: Access/RoleUsers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     POST: Access/RoleUsers/Create
+        ///     To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        ///     more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// </summary>
+        /// <param name="roleUser">RoleUser</param>
+        /// <returns>ActionResult</returns>
+        /// -----------------------------------------------------------------------------------------------
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,RoleId,UserId")] RoleUser roleUser)
+        public ActionResult Create([Bind(Include = @"Id,RoleId,UserId")] RoleUser roleUser)
         {
             if (ModelState.IsValid)
             {
@@ -70,18 +83,39 @@ namespace SecurityFramework.Areas.Access.Controllers
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
-
-            ViewBag.RoleId = new SelectList(
-                _accessUtils.GetAreasAndRoles(),
-                $"RoleId", $"AreaAndRole", roleUser.RoleId);
-            ViewBag.UserId = new SelectList(
-                _accessUtils.GetAreasAndRolesAndUsers(),
-                $"UserId", $"DisplayName", roleUser.UserId);
-
+            ViewBag.RoleId = new SelectList(_accessUtils.GetAreasAndRoles(), $"Id", $"Name", roleUser.RoleId);
+            ViewBag.UserId = new SelectList(_accessUtils.GetRolesAndUsers(), $"Id", $"Name", roleUser.UserId);
             return View(roleUser);
         }
 
-        // GET: Access/RoleUsers/Edit/5
+        #endregion Create
+
+        #region Edit
+
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     GET: Access/RoleUsers/Details/5
+        /// </summary>
+        /// <param name="id">Guid?</param>
+        /// <returns>ActionResult</returns>
+        /// -----------------------------------------------------------------------------------------------
+        public ActionResult Details(Guid? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var roleUser = _accessUtils.GetAreasAndRolesAndUsers().SingleOrDefault(item => item.Id == id);
+            if (roleUser == null)
+                return HttpNotFound();
+            return View(roleUser);
+        }
+
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     GET: Access/RoleUsers/Edit/5
+        /// </summary>
+        /// <param name="id">Guid?</param>
+        /// <returns>ActionResult</returns>
+        /// -----------------------------------------------------------------------------------------------
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -89,23 +123,23 @@ namespace SecurityFramework.Areas.Access.Controllers
             var roleUser = _db.RoleUsers.Find(id);
             if (roleUser == null)
                 return HttpNotFound();
-
-            ViewBag.RoleId = new SelectList(
-                _accessUtils.GetAreasAndRoles(),
-                $"RoleId", $"AreaAndRole", roleUser.RoleId);
-            ViewBag.UserId = new SelectList(
-                _accessUtils.GetAreasAndRolesAndUsers(),
-                $"UserId", $"DisplayName", roleUser.UserId);
-
+            ViewBag.RoleId = new SelectList(_accessUtils.GetAreasAndRoles(), $"Id", $"Name", roleUser.RoleId);
+            ViewBag.UserId = new SelectList(_accessUtils.GetRolesAndUsers(), $"Id", $"Name", roleUser.UserId);
             return View(roleUser);
         }
 
-        // POST: Access/RoleUsers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     POST: Access/RoleUsers/Edit/5
+        ///     To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        ///     more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// </summary>
+        /// <param name="roleUser">RoleUser</param>
+        /// <returns>ActionResult</returns>
+        /// -----------------------------------------------------------------------------------------------
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,RoleId,UserId")] RoleUser roleUser)
+        public ActionResult Edit([Bind(Include = @"Id,RoleId,UserId")] RoleUser roleUser)
         {
             if (ModelState.IsValid)
             {
@@ -113,18 +147,22 @@ namespace SecurityFramework.Areas.Access.Controllers
                 _db.SaveChanges();
                 return RedirectToAction($"Index");
             }
-
-            ViewBag.RoleId = new SelectList(
-                _accessUtils.GetAreasAndRoles()
-                , $"RoleId", $"AreaAndRole", roleUser.RoleId);
-            ViewBag.UserId = new SelectList(
-                _accessUtils.GetAreasAndRolesAndUsers(),
-                $"UserId", $"DisplayName", roleUser.UserId);
-
+            ViewBag.RoleId = new SelectList(_accessUtils.GetAreasAndRoles(), $"Id", $"Name", roleUser.RoleId);
+            ViewBag.UserId = new SelectList(_accessUtils.GetRolesAndUsers(), $"Id", $"Name", roleUser.UserId);
             return View(roleUser);
         }
 
-        // GET: Access/RoleUsers/Delete/5
+        #endregion Edit
+
+        #region Delete
+
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     GET: Access/RoleUsers/Delete/5
+        /// </summary>
+        /// <param name="id">Guid?</param>
+        /// <returns>ActionResult</returns>
+        /// -----------------------------------------------------------------------------------------------
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -135,7 +173,13 @@ namespace SecurityFramework.Areas.Access.Controllers
             return View(roleUser);
         }
 
-        // POST: Access/RoleUsers/Delete/5
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     POST: Access/RoleUsers/Delete/5
+        /// </summary>
+        /// <param name="id">Guid</param>
+        /// <returns>ActionResult</returns>
+        /// -----------------------------------------------------------------------------------------------
         [HttpPost]
         [ActionName(nameof(Delete))]
         [ValidateAntiForgeryToken]
@@ -147,20 +191,39 @@ namespace SecurityFramework.Areas.Access.Controllers
             return RedirectToAction($"Index");
         }
 
+        #endregion Delete
+
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Cleanup
+        /// </summary>
+        /// <param name="disposing">bool</param>
+        /// -----------------------------------------------------------------------------------------------
         public new void Dispose(bool disposing)
         {
             if (disposing)
                 _db.Dispose();
             base.Dispose(disposing);
         }
+    }
+}
 
+
+/* Archive
+ 
+        /// -----------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Archive: Listbox testing
+        /// </summary>
+        /// <returns>ActionResult</returns>
+        /// -----------------------------------------------------------------------------------------------
         public ActionResult ListBox()
         {
             var areasAndRoles = _db.vwAreasAndRoles
                 .OrderBy(item => item.AreaSeq)
                 .ThenBy(item => item.Seq);
-            ViewBag.RoleId = new SelectList(areasAndRoles, "RoleId", "AreaAndRole");
+            ViewBag.RoleId = new SelectList(areasAndRoles, $"RoleId", $"AreaAndRole");
             return View();
         }
-    }
-}
+     
+     */

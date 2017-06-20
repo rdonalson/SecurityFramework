@@ -268,12 +268,29 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
       <PropertyRef Name="RoleId" />
       <PropertyRef Name="UserId" />
       <PropertyRef Name="UserName" />
+      <PropertyRef Name="SysAdmin" />
     </Key>
     <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="Email" Type="nvarchar" MaxLength="256" />
     <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
     <Property Name="DisplayName" Type="nvarchar" MaxLength="514" />
+    <Property Name="SysAdmin" Type="bit" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'SecurityFramework.Access.vwUsers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="UserName" />
+      <PropertyRef Name="SysAdmin" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="SysAdmin" Type="bit" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="256" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="256" />
+    <Property Name="DisplayName" Type="nvarchar" MaxLength="513" />
   </EntityType>
   <Association Name="FK_AspNetUsers_AspNetUsers">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
@@ -593,8 +610,19 @@ warning 6002: The table/view 'SecurityFramework.Access.vwRolesUsers' does not ha
     [vwRolesUsers].[UserId] AS [UserId], 
     [vwRolesUsers].[Email] AS [Email], 
     [vwRolesUsers].[UserName] AS [UserName], 
-    [vwRolesUsers].[DisplayName] AS [DisplayName]
+    [vwRolesUsers].[DisplayName] AS [DisplayName], 
+    [vwRolesUsers].[SysAdmin] AS [SysAdmin]
     FROM [Access].[vwRolesUsers] AS [vwRolesUsers]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vwUsers" EntityType="Self.vwUsers" store:Type="Views" store:Schema="Access">
+      <DefiningQuery>SELECT 
+    [vwUsers].[Id] AS [Id], 
+    [vwUsers].[UserName] AS [UserName], 
+    [vwUsers].[SysAdmin] AS [SysAdmin], 
+    [vwUsers].[FirstName] AS [FirstName], 
+    [vwUsers].[LastName] AS [LastName], 
+    [vwUsers].[DisplayName] AS [DisplayName]
+    FROM [Access].[vwUsers] AS [vwUsers]</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="FK_AspNetUsers_AspNetUsers" Association="Self.FK_AspNetUsers_AspNetUsers">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
